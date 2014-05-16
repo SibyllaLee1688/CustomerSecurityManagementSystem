@@ -23,7 +23,7 @@
 		</developer>
 	</developers>
 
-	<!-- use local maven repo here if exists, can also set in setting.xml <repositories> 
+	<!-- use maven repo here if required, can also set in setting.xml <repositories> 
 		</repositories> -->
 
 	<scm>
@@ -82,7 +82,9 @@
 		<project.servlet-apiVersion>3.0-alpha-1</project.servlet-apiVersion>
 		<project.jsp-apiVersion>2.2.1-b03</project.jsp-apiVersion>
 		<!-- Project dependency versions -->
+		<project.kiePluginVersion>6.1.0.Beta3</project.kiePluginVersion>
 		<project.openjpaPluginVersion>1.2</project.openjpaPluginVersion>
+		<project.droolsVersion>6.1.0.Beta3</project.droolsVersion>
 		<project.cglib-nodepVersion>3.1</project.cglib-nodepVersion>
 		<project.itextVersion>4.2.1</project.itextVersion>
 		<project.commons-beanutilsVersion>1.9.1</project.commons-beanutilsVersion>
@@ -345,6 +347,38 @@
 				<version>${project.hibernateVersion}</version>
 			</dependency>
 			<!-- for hibernate end -->
+			<!-- for rule engine -->
+			<dependency>
+				<groupId>org.drools</groupId>
+				<artifactId>drools-core</artifactId>
+				<version>${project.droolsVersion}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.drools</groupId>
+				<artifactId>drools-compiler</artifactId>
+				<version>${project.droolsVersion}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.drools</groupId>
+				<artifactId>knowledge-api</artifactId>
+				<version>${project.droolsVersion}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.drools</groupId>
+				<artifactId>drools-decisiontables</artifactId>
+				<version>${project.droolsVersion}</version>
+				<type>jar</type>
+			</dependency>
+			<dependency>
+				<groupId>org.drools</groupId>
+				<artifactId>drools-jsr94</artifactId>
+				<version>${project.droolsVersion}</version>
+				<type>jar</type>
+			</dependency>
+			<!-- for rule engine end -->
 		</dependencies>
 	</dependencyManagement>
 	<dependencies>
@@ -742,6 +776,12 @@
 							<content> enabled=true projectclassloader=false </content> </file> </additionalConfig> -->
 					</configuration>
 				</plugin>
+				<plugin>
+					<groupId>org.kie</groupId>
+					<artifactId>kie-maven-plugin</artifactId>
+					<version>${project.kiePluginVersion}</version>
+					<extensions>true</extensions>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -965,9 +1005,9 @@
 				</executions>
 			</plugin>
 			<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-            </plugin>    
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+			</plugin>
 		</plugins>
 		<resources>
 			<resource>
@@ -1018,52 +1058,24 @@
 				<artifactId>maven-changes-plugin</artifactId>
 				<version>${project.changePluginVersion}</version>
 			</plugin>
-			<!-- replaced by sonar 
-			<plugin>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<configuration>
-					<consoleOutput>true</consoleOutput>
-					<configLocation>https://raw.github.com/appfuse/appfuse/master/www/checkstyle.xml</configLocation>
-					<failsOnError>false</failsOnError>
-					<maxAllowedViolations>3</maxAllowedViolations>
-				</configuration>
-				<version>${project.checkstylePluginVersion}</version>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>cobertura-maven-plugin</artifactId>
-				<configuration>
-					<instrumentation>
-						<excludes>
-							<exclude>**/model/*.class</exclude>
-						</excludes>
-					</instrumentation>
-				</configuration>
-				<version>${project.coberturaPluginVersion}</version>
-			</plugin>
-			<plugin>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>${project.javadocPluginVersion}</version>
-			</plugin>
-			<plugin>
-				<artifactId>maven-jxr-plugin</artifactId>
-				<version>${project.jxrPluginVersion}</version>
-			</plugin>
-			<plugin>
-				<artifactId>maven-pmd-plugin</artifactId>
-				<configuration>
-					<linkXRef>true</linkXRef>
-					<targetJdk>${project.JavaVersion}</targetJdk>
-				</configuration>
-				<version>${project.pmdPluginVersion}</version>
-			</plugin>
-			 -->
+			<!-- replaced by sonar <plugin> <artifactId>maven-checkstyle-plugin</artifactId> 
+				<configuration> <consoleOutput>true</consoleOutput> <configLocation>https://raw.github.com/appfuse/appfuse/master/www/checkstyle.xml</configLocation> 
+				<failsOnError>false</failsOnError> <maxAllowedViolations>3</maxAllowedViolations> 
+				</configuration> <version>${project.checkstylePluginVersion}</version> </plugin> 
+				<plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>cobertura-maven-plugin</artifactId> 
+				<configuration> <instrumentation> <excludes> <exclude>**/model/*.class</exclude> 
+				</excludes> </instrumentation> </configuration> <version>${project.coberturaPluginVersion}</version> 
+				</plugin> <plugin> <artifactId>maven-javadoc-plugin</artifactId> <version>${project.javadocPluginVersion}</version> 
+				</plugin> <plugin> <artifactId>maven-jxr-plugin</artifactId> <version>${project.jxrPluginVersion}</version> 
+				</plugin> <plugin> <artifactId>maven-pmd-plugin</artifactId> <configuration> 
+				<linkXRef>true</linkXRef> <targetJdk>${project.JavaVersion}</targetJdk> </configuration> 
+				<version>${project.pmdPluginVersion}</version> </plugin> -->
 			<plugin>
 				<artifactId>maven-surefire-report-plugin</artifactId>
 				<version>${project.surefireReportPluginVersion}</version>
-                <configuration>
-                    <showSuccess>false</showSuccess>
-                </configuration>
+				<configuration>
+					<showSuccess>false</showSuccess>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
