@@ -8,86 +8,90 @@
 	<packaging>war</packaging>
 	<version>0.1-SNAPSHOT</version>
 	<name>Cloud Lu SSH/SSO Application</name>
-	<url>http://www.mycompany.com</url>
+	<url>https://github.com/elulian/CustomerSecurityManagementSystem</url>
 
 	<prerequisites>
 		<maven>3.0.5</maven>
 	</prerequisites>
 
+	<developers>
+		<developer>
+			<email>luliang1984@gmail.com</email>
+			<name>Cloud Lu</name>
+			<url>https://github.com/cloudlu</url>
+			<id>cloudlu</id>
+		</developer>
+	</developers>
 
-	<!-- <repositories> <repository> <id>com.springsource.repository.bundles.release</id> 
-		<name>EBR Spring Release Repository</name> <url>http:// repository.springsource.com/maven/bundles/release</url> 
-		</repository> <repository> <id>com.springsource.repository.bundles.external</id> 
-		<name>EBR External Release Repository</name> <url>http:// repository.springsource.com/maven/bundles/external</url> 
-		</repository> </repositories> <repository> <id>springsource-repo</id> <name>SpringSource 
-		Repository</name> <url>http://repo.springsource.org/release</url> </repository> -->
-		
+	<!-- use local maven repo here if exists, can also set in setting.xml <repositories> 
+		</repositories> -->
+
+	<scm>
+		<connection>scm:git:https://github.com/elulian/CustomerSecurityManagementSystem.git</connection>
+		<developerConnection>scm:git:https://github.com/elulian/CustomerSecurityManagementSystem.git</developerConnection>
+		<url>https://github.com/elulian/CustomerSecurityManagementSystem</url>
+	</scm>
+
 	<properties>
 		<!-- Application settings -->
-		<copyright.year>2014</copyright.year>
-		<dao.framework>hibernate</dao.framework>
-		<web.framework>struts</web.framework>
-		<amp.genericCore>true</amp.genericCore>
-		<amp.fullSource>false</amp.fullSource>
-		<db.name>CustomerSecurityManagementSystem</db.name>
-		<web.deployname>/CustomerSecurityManagementSystem</web.deployname>
-
+		<project.copyright.year>2014</project.copyright.year>
+		<project.dao.framework>openjpa</project.dao.framework>
+		<project.web.framework>struts</project.web.framework>
+		<project.db.name>CustomerSecurityManagementSystem</project.db.name>
+		<project.web.deployname>/CustomerSecurityManagementSystem</project.web.deployname>
 		<!-- java common properties -->
-		<project.complieSourceVersion>1.6</project.complieSourceVersion>
+		<project.JavaVersion>1.6</project.JavaVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		
-		 <!-- jse common properties -->
-	    <!-- dependency jar -->
-	    <project.junitVersion>4.11</project.junitVersion>
-	    <project.jmockVersion>2.6.0-RC2</project.jmockVersion>
-	    <project.powermock-api-mockitoVersion>1.5.1</project.powermock-api-mockitoVersion>
-	    <project.powermoc-api-supportkVersion>1.5.2</project.powermoc-api-supportkVersion>
-	    <project.powermock-module-junit4Version>1.5.1</project.powermock-module-junit4Version>
-	    <project.mockito-allVersion>1.9.5</project.mockito-allVersion>
-	    <project.mysqlConnectorVersion>5.1.30</project.mysqlConnectorVersion>
-	    <project.groovy-allVersion>2.3.0</project.groovy-allVersion>
-	    	    
-	    <!-- dependency plugin -->    
-	    <project.dependencyPluginVersion>2.8</project.dependencyPluginVersion>
-	    <project.sitePluginVersion>3.3</project.sitePluginVersion>
-	    <project.sitePluginSkip>true</project.sitePluginSkip>
-	    <!-- for can not open zip file in dependency report generation -->
-	    <project.projectInfoReportsPluginVersion>2.7</project.projectInfoReportsPluginVersion>
-	    <project.resourcesPluginVersion>2.6</project.resourcesPluginVersion>
-	    <project.changePluginVersion>2.10</project.changePluginVersion>
-	    <project.cleanPluginVersion>2.5</project.cleanPluginVersion>
-	    <project.releasePluginVersion>2.4.2</project.releasePluginVersion>
-	    <project.compilerPluginVersion>3.1</project.compilerPluginVersion>
-	    <project.javadocPluginVersion>2.9.1</project.javadocPluginVersion>
-	    <project.versionsPluginVersion>2.1</project.versionsPluginVersion>
-	    <project.checkstylePluginVersion>2.12.1</project.checkstylePluginVersion>
-	    <project.jxrPluginVersion>2.4</project.jxrPluginVersion>
-	    <project.pmdPluginVersion>3.1</project.pmdPluginVersion>
-	    <project.surefireReportPluginVersion>2.17</project.surefireReportPluginVersion>
-	    <project.findbugsPluginVersion>2.5.2</project.findbugsPluginVersion>
-	    <project.sonarPluginVersion>0.1</project.sonarPluginVersion>
-	    <project.cargoPluginVersion>1.4.8</project.cargoPluginVersion>
-	    <project.jettyPluginVersion>8.1.15.v20140411</project.jettyPluginVersion>
-	    <project.warPluginVersion>2.4</project.warPluginVersion>
-	    <!-- change cobertura plugin version back to 2.5.2 to avoid loadCoverageData Error and absent class attribute warning -->
-	    <project.coberturaPluginVersion>2.5.2</project.coberturaPluginVersion>
-	
-		<!-- jee properties -->
+		<!-- jse common properties -->
+		<!-- dependency jar -->
+		<project.junitVersion>4.11</project.junitVersion>
+		<project.jmockVersion>2.6.0-RC2</project.jmockVersion>
+		<project.powermock-api-mockitoVersion>1.5.1</project.powermock-api-mockitoVersion>
+		<project.powermoc-api-supportkVersion>1.5.2</project.powermoc-api-supportkVersion>
+		<project.powermock-module-junit4Version>1.5.1</project.powermock-module-junit4Version>
+		<project.mockito-allVersion>1.9.5</project.mockito-allVersion>
+		<!-- dependency plugin -->
+		<project.dependencyPluginVersion>2.8</project.dependencyPluginVersion>
+		<project.sitePluginVersion>3.3</project.sitePluginVersion>
+		<project.sitePluginSkip>true</project.sitePluginSkip>
+		<!-- for can not open zip file in dependency report generation -->
+		<project.projectInfoReportsPluginVersion>2.7</project.projectInfoReportsPluginVersion>
+		<project.resourcesPluginVersion>2.6</project.resourcesPluginVersion>
+		<project.changePluginVersion>2.10</project.changePluginVersion>
+		<project.cleanPluginVersion>2.5</project.cleanPluginVersion>
+		<project.releasePluginVersion>2.4.2</project.releasePluginVersion>
+		<project.compilerPluginVersion>3.1</project.compilerPluginVersion>
+		<project.javadocPluginVersion>2.9.1</project.javadocPluginVersion>
+		<project.versionsPluginVersion>2.1</project.versionsPluginVersion>
+		<project.checkstylePluginVersion>2.12.1</project.checkstylePluginVersion>
+		<project.jxrPluginVersion>2.4</project.jxrPluginVersion>
+		<project.pmdPluginVersion>3.1</project.pmdPluginVersion>
+		<project.surefireReportPluginVersion>2.17</project.surefireReportPluginVersion>
+		<project.findbugsPluginVersion>2.5.2</project.findbugsPluginVersion>
+		<project.sonarPluginVersion>0.1</project.sonarPluginVersion>
+		<project.cargoPluginVersion>1.4.8</project.cargoPluginVersion>
+		<project.jettyPluginVersion>8.1.15.v20140411</project.jettyPluginVersion>
+		<project.warPluginVersion>2.4</project.warPluginVersion>
+		<project.eclipsePluginVersion>2.9</project.eclipsePluginVersion>
+		<!-- change cobertura plugin version back to 2.5.2 to avoid loadCoverageData 
+			Error and absent class attribute warning -->
+		<project.coberturaPluginVersion>2.5.2</project.coberturaPluginVersion>
+		<!-- jee common properties -->
+		<project.wtpVersion>2.0</project.wtpVersion>
+		<project.servlet-apiVersion>3.0-alpha-1</project.servlet-apiVersion>
+		<project.jsp-apiVersion>2.2.1-b03</project.jsp-apiVersion>
+		<!-- Project dependency versions -->
+		<project.openjpaPluginVersion>1.2</project.openjpaPluginVersion>
 		<project.cglib-nodepVersion>3.1</project.cglib-nodepVersion>
 		<project.itextVersion>4.2.1</project.itextVersion>
 		<project.commons-beanutilsVersion>1.9.1</project.commons-beanutilsVersion>
 		<project.commons-configurationVersion>1.10</project.commons-configurationVersion>
-		
-		<project.servlet-apiVersion>3.0-alpha-1</project.servlet-apiVersion>
-		<project.jsp-apiVersion>2.2.1-b03</project.jsp-apiVersion>
-		
+		<project.mysqlConnectorVersion>5.1.30</project.mysqlConnectorVersion>
+		<project.groovy-allVersion>2.3.0</project.groovy-allVersion>
 		<project.jasperreportsVersion>5.5.2</project.jasperreportsVersion>
 		<project.jxlVersion>2.6.12</project.jxlVersion>
 		<project.urlrewritefilterVersion>4.0.4</project.urlrewritefilterVersion>
-		
-				
-		<!-- Framework dependency versions -->
 		<!-- <displaytag.version>1.2</displaytag.version> -->
 		<project.springVersion>4.0.4.RELEASE</project.springVersion>
 		<project.springSecurityVersion>3.2.3.RELEASE</project.springSecurityVersion>
@@ -96,35 +100,30 @@
 		<project.aspectjVersion>1.8.0</project.aspectjVersion>
 		<project.openjpaVersion>2.3.0</project.openjpaVersion>
 		<project.poiVersion>3.10-FINAL</project.poiVersion>
-		
-		<wiser.version>1.2</wiser.version>
-
+		<project.wiserVersion>1.2</project.wiserVersion>
 		<!-- WebTest default target -->
-		<webtest.target>run-all-tests</webtest.target>
+		<project.webtest.target>run-all-tests</project.webtest.target>
 
-		<cargo.container>tomcat7x</cargo.container>
-		<cargo.container.home>${env.CATALINA_HOME}</cargo.container.home>
-		<cargo.container.url>http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.33/bin/apache-tomcat-7.0.33.zip</cargo.container.url>
-		<cargo.host>localhost</cargo.host>
-		<cargo.port>8081</cargo.port>
-		<cargo.wait>false</cargo.wait>
-
-		<!-- Jetty Cargo settings: <cargo.container>jetty6x</cargo.container> <cargo.container.url>http://dist.codehaus.org/jetty/jetty-6.1.21/jetty-6.1.21.zip</cargo.container.url> -->
-
+		<project.cargo.container>tomcat7x</project.cargo.container>
+		<project.cargo.container.home>${env.CATALINA_HOME}</project.cargo.container.home>
+		<project.cargo.container.url>http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.33/bin/apache-tomcat-7.0.33.zip</project.cargo.container.url>
+		<project.cargo.host>localhost</project.cargo.host>
+		<project.cargo.port>8081</project.cargo.port>
+		<project.cargo.wait>false</project.cargo.wait>
+		<!-- Jetty Cargo settings: <project.cargo.container>jetty6x</project.cargo.container> 
+			<project.cargo.container.url>http://dist.codehaus.org/jetty/jetty-6.1.21/jetty-6.1.21.zip</project.cargo.container.url> -->
 		<!-- Database settings -->
 		<dbunit.dataTypeFactoryName>org.dbunit.ext.mysql.MySqlDataTypeFactory</dbunit.dataTypeFactoryName>
 		<dbunit.operation.type>CLEAN_INSERT</dbunit.operation.type>
 		<hibernate.dialect>org.hibernate.dialect.MySQL5InnoDBDialect</hibernate.dialect>
-		<jdbc.groupId>mysql</jdbc.groupId>
-		<jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
-		<jdbc.version>${project.mysqlConnectorVersion}</jdbc.version>
-		<jdbc.driverClassName>com.mysql.jdbc.Driver</jdbc.driverClassName>
-		<jdbc.url>jdbc:mysql://localhost/${db.name}?createDatabaseIfNotExist=true&amp;amp;useUnicode=true&amp;amp;characterEncoding=utf-8&amp;amp;autoReconnect=true</jdbc.url>
-		<jdbc.username>root</jdbc.username>
-		<jdbc.password>root</jdbc.password>
-		
-		
-	</properties>	
+		<project.jdbc.groupId>mysql</project.jdbc.groupId>
+		<project.jdbc.artifactId>mysql-connector-java</project.jdbc.artifactId>
+		<project.jdbcVersion>${project.mysqlConnectorVersion}</project.jdbcVersion>
+		<project.jdbc.driverClassName>com.mysql.jdbc.Driver</project.jdbc.driverClassName>
+		<project.jdbc.url>jdbc:mysql://localhost/${project.db.name}?createDatabaseIfNotExist=true&amp;amp;useUnicode=true&amp;amp;characterEncoding=utf-8&amp;amp;autoReconnect=true</project.jdbc.url>
+		<project.jdbc.username>root</project.jdbc.username>
+		<project.jdbc.password>root</project.jdbc.password>
+	</properties>
 	<profiles>
 		<profile>
 			<id>integration-test</id>
@@ -140,20 +139,20 @@
 						<artifactId>cargo-maven2-plugin</artifactId>
 						<version>${project.cargoPluginVersion}</version>
 						<configuration>
-							<wait>${cargo.wait}</wait>
+							<wait>${project.cargo.wait}</wait>
 							<container>
-								<containerId>${cargo.container}</containerId>
-								<home>${cargo.container.home}</home>
+								<containerId>${project.cargo.container}</containerId>
+								<home>${project.cargo.container.home}</home>
 								<zipUrlInstaller>
-									<url>${cargo.container.url}</url>
+									<url>${project.cargo.container.url}</url>
 									<extractDir>${installDir}</extractDir>
 								</zipUrlInstaller>
 							</container>
 							<configuration>
-								<home>${project.build.directory}/${cargo.container}/container</home>
+								<home>${project.build.directory}/${project.cargo.container}/container</home>
 								<properties>
-									<cargo.hostname>${cargo.host}</cargo.hostname>
-									<cargo.servlet.port>${cargo.port}</cargo.servlet.port>
+									<project.cargo.hostname>${project.cargo.host}</project.cargo.hostname>
+									<cargo.servlet.port>${project.cargo.port}</cargo.servlet.port>
 									<!-- To prevent conflicts with already running instances -->
 									<cargo.tomcat.ajp.port>8123</cargo.tomcat.ajp.port>
 								</properties>
@@ -204,11 +203,11 @@
 							</execution>
 						</executions>
 						<configuration>
-							<host>${cargo.host}</host>
-							<port>${cargo.port}</port>
+							<host>${project.cargo.host}</host>
+							<port>${project.cargo.port}</port>
 							<sourcedirectory>src/test/resources</sourcedirectory>
 							<sourcefile>web-tests.xml</sourcefile>
-							<target>${webtest.target}</target>
+							<target>${project.webtest.target}</target>
 							<basepath>${project.build.finalName}</basepath>
 							<resultpath>target/webtest/webtest-results</resultpath>
 							<haltonfailure>false</haltonfailure>
@@ -245,13 +244,13 @@
 			<id>derby</id>
 			<properties>
 				<hibernate.dialect>org.hibernate.dialect.DerbyDialect</hibernate.dialect>
-				<jdbc.groupId>org.apache.derby</jdbc.groupId>
-				<jdbc.artifactId>derbyclient</jdbc.artifactId>
-				<jdbc.version>10.2.2.0</jdbc.version>
-				<jdbc.driverClassName>org.apache.derby.jdbc.ClientDriver</jdbc.driverClassName>
-				<jdbc.url>jdbc:derby://localhost/${db.name};create=true</jdbc.url>
-				<jdbc.username>any</jdbc.username>
-				<jdbc.password>value</jdbc.password>
+				<project.jdbc.groupId>org.apache.derby</project.jdbc.groupId>
+				<project.jdbc.artifactId>derbyclient</project.jdbc.artifactId>
+				<project.jdbcVersion>10.2.2.0</project.jdbcVersion>
+				<project.jdbc.driverClassName>org.apache.derby.jdbc.ClientDriver</project.jdbc.driverClassName>
+				<project.jdbc.url>jdbc:derby://localhost/${project.db.name};create=true</project.jdbc.url>
+				<project.jdbc.username>any</project.jdbc.username>
+				<project.jdbc.password>value</project.jdbc.password>
 			</properties>
 		</profile>
 		<profile>
@@ -259,12 +258,12 @@
 			<properties>
 				<dbunit.dataTypeFactoryName>org.dbunit.ext.h2.H2DataTypeFactory</dbunit.dataTypeFactoryName>
 				<hibernate.dialect>org.hibernate.dialect.H2Dialect</hibernate.dialect>
-				<jdbc.groupId>com.h2database</jdbc.groupId>
-				<jdbc.artifactId>h2</jdbc.artifactId>
-				<jdbc.version>1.3.170</jdbc.version>
-				<jdbc.driverClassName>org.h2.Driver</jdbc.driverClassName>
-				<jdbc.url>jdbc:h2:/tmp/${db.name};MVCC=TRUE</jdbc.url>
-				<jdbc.username>sa</jdbc.username>
+				<project.jdbc.groupId>com.h2database</project.jdbc.groupId>
+				<project.jdbc.artifactId>h2</project.jdbc.artifactId>
+				<project.jdbcVersion>1.3.170</project.jdbcVersion>
+				<project.jdbc.driverClassName>org.h2.Driver</project.jdbc.driverClassName>
+				<project.jdbc.url>jdbc:h2:/tmp/${project.db.name};MVCC=TRUE</project.jdbc.url>
+				<project.jdbc.username>sa</project.jdbc.username>
 			</properties>
 		</profile>
 		<profile>
@@ -272,12 +271,12 @@
 			<properties>
 				<dbunit.dataTypeFactoryName>org.dbunit.ext.hsqldb.HsqldbDataTypeFactory</dbunit.dataTypeFactoryName>
 				<hibernate.dialect>org.hibernate.dialect.HSQLDialect</hibernate.dialect>
-				<jdbc.groupId>org.hsqldb</jdbc.groupId>
-				<jdbc.artifactId>hsqldb</jdbc.artifactId>
-				<jdbc.version>2.2.9</jdbc.version>
-				<jdbc.driverClassName>org.hsqldb.jdbcDriver</jdbc.driverClassName>
-				<jdbc.url>jdbc:hsqldb:/tmp/${db.name};shutdown=true</jdbc.url>
-				<jdbc.username>sa</jdbc.username>
+				<project.jdbc.groupId>org.hsqldb</project.jdbc.groupId>
+				<project.jdbc.artifactId>hsqldb</project.jdbc.artifactId>
+				<project.jdbcVersion>2.2.9</project.jdbcVersion>
+				<project.jdbc.driverClassName>org.hsqldb.jdbcDriver</project.jdbc.driverClassName>
+				<project.jdbc.url>jdbc:hsqldb:/tmp/${project.db.name};shutdown=true</project.jdbc.url>
+				<project.jdbc.username>sa</project.jdbc.username>
 			</properties>
 		</profile>
 		<profile>
@@ -286,26 +285,26 @@
 				<dbunit.dataTypeFactoryName>org.dbunit.ext.oracle.OracleDataTypeFactory</dbunit.dataTypeFactoryName>
 				<dbunit.schema>SYSTEM</dbunit.schema> <!-- Make sure to capitalize the schema name -->
 				<hibernate.dialect>org.hibernate.dialect.Oracle9Dialect</hibernate.dialect>
-				<jdbc.groupId>com.oracle</jdbc.groupId>
-				<jdbc.artifactId>ojdbc14</jdbc.artifactId>
-				<jdbc.version>10.2.0.2.0</jdbc.version>
-				<jdbc.driverClassName>oracle.jdbc.OracleDriver</jdbc.driverClassName>
-				<jdbc.url>jdbc:oracle:thin:@localhost:1521:XE</jdbc.url>
-				<jdbc.username>system</jdbc.username>
-				<jdbc.password>system</jdbc.password>
+				<project.jdbc.groupId>com.oracle</project.jdbc.groupId>
+				<project.jdbc.artifactId>ojdbc14</project.jdbc.artifactId>
+				<project.jdbcVersion>10.2.0.2.0</project.jdbcVersion>
+				<project.jdbc.driverClassName>oracle.jdbc.OracleDriver</project.jdbc.driverClassName>
+				<project.jdbc.url>jdbc:oracle:thin:@localhost:1521:XE</project.jdbc.url>
+				<project.jdbc.username>system</project.jdbc.username>
+				<project.jdbc.password>system</project.jdbc.password>
 			</properties>
 		</profile>
 		<profile>
 			<id>postgresql</id>
 			<properties>
 				<hibernate.dialect>org.hibernate.dialect.PostgreSQLDialect</hibernate.dialect>
-				<jdbc.groupId>postgresql</jdbc.groupId>
-				<jdbc.artifactId>postgresql</jdbc.artifactId>
-				<jdbc.version>8.1-407.jdbc3</jdbc.version>
-				<jdbc.driverClassName>org.postgresql.Driver</jdbc.driverClassName>
-				<jdbc.url>jdbc:postgresql://localhost/${db.name}</jdbc.url>
-				<jdbc.username>postgres</jdbc.username>
-				<jdbc.password>postgres</jdbc.password>
+				<project.jdbc.groupId>postgresql</project.jdbc.groupId>
+				<project.jdbc.artifactId>postgresql</project.jdbc.artifactId>
+				<project.jdbcVersion>8.1-407.jdbc3</project.jdbcVersion>
+				<project.jdbc.driverClassName>org.postgresql.Driver</project.jdbc.driverClassName>
+				<project.jdbc.url>jdbc:postgresql://localhost/${project.db.name}</project.jdbc.url>
+				<project.jdbc.username>postgres</project.jdbc.username>
+				<project.jdbc.password>postgres</project.jdbc.password>
 			</properties>
 		</profile>
 		<profile>
@@ -316,13 +315,13 @@
 				<dbunit.dataTypeFactoryName>org.dbunit.ext.mssql.MsSqlDataTypeFactory</dbunit.dataTypeFactoryName>
 				<dbunit.operation.type>MSSQL_CLEAN_INSERT</dbunit.operation.type>
 				<hibernate.dialect>org.hibernate.dialect.SQLServerDialect</hibernate.dialect>
-				<jdbc.groupId>net.sourceforge.jtds</jdbc.groupId>
-				<jdbc.artifactId>jtds</jdbc.artifactId>
-				<jdbc.version>1.2</jdbc.version>
-				<jdbc.driverClassName>net.sourceforge.jtds.jdbc.Driver</jdbc.driverClassName>
-				<jdbc.url>jdbc:jtds:sqlserver://localhost:3683/${db.name}</jdbc.url>
-				<jdbc.username>sa</jdbc.username>
-				<jdbc.password>appfuse</jdbc.password>
+				<project.jdbc.groupId>net.sourceforge.jtds</project.jdbc.groupId>
+				<project.jdbc.artifactId>jtds</project.jdbc.artifactId>
+				<project.jdbcVersion>1.2</project.jdbcVersion>
+				<project.jdbc.driverClassName>net.sourceforge.jtds.jdbc.Driver</project.jdbc.driverClassName>
+				<project.jdbc.url>jdbc:jtds:sqlserver://localhost:3683/${project.db.name}</project.jdbc.url>
+				<project.jdbc.username>sa</project.jdbc.username>
+				<project.jdbc.password>appfuse</project.jdbc.password>
 			</properties>
 		</profile>
 
@@ -330,36 +329,30 @@
 		<profile>
 			<id>jboss</id>
 			<properties>
-				<cargo.container>jboss4x</cargo.container>
-				<cargo.container.home>${env.JBOSS_HOME}</cargo.container.home>
-				<cargo.container.url>http://easynews.dl.sourceforge.net/sourceforge/jboss/jboss-4.0.5.GA.zip</cargo.container.url>
+				<project.cargo.container>jboss4x</project.cargo.container>
+				<project.cargo.container.home>${env.JBOSS_HOME}</project.cargo.container.home>
+				<project.cargo.container.url>http://easynews.dl.sourceforge.net/sourceforge/jboss/jboss-4.0.5.GA.zip</project.cargo.container.url>
 			</properties>
 		</profile>
 	</profiles>
 
-<!-- 
 	<dependencyManagement>
 		<dependencies>
+			<!-- for hibernate -->
 			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-core</artifactId>
+				<version>${project.hibernateVersion}</version>
 			</dependency>
+			<!-- for hibernate end -->
 		</dependencies>
 	</dependencyManagement>
-	 -->
 	<dependencies>
 		<dependency>
 			<groupId>javax.annotation</groupId>
 			<artifactId>jsr250-api</artifactId>
 			<version>1.0</version>
 		</dependency>
-
-		<!-- for hibernate -->
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>${project.hibernateVersion}</version>
-		</dependency>
-		<!-- for hibernate end -->
-
 		<!-- for openjpa -->
 		<dependency>
 			<groupId>org.apache.openjpa</groupId>
@@ -373,7 +366,6 @@
 			</exclusions>
 		</dependency>
 		<!-- for openjpa end -->
-
 		<!-- for database source -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
@@ -381,19 +373,16 @@
 			<version>1.4</version>
 		</dependency>
 		<!-- for database source end -->
-
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib-nodep</artifactId>
 			<version>${project.cglib-nodepVersion}</version>
 		</dependency>
-
 		<dependency>
-			<groupId>${jdbc.groupId}</groupId>
-			<artifactId>${jdbc.artifactId}</artifactId>
-			<version>${jdbc.version}</version>
+			<groupId>${project.jdbc.groupId}</groupId>
+			<artifactId>${project.jdbc.artifactId}</artifactId>
+			<version>${project.jdbcVersion}</version>
 		</dependency>
-
 		<!-- for spring -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -430,7 +419,6 @@
 			<artifactId>spring-expression</artifactId>
 			<version>${project.springVersion}</version>
 		</dependency>
-
 		<!-- Bean Factory and JavaBeans utilities (depends on spring-core) Define 
 			this if you use Spring Bean APIs (org.springframework.beans) -->
 		<dependency>
@@ -438,7 +426,6 @@
 			<artifactId>spring-beans</artifactId>
 			<version>${project.springVersion}</version>
 		</dependency>
-
 		<!-- Aspect Oriented Programming (AOP) Framework (depends on spring-core, 
 			spring-beans) Define this if you use Spring AOP APIs (org.springframework.aop) -->
 		<dependency>
@@ -446,7 +433,6 @@
 			<artifactId>spring-aop</artifactId>
 			<version>${project.springVersion}</version>
 		</dependency>
-
 		<!-- Application Context (depends on spring-core, spring-expression, spring-aop, 
 			spring-beans) This is the central artifact for Spring's Dependency Injection 
 			Container and is generally always defined -->
@@ -455,7 +441,6 @@
 			<artifactId>spring-context</artifactId>
 			<version>${project.springVersion}</version>
 		</dependency>
-
 		<!-- Various Application Context utilities, including EhCache, JavaMail, 
 			Quartz, and Freemarker integration Define this if you need any of these integrations -->
 		<dependency>
@@ -463,7 +448,6 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>${project.springVersion}</version>
 		</dependency>
-
 		<!-- Transaction Management Abstraction (depends on spring-core, spring-beans, 
 			spring-aop, spring-context) Define this if you use Spring Transactions or 
 			DAO Exception Hierarchy (org.springframework.transaction, org.springframework.dao) -->
@@ -472,7 +456,6 @@
 			<artifactId>spring-tx</artifactId>
 			<version>${project.springVersion}</version>
 		</dependency>
-
 		<!-- JDBC Data Access Library (depends on spring-core, spring-beans, spring-context, 
 			spring-tx) Define this if you use Spring's JdbcTemplate API (org.springframework.jdbc) 
 			<dependency> <groupId>org.springframework</groupId> <artifactId>spring-jdbc</artifactId> 
@@ -485,7 +468,6 @@
 			<artifactId>spring-orm</artifactId>
 			<version>${project.springVersion}</version>
 		</dependency>
-
 		<!-- Object-to-XML Mapping (OXM) abstraction and integration with JAXB, 
 			JiBX, Castor, XStream, and XML Beans. (depends on spring-core, spring-beans, 
 			spring-context) Define this if you need OXM (org.springframework.oxm) <dependency> 
@@ -500,7 +482,6 @@
 			<artifactId>spring-web</artifactId>
 			<version>${project.springVersion}</version>
 		</dependency>
-
 		<!-- Spring MVC for Servlet Environments (depends on spring-core, spring-beans, 
 			spring-context, spring-web) Define this if you use Spring MVC with a Servlet 
 			Container such as Apache Tomcat (org.springframework.web.servlet) <dependency> 
@@ -521,7 +502,6 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- for spring end -->
-
 		<!-- for AspectJ -->
 		<dependency>
 			<groupId>org.aspectj</groupId>
@@ -539,7 +519,6 @@
 			<version>${project.aspectjVersion}</version>
 		</dependency>
 		<!-- for AspectJ end -->
-
 		<!-- for struts -->
 		<dependency>
 			<groupId>org.apache.struts</groupId>
@@ -599,15 +578,13 @@
 			<groupId>commons-io</groupId> <artifactId>commons-io</artifactId> <version>${commons.io.version}</version> 
 			</dependency> -->
 		<!-- for struts end -->
-		
 		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 			<scope>runtime</scope>
 		</dependency>
-
-<!-- <dependency> <groupId>displaytag</groupId> <artifactId>displaytag</artifactId> 
+		<!-- <dependency> <groupId>displaytag</groupId> <artifactId>displaytag</artifactId> 
 			<version>${displaytag.version}</version> <exclusions> <exclusion> <groupId>org.slf4j</groupId> 
 			<artifactId>jcl104-over-slf4j</artifactId> </exclusion> </exclusions> </dependency> -->
 		<dependency>
@@ -627,7 +604,6 @@
 			<artifactId>urlrewritefilter</artifactId>
 			<version>${project.urlrewritefilterVersion}</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.jmock</groupId>
 			<artifactId>jmock</artifactId>
@@ -640,15 +616,10 @@
 			<version>${project.jmockVersion}</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- Upgrade junit-dep used by jmock 
-		The artifact junit:junit-dep:jar:4.11 has been relocated to junit:junit:jar:4.11
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit-dep</artifactId>
-			<version>${project.junitVersion}</version>
-			<scope>test</scope>
-		</dependency>
-		-->
+		<!-- Upgrade junit-dep used by jmock The artifact junit:junit-dep:jar:4.11 
+			has been relocated to junit:junit:jar:4.11 <dependency> <groupId>junit</groupId> 
+			<artifactId>junit-dep</artifactId> <version>${project.junitVersion}</version> 
+			<scope>test</scope> </dependency> -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -656,28 +627,22 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- <dependency> <groupId>org.subethamail</groupId> <artifactId>subethasmtp-wiser</artifactId> 
-			<version>${wiser.version}</version> <scope>test</scope> </dependency> -->
-
+			<version>${project.wiserVersion}</version> <scope>test</scope> </dependency> -->
 		<!-- for sitemesh -->
 
-
-
 		<!-- for sitemesh end -->
-
 		<!-- for jfreechar -->
 		<dependency>
 			<groupId>jfree</groupId>
 			<artifactId>jfreechart</artifactId>
 			<version>1.0.13</version>
 		</dependency>
-
 		<dependency>
 			<groupId>jfree</groupId>
 			<artifactId>jcommon</artifactId>
 			<version>1.0.16</version>
 		</dependency>
 		<!-- for jfreechar end -->
-
 		<!-- for apache common configuration -->
 		<dependency>
 			<groupId>commons-configuration</groupId>
@@ -744,20 +709,41 @@
 			<version>${project.strutsVersion}</version>
 		</dependency>
 		<!-- for jasperreport end -->
-	</dependencies>		
-		
-		
+	</dependencies>
+
+
 	<build>
 		<defaultGoal>install</defaultGoal>
 		<pluginManagement>
-		  <plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>versions-maven-plugin</artifactId>
-				<version>${project.versionsPluginVersion}</version>
-			</plugin>
-		  </plugins>
-    	</pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>versions-maven-plugin</artifactId>
+					<version>${project.versionsPluginVersion}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-eclipse-plugin</artifactId>
+					<version>${project.eclipsePluginVersion}</version>
+					<configuration>
+						<!-- aligned with Using maven-eclipse-plugin in multi-module projects 
+							with WTP -->
+						<!-- http://maven.apache.org/plugins/maven-eclipse-plugin/examples/multi-module-projects.html -->
+						<projectNameTemplate>[artifactId]-[version]</projectNameTemplate>
+						<wtpmanifest>true</wtpmanifest>
+						<downloadSources>false</downloadSources>
+						<downloadJavadocs>false</downloadJavadocs>
+						<wtpapplicationxml>true</wtpapplicationxml>
+						<wtpversion>${project.wtpVersion}</wtpversion>
+						<!-- <additionalBuildcommands> <buildCommand> <name> de.mvmsoft.checkclipse.CheckclipseBuilder 
+							</name> </buildCommand> </additionalBuildcommands> <additionalProjectnatures> 
+							<projectnature> de.mvmsoft.checkclipse.CheckclipseNature </projectnature> 
+							</additionalProjectnatures> <additionalConfig> <file> <name>.checkclipse</name> 
+							<content> enabled=true projectclassloader=false </content> </file> </additionalConfig> -->
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<plugins>
 			<!-- for openjpa, see http://mojo.codehaus.org/openjpa-maven-plugin/index.html 
 				for more details -->
@@ -770,7 +756,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>openjpa-maven-plugin</artifactId>
-				<version>1.2</version>
+				<version>${project.openjpaPluginVersion}</version>
 				<configuration>
 					<includes>com/elulian/CustomerSecurityManagementSystem/vo/**/*.class</includes>
 					<excludes>
@@ -800,155 +786,78 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>${project.compilerPluginVersion}</version>
 				<configuration>
-					<source>${project.complieSourceVersion}</source>
-					<target>${project.complieSourceVersion}</target>
+					<source>${project.JavaVersion}</source>
+					<target>${project.JavaVersion}</target>
 				</configuration>
 			</plugin>
-			<!-- generate sql schema file -->
-			<!-- <plugin>
+			<!-- generate sql schema file with hibernate <plugin> <groupId>org.codehaus.mojo</groupId> 
+				<artifactId>hibernate3-maven-plugin</artifactId> <version>2.2</version> <configuration> 
+				<components> <component> <name>hbm2ddl</name> <implementation>annotationconfiguration</implementation> 
+				Use 'jpaconfiguration' if you're using JPA. <implementation>jpaconfiguration</implementation> 
+				</component> </components> <componentProperties> <drop>true</drop> <jdk5>true</jdk5> 
+				<propertyfile>${project.build.outputDirectory}/jdbc.properties</propertyfile> 
+				<skip>${skipTests}</skip> </componentProperties> </configuration> <executions> 
+				<execution> <phase>process-test-resources</phase> <goals> <goal>hbm2ddl</goal> 
+				</goals> </execution> </executions> <dependencies> <dependency> <groupId>${project.jdbc.groupId}</groupId> 
+				<artifactId>${project.jdbc.artifactId}</artifactId> <version>${project.jdbcVersion}</version> 
+				</dependency> </dependencies> </plugin> -->
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>hibernate3-maven-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<components>
-						<component>
-							<name>hbm2ddl</name>
-							<implementation>annotationconfiguration</implementation>
-							Use 'jpaconfiguration' if you're using JPA.
-							<implementation>jpaconfiguration</implementation>
-						</component>
-					</components>
-					<componentProperties>
-						<drop>true</drop>
-						<jdk5>true</jdk5>
-						<propertyfile>${project.build.outputDirectory}/jdbc.properties</propertyfile>
-						<skip>${skipTests}</skip>
-					</componentProperties>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>process-test-resources</phase>
-						<goals>
-							<goal>hbm2ddl</goal>
-						</goals>
-					</execution>
-				</executions>
+				<artifactId>sql-maven-plugin</artifactId>
+				<version>1.5</version>
 				<dependencies>
 					<dependency>
-						<groupId>${jdbc.groupId}</groupId>
-						<artifactId>${jdbc.artifactId}</artifactId>
-						<version>${jdbc.version}</version>
+						<groupId>${project.jdbc.groupId}</groupId>
+						<artifactId>${project.jdbc.artifactId}</artifactId>
+						<version>${project.jdbcVersion}</version>
 					</dependency>
 				</dependencies>
-			</plugin> -->
-			
-			<plugin>
-			 <groupId>org.codehaus.mojo</groupId>
-        <artifactId>sql-maven-plugin</artifactId>
-        <version>1.5</version>
+				<!-- common configuration shared by all executions -->
+				<configuration>
+					<driver>${project.jdbc.driverClassName}</driver>
+					<username>${project.jdbc.username}</username>
+					<password>${project.jdbc.password}</password>
+					<url>${project.jdbc.url}</url>
+					<!-- You can comment out username/password configurations and have maven 
+						to look them up in your settings.xml using ${settingsKey} <settingsKey>sensibleKey</settingsKey> -->
+					<!--all executions are ignored if -Dmaven.skipTest=true -->
+					<skip>${skipTests}</skip>
+				</configuration>
+				<executions>
+					<!-- <execution> <id>drop-db-before-test-if-any</id> <phase>process-test-resources</phase> 
+						<goals> <goal>execute</goal> </goals> <configuration> need another database 
+						to drop the targeted one <url>jdbc:postgressql://localhost:5432:bootstrapdb</url> 
+						<autocommit>true</autocommit> <sqlCommand>drop database yourdb</sqlCommand> 
+						ignore error when database is not avaiable <onError>continue</onError> </configuration> 
+						</execution> -->
+					<!-- <execution> <id>create-db</id> <phase>process-test-resources</phase> 
+						<goals> <goal>execute</goal> </goals> <configuration> <url>jdbc:postgressql://localhost:5432:yourdb</url> 
+						no transaction <autocommit>true</autocommit> <sqlCommand>create database 
+						yourdb</sqlCommand> </configuration> </execution> -->
+					<execution>
+						<id>create-schema</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<autocommit>true</autocommit>
+							<srcFiles>
+								<srcFile>src/main/resources/database.sql</srcFile>
+							</srcFiles>
+							<onError>continue</onError>
+						</configuration>
+					</execution>
+					<!-- <execution> <id>create-data</id> <phase>process-test-resources</phase> 
+						<goals> <goal>execute</goal> </goals> <configuration> <orderFile>ascending</orderFile> 
+						<fileset> <basedir>${basedir}</basedir> <includes> <include>src/test/sql/test-data2.sql</include> 
+						<include>src/test/sql/test-data1.sql</include> </includes> </fileset> </configuration> 
+						</execution> drop db after test <execution> <id>drop-db-after-test</id> <phase>test</phase> 
+						<goals> <goal>execute</goal> </goals> <configuration> <autocommit>true</autocommit> 
+						<sqlCommand>drop database yourdb</sqlCommand> </configuration> </execution> -->
+				</executions>
+			</plugin>
 
-        <dependencies>
-					<dependency>
-						<groupId>${jdbc.groupId}</groupId>
-						<artifactId>${jdbc.artifactId}</artifactId>
-						<version>${jdbc.version}</version>
-					</dependency>
-				</dependencies>
-
-        <!-- common configuration shared by all executions -->
-        <configuration>
-        <driver>${jdbc.driverClassName}</driver>
-					<username>${jdbc.username}</username>
-					<password>${jdbc.password}</password>
-					<url>${jdbc.url}</url>
-          <!-- You can comment out username/password configurations and
-               have maven to look them up in your settings.xml using ${settingsKey}
-          
-          <settingsKey>sensibleKey</settingsKey>
-          -->
-          <!--all executions are ignored if -Dmaven.skipTest=true-->
-          <skip>${skipTests}</skip>
-        </configuration>
-
-        <executions>
-<!--           <execution>
-            <id>drop-db-before-test-if-any</id>
-            <phase>process-test-resources</phase>
-            <goals>
-              <goal>execute</goal>
-            </goals>
-            <configuration>
-              need another database to drop the targeted one
-              <url>jdbc:postgressql://localhost:5432:bootstrapdb</url>
-              <autocommit>true</autocommit>
-              <sqlCommand>drop database yourdb</sqlCommand>
-              ignore error when database is not avaiable
-              <onError>continue</onError>
-            </configuration>
-          </execution>
- -->
-          <!-- <execution>
-            <id>create-db</id>
-            <phase>process-test-resources</phase>
-            <goals>
-              <goal>execute</goal>
-            </goals>
-            <configuration>
-              <url>jdbc:postgressql://localhost:5432:yourdb</url>
-              no transaction
-              <autocommit>true</autocommit>
-              <sqlCommand>create database yourdb</sqlCommand>
-            </configuration>
-          </execution> -->
-
-          <execution>
-            <id>create-schema</id>
-            <phase>process-test-resources</phase>
-            <goals>
-              <goal>execute</goal>
-            </goals>
-            <configuration>
-              <autocommit>true</autocommit>
-              <srcFiles>
-                <srcFile>src/main/resources/database.sql</srcFile>
-              </srcFiles>
-              <onError>continue</onError>
-            </configuration>
-          </execution>
-
-      <!--     <execution>
-            <id>create-data</id>
-            <phase>process-test-resources</phase>
-            <goals>
-              <goal>execute</goal>
-            </goals>
-            <configuration>
-              <orderFile>ascending</orderFile>
-              <fileset>
-                <basedir>${basedir}</basedir>
-                <includes>
-                  <include>src/test/sql/test-data2.sql</include>
-                  <include>src/test/sql/test-data1.sql</include>
-                </includes>
-              </fileset>
-            </configuration>
-          </execution>
-
-          drop db after test
-          <execution>
-            <id>drop-db-after-test</id>
-            <phase>test</phase>
-            <goals>
-              <goal>execute</goal>
-            </goals>
-            <configuration>
-              <autocommit>true</autocommit>
-              <sqlCommand>drop database yourdb</sqlCommand>
-            </configuration>
-          </execution> -->
-        </executions>
-      </plugin>
-			
 			<!-- database import/export -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -956,10 +865,10 @@
 				<version>1.0-beta-3</version>
 				<configuration>
 					<dataTypeFactoryName>${dbunit.dataTypeFactoryName}</dataTypeFactoryName>
-					<driver>${jdbc.driverClassName}</driver>
-					<username>${jdbc.username}</username>
-					<password>${jdbc.password}</password>
-					<url>${jdbc.url}</url>
+					<driver>${project.jdbc.driverClassName}</driver>
+					<username>${project.jdbc.username}</username>
+					<password>${project.jdbc.password}</password>
+					<url>${project.jdbc.url}</url>
 					<src>src/test/resources/sample-data.xml</src>
 					<format>xml</format>
 					<dest>src/test/resources/sample-data.xml</dest>
@@ -991,9 +900,9 @@
 				</executions>
 				<dependencies>
 					<dependency>
-						<groupId>${jdbc.groupId}</groupId>
-						<artifactId>${jdbc.artifactId}</artifactId>
-						<version>${jdbc.version}</version>
+						<groupId>${project.jdbc.groupId}</groupId>
+						<artifactId>${project.jdbc.artifactId}</artifactId>
+						<version>${project.jdbcVersion}</version>
 					</dependency>
 				</dependencies>
 			</plugin>
@@ -1003,8 +912,10 @@
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>${project.jettyPluginVersion}</version>
 				<configuration>
+					<jvmArgs>-Xmx1024m -Xms1024m -XX:PermSize=128m -XX:MaxPermSize=256m</jvmArgs>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
 					<webApp>
-						<contextPath>${web.deployname}</contextPath>
+						<contextPath>${project.web.deployname}</contextPath>
 					</webApp>
 				</configuration>
 			</plugin>
@@ -1053,6 +964,10 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+            </plugin>    
 		</plugins>
 		<resources>
 			<resource>
@@ -1095,7 +1010,7 @@
 		</testResources>
 	</build>
 
-	
+
 
 	<reporting>
 		<plugins>
@@ -1103,6 +1018,7 @@
 				<artifactId>maven-changes-plugin</artifactId>
 				<version>${project.changePluginVersion}</version>
 			</plugin>
+			<!-- replaced by sonar 
 			<plugin>
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<configuration>
@@ -1137,18 +1053,36 @@
 				<artifactId>maven-pmd-plugin</artifactId>
 				<configuration>
 					<linkXRef>true</linkXRef>
-					<targetJdk>${project.complieSourceVersion}</targetJdk>
+					<targetJdk>${project.JavaVersion}</targetJdk>
 				</configuration>
 				<version>${project.pmdPluginVersion}</version>
 			</plugin>
+			 -->
 			<plugin>
 				<artifactId>maven-surefire-report-plugin</artifactId>
-				<version>2.12.4</version>
+				<version>${project.surefireReportPluginVersion}</version>
+                <configuration>
+                    <showSuccess>false</showSuccess>
+                </configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>webtest-maven-plugin</artifactId>
 				<version>1.0.0</version>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>versions-maven-plugin</artifactId>
+				<version>${project.versionsPluginVersion}</version>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>dependency-updates-report</report>
+							<report>plugin-updates-report</report>
+							<report>property-updates-report</report>
+						</reports>
+					</reportSet>
+				</reportSets>
 			</plugin>
 		</plugins>
 	</reporting>
