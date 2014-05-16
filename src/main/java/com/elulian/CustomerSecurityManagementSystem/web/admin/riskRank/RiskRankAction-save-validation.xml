@@ -1,0 +1,38 @@
+<!DOCTYPE validators PUBLIC
+        "-//OpenSymphony Group//XWork Validator 1.0.3//EN"
+        "http://www.opensymphony.com/xwork/xwork-validator-1.0.3.dtd">
+<validators>
+    <field name="riskRank.rankType">
+        <field-validator type="requiredstring">
+            <message>${getText("value.required")}</message>
+        </field-validator>
+    </field>
+    <field name="riskRank.minValue" >
+    	<field-validator type="required">
+          <message>${getText("value.required")}</message>
+      </field-validator>
+    
+        <field-validator type="int" >
+        	<param name="min">1</param>
+        	<param name="max">999</param>
+            <message>${getText('value.range')} [${min}, ${max}]</message>
+        </field-validator>
+    </field>
+    <field name="riskRank.maxValue">
+    <field-validator type="required" short-circuit="true">
+          <message>${getText("value.required")}</message>
+      </field-validator>
+        <field-validator type="int">
+        <param name="min">1</param>
+        	<param name="max">999</param>
+            <message>${getText('value.range')} [${min}, ${max}]</message>
+        </field-validator>
+     
+  
+    </field>
+    
+    <validator type="expression">
+      <param name="expression">riskRank.minValue lt riskRank.maxValue </param>
+      <message>${getText("riskRank.value.expression")}</message>
+  </validator>
+</validators>

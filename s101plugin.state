@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<structure101-builder version="1.0" format="state" vendor="headway" generated-at="Thu Aug 29 14:11:19 CST 2013">
+  <builder-settings includeExternals="true" diagramsTimeStamp="0" actionsTimeStamp="0" settingsCheckInterval="5000" classPath="" compilationPath="">
+    <s101plugin-properties>
+      <isEnabled value="true"/>
+      <onDemand value="false"/>
+      <repository value="C:\Users\elulian\workspace\CustomerSecurityManagementSystem"/>
+      <project value="(unset)"/>
+      <snapshot value="(most recent)"/>
+      <violationsSeverity value="Warn"/>
+      <newViolationsSeverity value="Error"/>
+      <excludesEnabled value="true"/>
+      <excludesPaths value="test;"/>
+      <recents>
+        <recent value="C:\Users\elulian\workspace\CustomerSecurityManagementSystem"/>
+        <recent value="C:\Users\elulian\Structure101\java"/>
+      </recents>
+    </s101plugin-properties>
+    <excludes/>
+    <excludes-from-xs/>
+    <transformations/>
+  </builder-settings>
+</structure101-builder>

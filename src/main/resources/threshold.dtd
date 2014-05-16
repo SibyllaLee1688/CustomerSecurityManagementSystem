@@ -1,0 +1,16 @@
+<!ELEMENT thresholds (threshold*)>
+<!ATTLIST thresholds focus CDATA #FIXED "CustomerInfo">
+<!ELEMENT threshold (id, attribute, type?, condition, params?, value, description?)>
+<!ELEMENT id (#PCDATA)>
+<!ELEMENT attribute (#PCDATA)>
+<!ELEMENT type (#PCDATA)>
+<!--
+	<!ATTLIST square width CDATA "0">
+	defaultValue (like: "0"), #REQUIRED, #FIXED value, #IMPLIED
+-->
+
+<!ELEMENT condition (#PCDATA)>
+<!ELEMENT params (param+)>
+<!ELEMENT param (#PCDATA)>
+<!ELEMENT value (#PCDATA)>
+<!ELEMENT description (#PCDATA)>

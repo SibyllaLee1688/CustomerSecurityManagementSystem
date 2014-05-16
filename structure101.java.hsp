@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<local-project language="java" version="3.5.4164" flavor="j2se">
+  <property name="hide-externals" value="true" />
+  <property name="show-needs-to-compile" value="false" />
+  <property name="detail-mode" value="true" />
+  <property name="project-type" value="maven" />
+  <property name="action-set-mod" value="10" />
+  <property name="hide-deprecated" value="false" />
+  <property name="parse-archive-in-archive" value="false" />
+  <classpath relativeto="C:\Users\elulian\workspace\CustomerSecurityManagementSystem">
+    <classpathentry kind="lib" path="target\classes" />
+    <classpathentry kind="lib" path="target\classes" />
+  </classpath>
+  <pom-root-files>
+    <pom path="C:\Users\elulian\workspace\CustomerSecurityManagementSystem\pom.xml" />
+  </pom-root-files>
+  <transformations>
+    <transformation in="*" out="{jar}.*" />
+  </transformations>
+  <restructuring>
+    <set version="2" name="List 1" hiview="Codemap" active="true" todo="false" />
+  </restructuring>
+  <grid-set sep="." version="3.5.4164">
+    <grid name="Diagram 1" enforce="true" strict="false">
+      <row>
+        <cell name="web" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.web.*" vexpanded="true" visibility="public" drill="false">
+          <grid>
+            <row>
+              <cell name="admin" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.web.admin.*" vexpanded="false" visibility="public" drill="false" />
+              <cell name="converters" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.web.converters.?" vexpanded="false" visibility="public" drill="false" />
+              <cell name="customerInfo" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.web.customerInfo.?" vexpanded="false" visibility="public" drill="false" />
+              <cell name="filter" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.web.filter.?" vexpanded="false" visibility="public" drill="false" />
+              <cell name="Interceptors" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.web.Interceptors.*" vexpanded="false" visibility="public" drill="false" />
+              <cell name="selfService" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.web.selfService.?" vexpanded="false" visibility="public" drill="false" />
+            </row>
+          </grid>
+        </cell>
+      </row>
+      <row>
+        <cell name="service" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.service.*" vexpanded="true" visibility="public" drill="false">
+          <grid>
+            <row>
+              <cell name="impl" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.service.impl.?" vexpanded="false" visibility="public" drill="false" />
+            </row>
+            <row>
+              <cell name="service" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.service.?" vexpanded="false" visibility="public" drill="false" />
+            </row>
+          </grid>
+        </cell>
+      </row>
+      <row>
+        <cell name="dao" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.dao.*" vexpanded="true" visibility="public" drill="false">
+          <grid>
+            <row>
+              <cell name="dao" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.dao.?" vexpanded="false" visibility="public" drill="false" />
+            </row>
+            <row>
+              <cell name="impl" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.dao.impl.?" vexpanded="false" visibility="public" drill="false" />
+              <cell name="utility" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.dao.utility.?" vexpanded="false" visibility="public" drill="false" />
+            </row>
+          </grid>
+        </cell>
+      </row>
+      <row>
+        <cell name="common" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.common.?" vexpanded="true" visibility="public" drill="false">
+          <grid>
+            <row>
+              <cell name="Locales" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.common.Locales" vexpanded="false" visibility="public" drill="false" />
+            </row>
+            <row>
+              <cell name="ConfigServlet" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.common.ConfigServlet" vexpanded="false" visibility="public" drill="false" />
+            </row>
+            <row>
+              <cell name="ChartResult" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.common.ChartResult" vexpanded="false" visibility="public" drill="false" />
+              <cell name="Config" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.common.Config" vexpanded="false" visibility="public" drill="false" />
+              <cell name="ConfigProperties" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.common.ConfigProperties" vexpanded="false" visibility="public" drill="false" />
+              <cell name="Utility" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.common.Utility" vexpanded="false" visibility="public" drill="false" />
+            </row>
+          </grid>
+        </cell>
+        <cell name="exception" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.exception.?" vexpanded="true" visibility="public" drill="false">
+          <grid>
+            <row>
+              <cell name="RuleDataIDExistException" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.exception.RuleDataIDExistException" vexpanded="false" visibility="public" drill="false" />
+              <cell name="RuleDataIDNotExistException" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.exception.RuleDataIDNotExistException" vexpanded="false" visibility="public" drill="false" />
+              <cell name="UserExistsException" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.exception.UserExistsException" vexpanded="false" visibility="public" drill="false" />
+              <cell name="UserNotExistsException" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.exception.UserNotExistsException" vexpanded="false" visibility="public" drill="false" />
+            </row>
+            <row>
+              <cell name="DataMissingException" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.exception.DataMissingException" vexpanded="false" visibility="public" drill="false" />
+              <cell name="ExistsException" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.exception.ExistsException" vexpanded="false" visibility="public" drill="false" />
+              <cell name="NotExistsException" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.exception.NotExistsException" vexpanded="false" visibility="public" drill="false" />
+            </row>
+          </grid>
+        </cell>
+        <cell name="vo" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.vo.?" vexpanded="true" visibility="public" drill="false">
+          <grid>
+            <row>
+              <cell name="UserInfo" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.vo.UserInfo" vexpanded="false" visibility="public" drill="false" />
+            </row>
+            <row>
+              <cell name="CustomerInfo" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.vo.CustomerInfo" vexpanded="false" visibility="public" drill="false" />
+              <cell name="Role" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.vo.Role" vexpanded="false" visibility="public" drill="false" />
+              <cell name="Threshold" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.vo.Threshold" vexpanded="false" visibility="public" drill="false" />
+            </row>
+            <row>
+              <cell name="BaseObject" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.vo.BaseObject" vexpanded="false" visibility="public" drill="false" />
+              <cell name="Condition" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.vo.Condition" vexpanded="false" visibility="public" drill="false" />
+              <cell name="RiskRank" pattern="CustomerSecurityManagementSystem.CustomerSecurityManagementSystem.com.elulian.CustomerSecurityManagementSystem.vo.RiskRank" vexpanded="false" visibility="public" drill="false" />
+            </row>
+          </grid>
+        </cell>
+      </row>
+      <description>Top-level breakout (depth=2)</description>
+    </grid>
+  </grid-set>
+</local-project>
+
