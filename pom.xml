@@ -100,7 +100,7 @@
 		<project.strutsVersion>2.3.16.3</project.strutsVersion>
 		<project.hibernateVersion>4.3.5.Final</project.hibernateVersion>
 		<project.aspectjVersion>1.8.0</project.aspectjVersion>
-		<project.openjpaVersion>2.3.0</project.openjpaVersion>
+		<project.openjpaVersion>2.2.0</project.openjpaVersion>
 		<project.poiVersion>3.10-FINAL</project.poiVersion>
 		<project.wiserVersion>1.2</project.wiserVersion>
 		<!-- WebTest default target -->
@@ -648,6 +648,12 @@
 			<groupId>org.jmock</groupId>
 			<artifactId>jmock-junit4</artifactId>
 			<version>${project.jmockVersion}</version>
+			<exclusions>
+				<exclusion>
+					 <groupId>junit</groupId>
+      				<artifactId>junit-dep</artifactId>
+				</exclusion>
+			</exclusions>
 			<scope>test</scope>
 		</dependency>
 		<!-- Upgrade junit-dep used by jmock The artifact junit:junit-dep:jar:4.11 
@@ -952,8 +958,9 @@
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>${project.jettyPluginVersion}</version>
 				<configuration>
-					<jvmArgs>-Xmx1024m -Xms1024m -XX:PermSize=128m -XX:MaxPermSize=256m</jvmArgs>
+					<!-- <jvmArgs>-Xmx1024m -Xms1024m -XX:PermSize=128m -XX:MaxPermSize=256m</jvmArgs> 
 					<scanIntervalSeconds>10</scanIntervalSeconds>
+					-->
 					<webApp>
 						<contextPath>${project.web.deployname}</contextPath>
 					</webApp>

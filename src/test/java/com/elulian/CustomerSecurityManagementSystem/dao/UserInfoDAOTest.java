@@ -1,83 +1,68 @@
 package com.elulian.CustomerSecurityManagementSystem.dao;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.elulian.CustomerSecurityManagementSystem.BaseTest;
-import com.elulian.CustomerSecurityManagementSystem.dao.DAOFactory;
-import com.elulian.CustomerSecurityManagementSystem.dao.IUserInfoDAO;
 import com.elulian.CustomerSecurityManagementSystem.vo.Condition;
 import com.elulian.CustomerSecurityManagementSystem.vo.Role;
 import com.elulian.CustomerSecurityManagementSystem.vo.UserInfo;
 
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityManager;  
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;  
-  
-import org.junit.Test;  
-import org.junit.runner.RunWith;  
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.core.io.Resource;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.authentication.dao.SaltSource;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.test.context.ContextConfiguration;  
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;  
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-
-//import com.mchange.v2.c3p0.ComboPooledDataSource;
 @RunWith(SpringJUnit4ClassRunner.class)  
 @ContextConfiguration(
-        locations = {//"classpath:applicationContext-resources.xml",
+        locations = {"classpath:**/applicationContext-resources.xml",
              //   "classpath:applicationContext-dao.xml",
                 //"classpath:applicationContext-service.xml",
-                "classpath:**/security.xml",
-                "classpath:**/applicationContext*.xml"})
+                "classpath:**/security_test_dao.xml",
+                "classpath:**/applicationContext-dao.xml"})
 @Transactional  
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true) 
-public class UserInfoDAOTest extends BaseTest{
+public class UserInfoDAOTest {
+	
+	private static Logger logger = Logger.getLogger(UserInfoDAOTest.class);
 
-	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder bcryptEncoder;
 	
 	@Autowired
 	private IUserInfoDAO userInfoDAO;
-	
-	@Autowired(required = false)
-	private SaltSource saltSource;
-
-	@Autowired
-	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-		this.passwordEncoder = passwordEncoder;
-	}
 
 	private Condition con;
 	private UserInfo user; 
-	// private UserInfo user2; 
-//	 private UserInfo user3; 
-	 
 	 
 	private final String specialUsername = "Admin";
 	private final String specialRealname = "elulian";
 
+	private final String removeUsername = "remove";
+	private final String removeRealname = "remove";
+	
+	private final String addUsername = "add";
+	private final String addRealname = "add";	
+	
 	private String normalUsername = "userdao";
-
 	private String normalRealname = "userdao";
 
 	
+	/**
+	 * execute before each test, for once execution, use BeforeClass static
+	 */
 	@Before
 	public void setUp() {
 		
@@ -93,15 +78,17 @@ public class UserInfoDAOTest extends BaseTest{
 			Date expiredTime = cl.getTime();
 
 			buildUser(userInfo, specialUsername, specialRealname, registerTime,
-					expiredTime, "cloud.lu@ericsson.com","ALL");
+					expiredTime, "luliang1984@gmail.com","ALL");
+			
+			logger.info(userInfo);
 			
 			userInfoDAO.save(userInfo);
 		}
-		
-		UserInfo normalUserInfo = userInfoDAO
-				.getUserByName(normalUsername);
 
-		if (null == normalUserInfo) {
+		UserInfo removeUserInfo = userInfoDAO
+				.getUserByName(removeUsername);
+
+		if (null == removeUserInfo) {
 
 			UserInfo userInfo = new UserInfo();
 			Calendar cl = Calendar.getInstance();
@@ -109,12 +96,35 @@ public class UserInfoDAOTest extends BaseTest{
 			cl.add(Calendar.YEAR, 60);
 			Date expiredTime = cl.getTime();
 
-			buildUser(userInfo, normalUsername, normalRealname, registerTime,
-					expiredTime, "userdao@ericsson.com","北京");
+			buildUser(userInfo, removeUsername, removeRealname, registerTime,
+					expiredTime, "userdao@***.com","北京");
+			
+			logger.info(userInfo);
 			
 			userInfoDAO.save(userInfo);
 		}*/
 
+	}
+	
+	@After
+	public void tearDown(){
+		/*UserInfo userInfo = userInfoDAO.getUserByName(addUsername);
+		assertNotNull(userInfo);
+		userInfoDAO.remove(userInfo);
+
+		UserInfo removeUserInfo = userInfoDAO.getUserByName(removeUsername);
+
+		assertNull(removeUserInfo);
+		removeUserInfo = new UserInfo();
+		Calendar cl = Calendar.getInstance();
+		Date registerTime = cl.getTime();
+		cl.add(Calendar.YEAR, 60);
+		Date expiredTime = cl.getTime();
+
+		buildUser(userInfo, removeUsername, removeRealname, registerTime,
+				expiredTime, "userdao@***.com", "北京");
+
+		userInfoDAO.save(userInfo);*/
 	}
 	 
 	 private void buildUser(UserInfo userInfo, String username, String realname, Date registerTime, Date expiredTime, String email, String branch){
@@ -129,17 +139,9 @@ public class UserInfoDAOTest extends BaseTest{
     	 userInfo.setEmail(email);
     	 userInfo.setExpiredTime(expiredTime);
     	 userInfo.setPasswordHint("passwordHint");
-    	 userInfo.setPhoneNumber("75728");
+    	 userInfo.setPhoneNumber("7572875728");
     	 userInfo.setRegisterTime(registerTime);
-    	 if (saltSource == null) {
-             userInfo.setPassword(passwordEncoder.encodePassword(userInfo.getPassword(), null));
-         } else {
-             userInfo.setPassword(passwordEncoder.encodePassword(userInfo.getPassword(),
-                     saltSource.getSalt(userInfo)));
-         }
-    	 
-    	 
-//    	 userInfo.setRoles(roles);
+    	 userInfo.setPassword(bcryptEncoder.encode(userInfo.getPassword()));
 	 }
 	 
 	 /* test save */
@@ -148,8 +150,8 @@ public class UserInfoDAOTest extends BaseTest{
 	  */
      @Test
      public void testDAOAddUser(){
-    	 String username = "AdminUserDAO";
-    	 String userId = "cloudluDAO";
+    	 String username = "addTest";
+    	 String userId = "addTest";
     	 UserInfo userInfo = new UserInfo();
     	 Calendar cl = Calendar.getInstance();
     	 Date registerTime = cl.getTime();
@@ -159,11 +161,14 @@ public class UserInfoDAOTest extends BaseTest{
     	 assertNull(userInfo.getId());
     	 assertEquals("ROLE_ADMIN", ((Role)(userInfo.getRoles().toArray()[0])).getName());
     	 logger.info("add a new user to database--------------");
+    	 long startTime = System.currentTimeMillis();
     	 user = userInfoDAO.save(userInfo);
+    	 long endTime = System.currentTimeMillis();
+    	 logger.info(endTime - startTime);
     	 assertNotNull(user.getId());
     	 assertEquals(registerTime, user.getRegisterTime());
     	 assertEquals(expiredTime, user.getExpiredTime());
-    	 
+    	 //userInfoDAO.remove(user.getId());    	 
      }
      
      /**
@@ -215,9 +220,10 @@ public class UserInfoDAOTest extends BaseTest{
      }*/
      
      /**
-      * test add a miss data user into database
+      * test add a miss data user into database, use spring,
       */
-     @Test(expected = org.apache.openjpa.persistence.InvalidStateException.class)
+     @Test(expected=org.apache.openjpa.persistence.InvalidStateException.class)
+     //org.springframework.dao.InvalidDataAccessApiUsageException.class for commit to database
      public void testDAOAddMissingInfoUser(){
     	 Date registerTime = null;
     	 Date expiredTime = null; 
@@ -230,15 +236,11 @@ public class UserInfoDAOTest extends BaseTest{
     	 user.setPhoneNumber(null);
     	 logger.info("test add miss data user to database-------------");
     	 userInfoDAO.save(user);
-    	 /* due to defaul rollback is true, need to do some more operation to trigger actual
-    	  * save operation and exception in openjpa
-    	  */
     	 userInfoDAO.findAll();
      }
      
 	 /**
-	  * Test case should be modified if admin is not username in database
-	  * or "" is username in database
+	  * Test search 
 	  */
      @Test
      public void testDAOGetUserByName(){    					 
@@ -306,23 +308,11 @@ public class UserInfoDAOTest extends BaseTest{
      
 */
      @Test 
-     public void testDAORemoveUser(){
+     public void testDAOFindUser(){
     	 int id = 1;   	 
     	 UserInfo userInfo = userInfoDAO.findById(id);
     	 assertNotNull(userInfo);
-    	/* logger.info("test delete user by Id: " + id  + " -------------");
-    	 userInfoDAO.remove(userInfo.getId());
-    	 assertNull(userInfoDAO.findById(id));*/
-    	 
-    	 id = 55;
-    	 userInfo = userInfoDAO.findById(id);
-    	 assertNotNull(userInfo);
-    	 logger.info("test delete user by object: " + userInfo  + " -------------");
-    	 userInfoDAO.remove(userInfo);
-    	 assertNull(userInfoDAO.findById(id));
-    	 
-     }
-    
+     }    
      
      @Test
      public void testDAOGetTotalUser(){
@@ -331,6 +321,18 @@ public class UserInfoDAOTest extends BaseTest{
     	 
     	 assertNotNull(userCount);
     	 
-    	 System.out.println("===========================" + userCount + "===========================");
+    	 logger.info("===========================" + userCount + "===========================");
+     }
+     
+     /** test remove */
+     @Test
+     public void testDAORemoveUser(){
+    	 UserInfo userInfo = null;
+    	 userInfo = userInfoDAO.getUserByName(removeUsername);
+    	 int id =userInfo.getId();
+    	 assertNotNull(userInfo);
+    	 logger.info("test delete user by object: " + userInfo  + " -------------");
+    	 userInfoDAO.remove(userInfo);
+    	 assertNull(userInfoDAO.findById(id));  	 
      }
 }

@@ -5,13 +5,9 @@ import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
 
-import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.dao.SaltSource;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.elulian.CustomerSecurityManagementSystem.dao.IUserInfoDAO;
 import com.elulian.CustomerSecurityManagementSystem.service.IUserInfoService;
@@ -25,9 +21,6 @@ public class UserInfoService extends BaseService<UserInfo, Integer> implements
     private PasswordEncoder passwordEncoder;	
 	
 	private IUserInfoDAO userInfoDAO;
-
-	@Autowired(required = false)
-	private SaltSource saltSource;
 
 	@Autowired
 	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
@@ -99,12 +92,7 @@ public class UserInfoService extends BaseService<UserInfo, Integer> implements
 	}
 
 	private void encodeUserPassword(UserInfo userInfo) {
-		if (saltSource == null) {
-		     userInfo.setPassword(passwordEncoder.encodePassword(userInfo.getPassword(), null));
-		 } else {
-		     userInfo.setPassword(passwordEncoder.encodePassword(userInfo.getPassword(),
-		             saltSource.getSalt(userInfo)));
-		 }
+		userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
 	}
 
 	@Override
@@ -119,7 +107,7 @@ public class UserInfoService extends BaseService<UserInfo, Integer> implements
 			return false;
 		}
 		
-		if(passwordEncoder.isPasswordValid(userInfo.getPassword(), oldPassword, saltSource.getSalt(userInfo))){
+		if(passwordEncoder.matches(userInfo.getPassword(), oldPassword)){
 			userInfo.setPassword(newPassword);
 			encodeUserPassword(userInfo);
 			save(userInfo);
@@ -128,8 +116,6 @@ public class UserInfoService extends BaseService<UserInfo, Integer> implements
 		}
 		
 		logger.warn("invalid password for user: " + username);
-		
-		logger.error(oldPassword + "-------------" + userInfo.getPassword());
 		
 		return false;
 		

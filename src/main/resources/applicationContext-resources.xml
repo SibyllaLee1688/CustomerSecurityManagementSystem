@@ -21,11 +21,11 @@
     
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
-		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="driverClassName" value="${project.jdbc.driverClassName}" />
 		<property name="url"
-			value="${jdbc.url}" />
-		<property name="username" value="${jdbc.username}" />
-		<property name="password" value="${jdbc.password}" />
+			value="${project.jdbc.url}" />
+		<property name="username" value="${project.jdbc.username}" />
+		<property name="password" value="${project.jdbc.password}" />
 		<property name="maxActive" value="100" />
 		<property name="maxWait" value="1000" />
 		<property name="poolPreparedStatements" value="true" />

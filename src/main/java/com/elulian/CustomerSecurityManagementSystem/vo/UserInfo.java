@@ -19,6 +19,9 @@ public class UserInfo extends BaseObject implements UserDetails {
 	 * 
 	 */
 	private static final long serialVersionUID = -6013770907577732201L;
+	/**
+	 * 
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -29,7 +32,7 @@ public class UserInfo extends BaseObject implements UserDetails {
 	@Column(nullable = false, name = "name", length = 50)
 	private String username;
 	@Basic(optional = false)
-	@Column(nullable = false, length = 50)
+	@Column(nullable = false, length = 150)
 	private String password;
 	@Basic(optional = false)
 	@Column(nullable = false, length = 50)
@@ -297,14 +300,14 @@ public class UserInfo extends BaseObject implements UserDetails {
 	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(this.getClass().getCanonicalName()).append("username")
-				.append(this.username).append("enabled").append(this.enabled)
-				.append("accountExpired").append(this.accountExpired)
-				.append("credentialsExpired").append(this.credentialsExpired)
-				.append("accountLocked").append(this.accountLocked);
+		sb.append(this.getClass().getCanonicalName()).append(" username: ")
+				.append(this.username).append(" enabled: ").append(this.enabled)
+				.append(" accountExpired: ").append(this.accountExpired)
+				.append(" credentialsExpired: ").append(this.credentialsExpired)
+				.append(" accountLocked: ").append(this.accountLocked);
 
-		if (roles != null) {
-			sb.append("Granted Authorities: ");
+		if (null != roles) {
+			sb.append(" Granted Authorities: ");
 
 			int i = 0;
 			for (Role role : roles) {
@@ -315,7 +318,7 @@ public class UserInfo extends BaseObject implements UserDetails {
 				i++;
 			}
 		} else {
-			sb.append("No Granted Authorities");
+			sb.append(" No Granted Authorities");
 		}
 		return sb.toString();
 	}
