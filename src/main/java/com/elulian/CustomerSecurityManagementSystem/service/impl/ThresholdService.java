@@ -3,10 +3,13 @@ package com.elulian.CustomerSecurityManagementSystem.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.security.RolesAllowed;
-
-import org.springframework.stereotype.Service;
+import org.drools.event.rule.DebugWorkingMemoryEventListener;
+import org.kie.api.KieServices;
+import org.kie.api.event.rule.DebugAgendaEventListener;
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.StatelessKieSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.elulian.CustomerSecurityManagementSystem.dao.DAOFactory;
 import com.elulian.CustomerSecurityManagementSystem.dao.IThresholdDAO;
@@ -15,16 +18,20 @@ import com.elulian.CustomerSecurityManagementSystem.vo.CustomerInfo;
 import com.elulian.CustomerSecurityManagementSystem.vo.Threshold;
 
 @Service("thresholdService")
-@RolesAllowed({"ROLE_ADMIN"})
-public class ThresholdService extends BaseService<Threshold, Integer> implements
+//@RolesAllowed({"ROLE_ADMIN"})
+public class ThresholdService implements
 		IThresholdService {
 
+	private KieServices ks = null;
 	
+	private StatelessKieSession kSession = null;
+	
+	
+	@Deprecated
 	private IThresholdDAO thresholdDAO;
 
 	@Autowired
 	public void setThresholdDAO(IThresholdDAO thresholdDAO) {
-		this.dao = thresholdDAO;
 		this.thresholdDAO = thresholdDAO;
 	}
 
@@ -32,10 +39,12 @@ public class ThresholdService extends BaseService<Threshold, Integer> implements
 	protected IThresholdDAO getThresholdDAO() {
 		// synchoronized is not required here, dao factory's responsibility to
 		// keep only one instance.
-		this.dao = DAOFactory.getDAOFacotry().getIThresholdDAO();
+		
 		this.thresholdDAO = DAOFactory.getDAOFacotry().getIThresholdDAO();
 		return thresholdDAO;
 	}
+	
+	
 
 	@Override
 	@Deprecated
@@ -97,6 +106,49 @@ public class ThresholdService extends BaseService<Threshold, Integer> implements
 		 * info.setRiskType(info.getRiskType
 		 * ().substring(info.getRiskType().indexOf("��"))); }
 		 */
+	}
+
+	/**
+	 * Since Stateful Knowledge Session is the most commonly used session
+	 * type it is just named KieSession in the KIE API
+	 * Stateless Sessions typically do not use inference, so the
+	 * engine does not need to be aware of changes to data. Inference can also be turned off explicitly
+	 * by using the sequential mode.
+	 * stateless kie session is used here, no inference required.
+	 */
+	@Override
+	public void initThresholdService() {
+		ks = KieServices.Factory.get();
+		startThresholdService();
+	}
+	
+	private void startThresholdService(){
+		KieContainer kContainer = ks.getKieClasspathContainer();
+		kSession = kContainer.newStatelessKieSession("ksession-rules");
+		kSession.addEventListener( new DebugAgendaEventListener() );
+       // kSession.addEventListener( new DebugWorkingMemoryEventListener() );
+	}
+
+	@Override
+	public void refreshThresholdService() {
+		startThresholdService();
+	}
+
+	@Override
+	public void setCustomerThresholdsInfo(CustomerInfo info) {
+		kSession.execute(info);
+	}
+
+	@Override
+	public boolean editThresholdRulesFile() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean validateThresholdRulesFile() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

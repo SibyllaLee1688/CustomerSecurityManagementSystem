@@ -1,0 +1,94 @@
+//created on: May 19, 2014
+package com.elulian.CustomerSecurityManagementSystem.service.impl
+
+//list any import classes here.
+import com.elulian.CustomerSecurityManagementSystem.vo.CustomerInfo
+
+//declare any global variables here
+
+rule "Profession Rule"
+       //include attributes such as "salience" here... 
+       
+    when
+       //conditions
+       $info:CustomerInfo(null == professionCode or professionCode == "����" or professionCode == "��ҵ")
+    then
+       //actions
+       $info.setRiskValue($info.riskValue() + 20);
+       $info.setRiskType($info.riskType + "Profession is null or data fill is wrong");
+
+end
+/*
+
+rule "Certification End date Rule"
+    
+        if (info.getCertificateEndDate() == null
+                || info.getCertificateEndDate().before(new Date())) {
+            info.setRiskValue(info.getRiskValue() + 80);
+            if (info.getRiskType() != null)
+                info.setRiskType(info.getRiskType() + ", "
+                        + list.get(1).getType());
+            else
+                info.setRiskType(list.get(1).getType());
+        }
+    when
+        //conditions
+    then
+        //actions
+
+end
+
+rule "Customer Name Rule"
+    
+        if (info.getCustomerName() == null) {
+            info.setRiskValue(info.getRiskValue() + 80);
+            if (info.getRiskType() != null)
+                info.setRiskType(info.getRiskType() + ", "
+                        + list.get(2).getType());
+            else
+                info.setRiskType(list.get(2).getType());
+        }
+        
+    when
+        //conditions
+    then
+        //actions
+
+end
+
+rule "Certification ID Rule"
+    
+       if (info.getCertificateId() == null) {
+            info.setRiskValue(info.getRiskValue() + 80);
+            if (info.getRiskType() != null)
+                info.setRiskType(info.getRiskType() + ", "
+                        + list.get(3).getType());
+            else
+                info.setRiskType(list.get(3).getType());
+        }
+       
+    when
+        //conditions
+    then
+        //actions
+
+end
+
+rule "Foregin Flag Rule"
+    
+        if () {
+            info.setRiskValue(info.getRiskValue() + 20);
+            if (info.getRiskType() != null)
+                info.setRiskType(info.getRiskType() + ", "
+                        + list.get(4).getType());
+            else
+                info.setRiskType(list.get(4).getType());
+        }
+        
+    when
+        true == info.foreignFlag
+    then
+        //actions
+
+end
+*/

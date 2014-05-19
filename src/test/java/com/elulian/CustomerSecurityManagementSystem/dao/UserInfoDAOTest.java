@@ -30,7 +30,7 @@ import com.elulian.CustomerSecurityManagementSystem.vo.UserInfo;
         locations = {"classpath:**/applicationContext-resources.xml",
              //   "classpath:applicationContext-dao.xml",
                 //"classpath:applicationContext-service.xml",
-                "classpath:**/security_test_dao.xml",
+                "classpath:**/security.xml",
                 "classpath:**/applicationContext-dao.xml"})
 @Transactional  
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true) 

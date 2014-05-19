@@ -82,6 +82,7 @@
 		<project.servlet-apiVersion>3.0-alpha-1</project.servlet-apiVersion>
 		<project.jsp-apiVersion>2.2.1-b03</project.jsp-apiVersion>
 		<!-- Project dependency versions -->
+		<project.slf4j-simpleVersion>1.7.2</project.slf4j-simpleVersion>
 		<project.kiePluginVersion>6.1.0.Beta3</project.kiePluginVersion>
 		<project.openjpaPluginVersion>1.2</project.openjpaPluginVersion>
 		<project.droolsVersion>6.1.0.Beta3</project.droolsVersion>
@@ -553,6 +554,34 @@
 			<version>${project.aspectjVersion}</version>
 		</dependency>
 		<!-- for AspectJ end -->
+		<!--  for drools  -->
+		<dependency>
+                <groupId>org.drools</groupId>
+                <artifactId>drools-core</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.drools</groupId>
+                <artifactId>drools-compiler</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.drools</groupId>
+                <artifactId>knowledge-api</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.drools</groupId>
+                <artifactId>drools-decisiontables</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.drools</groupId>
+                <artifactId>drools-jsr94</artifactId>
+            </dependency>
+            <!-- fix for SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder" issue -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${project.slf4j-simpleVersion}</version>
+            </dependency>
+		<!-- for drools end -->
 		<!-- for struts -->
 		<dependency>
 			<groupId>org.apache.struts</groupId>
@@ -1023,6 +1052,7 @@
 			</resource>
 			<resource>
 				<directory>src/main/java</directory>
+				<filtering>true</filtering>
 				<includes>
 					<include>**/*.xml</include>
 				</includes>
@@ -1040,6 +1070,7 @@
 					<include>**/*.xml</include>
 				</includes>
 			</testResource>
+			<!-- include config files in main folder for testing -->
 			<testResource>
 				<directory>src/main/java</directory>
 				<filtering>true</filtering>

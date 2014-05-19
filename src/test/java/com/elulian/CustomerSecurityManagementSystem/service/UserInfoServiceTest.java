@@ -1,65 +1,27 @@
 package com.elulian.CustomerSecurityManagementSystem.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.elulian.CustomerSecurityManagementSystem.dao.DAOFactory;
-import com.elulian.CustomerSecurityManagementSystem.dao.IUserInfoDAO;
-import com.elulian.CustomerSecurityManagementSystem.exception.DataMissingException;
-import com.elulian.CustomerSecurityManagementSystem.exception.ExistsException;
-import com.elulian.CustomerSecurityManagementSystem.exception.UserExistsException;
-import com.elulian.CustomerSecurityManagementSystem.service.IUserInfoService;
-import com.elulian.CustomerSecurityManagementSystem.vo.Condition;
-import com.elulian.CustomerSecurityManagementSystem.vo.Role;
-import com.elulian.CustomerSecurityManagementSystem.vo.UserInfo;
-
-import javax.persistence.EntityExistsException;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
-
-import jxl.common.Logger;
-
-import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.core.io.Resource;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.TestingAuthenticationProvider;
-import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.SaltSource;
-import org.springframework.security.authentication.encoding.PasswordEncoder;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.context.SecurityContextImpl;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
+
+import com.elulian.CustomerSecurityManagementSystem.vo.Condition;
+import com.elulian.CustomerSecurityManagementSystem.vo.UserInfo;
 
 //import com.mchange.v2.c3p0.ComboPooledDataSource;
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {// "classpath:applicationContext-resources.xml",
+@ContextConfiguration(locations = {"classpath:applicationContext-resources.xml",
 // "classpath:applicationContext-dao.xml",
 // "classpath:applicationContext-service.xml",
 	"classpath:**/security.xml",
@@ -308,7 +270,7 @@ public class UserInfoServiceTest {
 		UserInfo userInfo = userInfoService
 				.getUserInfoByName(normalUsername);
 		
-		System.out.println(passwordEncoder.isPasswordValid(userInfo.getPassword(), password, slatSource.getSalt(userInfo)));
+		logger.info(passwordEncoder.matches(password, userInfo.getPassword()));
 		
 		//assertEquals(passwordEncoder.encodePassword(password, slatSource), userInfo.getPassword());
 		
@@ -317,7 +279,7 @@ public class UserInfoServiceTest {
 		userInfo = userInfoService
 		.getUserInfoByName(normalUsername);
 		
-		assertEquals(passwordEncoder.encodePassword(normalUsername, slatSource.getSalt(userInfo)), userInfo.getPassword());
+		assertEquals(passwordEncoder.encode(normalUsername), userInfo.getPassword());
 	}
 
 }

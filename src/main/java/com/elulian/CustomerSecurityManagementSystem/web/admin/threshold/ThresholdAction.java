@@ -1,3 +1,13 @@
+/**
+ * 
+ * This threshold action service provide upload new drl file, apply new drl service,
+ * list the context of drl file, for more detail drl modification, we use another
+ * web application provided by drools: docs.jboss.org/drools/release/5.6.0.Final/drools-guvnor-docs/html_single/index.html
+ * 	
+ * 
+ * @author elulian
+ * 
+ */
 package com.elulian.CustomerSecurityManagementSystem.web.admin.threshold;
 
 import java.util.List;
@@ -17,10 +27,9 @@ import com.elulian.CustomerSecurityManagementSystem.vo.Threshold;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
-
-@Controller("thresholdAction") @Scope("prototype")
+@Controller("thresholdAction")
+@Scope("prototype")
 public class ThresholdAction extends ActionSupport {
-
 
 	@Autowired
 	private IThresholdService thresholdService;
@@ -45,22 +54,24 @@ public class ThresholdAction extends ActionSupport {
 	}
 
 	public ThresholdAction() {
-		/*if (thresholdService == null)
-			thresholdService = ServiceFactory.getServiceFactory().getIThresholdService();*/
+		/*
+		 * if (thresholdService == null) thresholdService =
+		 * ServiceFactory.getServiceFactory().getIThresholdService();
+		 */
 	}
 
-	public String list(){
-		this.thresholds = thresholdService.findAll();
+	public String list() {
+		// this.thresholds = thresholdService.findAll();
 		return Action.SUCCESS;
 	}
+
 	/*
-	public String execute() {		
-		return Action.SUCCESS;
-	}*/
+	 * public String execute() { return Action.SUCCESS; }
+	 */
 
 	public String save() {
 		try {
-			this.thresholdService.save(threshold);
+			// this.thresholdService.save(threshold);
 		} catch (DataIntegrityViolationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -73,7 +84,7 @@ public class ThresholdAction extends ActionSupport {
 	}
 
 	public String remove() {
-		this.thresholdService.remove(id);
+		// this.thresholdService.remove(id);
 		return list();
 	}
 
@@ -81,9 +92,10 @@ public class ThresholdAction extends ActionSupport {
 		return thresholds;
 	}
 
-    public void prepare() throws Exception {
-        if (id != null)
-        	threshold = thresholdService.findById(id);
-    }
+	public void prepare() throws Exception {
+		/*
+		 * if (id != null) threshold = thresholdService.findById(id);
+		 */
+	}
 
 }

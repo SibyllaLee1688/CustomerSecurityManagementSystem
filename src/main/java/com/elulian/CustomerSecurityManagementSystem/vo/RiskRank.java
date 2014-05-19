@@ -11,7 +11,12 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name="riskrank", uniqueConstraints=@UniqueConstraint(columnNames={"rankType"}))   
-public class RiskRank {
+public class RiskRank extends BaseObject {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1425736767627206841L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -60,9 +65,10 @@ public class RiskRank {
 		this.maxValue = maxValue;
 	}
 	
-	   /**
+	 /**
      * {@inheritDoc}
      */
+	@Override
     public boolean equals(Object o) {
     	
     	/*if(null == o)
@@ -84,6 +90,7 @@ public class RiskRank {
     /**
      * {@inheritDoc}
      */
+    @Override
     public int hashCode() {
         return (rankType != null ? rankType.hashCode() : 0);
     }
@@ -91,8 +98,9 @@ public class RiskRank {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String toString() {
-        return new StringBuilder().append(this.getClass().getCanonicalName()).append("rankType").append(this.rankType).append("riskMinValue").append(this.minValue).append("rankMaxValue").append(this.maxValue)
+        return new StringBuilder().append(this.getClass().getCanonicalName()).append(" rankType: ").append(this.rankType).append(" riskMinValue: ").append(this.minValue).append(" rankMaxValue: ").append(this.maxValue)
                 .toString();
     }
 }

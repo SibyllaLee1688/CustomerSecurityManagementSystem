@@ -1,3 +1,11 @@
+/**
+ * 
+ * @deprecated replaced by drool rule engine, rule engine can 
+ * 				enable new rules without recompile the system
+ * 
+ * @author elulian
+ *
+ */
 package com.elulian.CustomerSecurityManagementSystem.vo;
 
 import javax.persistence.Basic;
@@ -11,7 +19,12 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name="threshold", uniqueConstraints=@UniqueConstraint(columnNames={"risk_type"})) 
+@Deprecated
 public class Threshold extends BaseObject {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7068186568191275177L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable=false,name="risk_id")
@@ -70,7 +83,7 @@ public class Threshold extends BaseObject {
 
 	@Override
 	public String toString() {
-		return new StringBuilder().append(this.getClass().getCanonicalName()).append("thresholdType").append(this.type).append("thresholdValue").append(this.value).toString();
+		return new StringBuilder().append(this.getClass().getCanonicalName()).append(" thresholdType: ").append(this.type).append(" thresholdValue: ").append(this.value).toString();
 	}
 
 	@Override

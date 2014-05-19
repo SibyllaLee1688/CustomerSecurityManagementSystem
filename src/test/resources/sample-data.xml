@@ -120,14 +120,14 @@
       <value>false</value>
       <value>ALL</value>
       <value>false</value>
-      <value>cloud.lu@ericsson.com</value>
+      <value>luliang1984@gmail.com</value>
       <value>true</value>
-      <value><![CDATA[2073-05-28 12:43:36.0]]></value>
-      <value>886d54207b777643075ecd626eb30349c8ca1bd5</value>
+      <value><![CDATA[2074-05-19 11:06:31.0]]></value>
+      <value>$2a$10$qbZnlvvlQQW08ZUmqDTiDe4dpSYYXmTyGN5oodH4xtRdqv18v/8Qa</value>
       <value>passwordHint</value>
-      <value>75728</value>
+      <value>7572875728</value>
       <value>elulian</value>
-      <value><![CDATA[2013-05-28 12:43:36.0]]></value>
+      <value><![CDATA[2014-05-19 11:06:31.0]]></value>
       <value>Admin</value>
     </row>
     <row>
@@ -136,31 +136,31 @@
       <value>false</value>
       <value>北京</value>
       <value>false</value>
-      <value>userdao@ericsson.com</value>
+      <value>userdao@***.com</value>
       <value>true</value>
-      <value><![CDATA[2073-05-28 12:48:33.0]]></value>
-      <value>b8e8e3e9b99f83c8304faa02e193d4ef4952098b</value>
+      <value><![CDATA[2074-05-19 11:06:31.0]]></value>
+      <value>$2a$10$eZf1xtX/gJGfRl8eRTBmmOsn4ucMZbEg71FA.bq1kg/iifR926XNS</value>
       <value>passwordHint</value>
-      <value>75728</value>
-      <value>userdao</value>
-      <value><![CDATA[2013-05-28 12:48:33.0]]></value>
-      <value>userdao</value>
+      <value>7572875728</value>
+      <value>remove</value>
+      <value><![CDATA[2014-05-19 11:06:31.0]]></value>
+      <value>remove</value>
     </row>
     <row>
       <value>3</value>
       <value>false</value>
       <value>false</value>
-      <value>北京</value>
+      <value>ALL</value>
       <value>false</value>
-      <value>userservice@ericsson.com</value>
+      <value>add@gmail.com</value>
       <value>true</value>
-      <value><![CDATA[2073-05-28 12:48:34.0]]></value>
-      <value>24dc5e12fc5ce0189f65351d43920d2be66a6d10</value>
+      <value><![CDATA[2014-11-19 11:06:32.0]]></value>
+      <value>$2a$10$GxAwbRY1fc4Pfjbemtg7oewGvyU64ZtZVYjQ7FDD2PGSRvMt0r3bG</value>
       <value>passwordHint</value>
-      <value>75728</value>
-      <value>userservice</value>
-      <value><![CDATA[2013-05-28 12:48:34.0]]></value>
-      <value>userservice</value>
+      <value>7572875728</value>
+      <value>add</value>
+      <value><![CDATA[2014-05-19 11:06:32.0]]></value>
+      <value>add</value>
     </row>
   </table>
 </dataset>

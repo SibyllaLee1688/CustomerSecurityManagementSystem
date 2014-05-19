@@ -63,8 +63,10 @@ public class CustomerInfoService extends BaseService<CustomerInfo, Integer> impl
 	@Override
 	@RolesAllowed({"ROLE_ADMIN"})
 	public void setMatchThresholdsInfo(CustomerInfo info) {
+		thresholdService.setCustomerThresholdsInfo(info);
 		// TODO Auto-generated method stub
-		info.setRiskValue(0);
+		/*
+		 * info.setRiskValue(0);
 		info.setRiskType(null);
 		String temp = info.getProfessionCode();
 		List<Threshold> list = thresholdService.findAll();
@@ -106,7 +108,7 @@ public class CustomerInfoService extends BaseService<CustomerInfo, Integer> impl
 						+ list.get(4).getType());
 			else
 				info.setRiskType(list.get(4).getType());
-		}
+		}*/
 		/*
 		 * if(info.getRiskType().startsWith("��")){
 		 * info.setRiskType(info.getRiskType
