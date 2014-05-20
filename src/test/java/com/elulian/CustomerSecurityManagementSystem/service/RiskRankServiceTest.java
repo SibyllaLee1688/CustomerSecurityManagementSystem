@@ -1,4 +1,4 @@
-package com.elulian.CustomerSecurityManagementSystem.service;
+﻿package com.elulian.CustomerSecurityManagementSystem.service;
 
 import static org.junit.Assert.*;
 
@@ -62,60 +62,65 @@ import org.springframework.transaction.annotation.Transactional;
 //import com.mchange.v2.c3p0.ComboPooledDataSource;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {// "classpath:applicationContext-resources.xml",
-// "classpath:applicationContext-dao.xml",
-// "classpath:applicationContext-service.xml",
-	"classpath:**/security.xml",
-"classpath:**/applicationContext*.xml" })
-/* 
-@TransactionConfiguration(transactionManager="transactionManager",defaultRollback=true)   
-@Transactional
-*/
+		// "classpath:applicationContext-dao.xml",
+		// "classpath:applicationContext-service.xml",
+		"classpath:**/security.xml", "classpath:**/applicationContext*.xml" })
+/*
+ * @TransactionConfiguration(transactionManager="transactionManager",defaultRollback
+ * =true)
+ * 
+ * @Transactional
+ */
 public class RiskRankServiceTest {
 
-	
 	private final Logger logger = Logger.getLogger(getClass());
-	
-	/*@Autowired */
+
+	/* @Autowired */
 	private RiskRankService riskRankService;
-	
+
 	private IRiskRankDAO riskRankDAO;
-	
+
 	private Mockery context;
 
 	private RiskRank riskRank;
-	
+
 	@Before
 	public void setUp() {
-		
+
 		context = new Mockery();
 		/* need to consider security testing in service layer */
-		SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("Admin","password"));
-		
+		SecurityContextHolder.getContext().setAuthentication(
+				new UsernamePasswordAuthenticationToken("Admin", "password"));
+
 		riskRankDAO = context.mock(IRiskRankDAO.class);
-		
+
 		riskRankService = new RiskRankService();
-		
+
 		riskRankService.setRiskRankDAO(riskRankDAO);
-		
-//		final IRiskRankService 
+
+		// final IRiskRankService
 	}
 
 	@Test
 	public void testAddRiskRankService() {
-		
+
 		riskRank = new RiskRank();
-		
+
 		RiskRank riskRankSaved = null;
-		
-		context.checking(new Expectations() {{
-			oneOf(riskRankDAO).findAll();will(returnValue(new ArrayList<RiskRank>()));
-            oneOf (riskRankDAO).save(riskRank); will(returnValue(riskRank));
-        }});
+
+		context.checking(new Expectations() {
+			{
+				oneOf(riskRankDAO).findAll();
+				will(returnValue(new ArrayList<RiskRank>()));
+				oneOf(riskRankDAO).save(riskRank);
+				will(returnValue(riskRank));
+			}
+		});
 
 		riskRankSaved = riskRankService.save(riskRank);
-		
+
 		context.assertIsSatisfied();
-	    assertSame("should be loaded object", riskRank, riskRankSaved);
+		assertSame("should be loaded object", riskRank, riskRankSaved);
 	}
 
 }

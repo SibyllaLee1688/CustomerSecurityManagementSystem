@@ -1,4 +1,4 @@
-package com.elulian.CustomerSecurityManagementSystem.vo;
+﻿package com.elulian.CustomerSecurityManagementSystem.vo;
 
 import java.util.Collection;
 import java.util.Date;

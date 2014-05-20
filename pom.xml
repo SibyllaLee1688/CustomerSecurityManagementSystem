@@ -829,6 +829,27 @@
 				for creating the schema mapping XML file for all persistence-enabled classes 
 				manually. mvn openjpa:schema -->
 			<plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>native2ascii-maven-plugin</artifactId>
+                <version>1.0-beta-1</version>
+                <executions>
+                    <execution>
+                        <id>native2ascii-utf8</id>
+                        <!-- default phase <phase>process-classes</phase> -->
+                        <goals>
+                            <goal>native2ascii</goal>
+                        </goals>
+                        <configuration>
+                            <encoding>UTF8</encoding>
+                            <includes>
+                                <include>globalMessages_zh*.properties</include>
+                                <include>branch.properties</include>
+                            </includes>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>openjpa-maven-plugin</artifactId>
 				<version>${project.openjpaPluginVersion}</version>
@@ -946,6 +967,7 @@
 					<url>${project.jdbc.url}</url>
 					<src>src/test/resources/sample-data.xml</src>
 					<format>xml</format>
+					
 					<dest>src/test/resources/sample-data.xml</dest>
 					<type>${dbunit.operation.type}</type>
 					<schema>${dbunit.schema}</schema>
@@ -1019,26 +1041,6 @@
 						<targetPath>WEB-INF/classes</targetPath> <filtering>true</filtering> <includes> 
 						<include>hibernate.properties</include> </includes> </resource> </webResources> -->
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>native2ascii-maven-plugin</artifactId>
-				<version>1.0-beta-1</version>
-				<executions>
-					<execution>
-						<id>native2ascii-utf8</id>
-						<goals>
-							<goal>native2ascii</goal>
-						</goals>
-						<configuration>
-							<encoding>UTF8</encoding>
-							<includes>
-								<include>globalMessages_zh*.properties</include>
-								<include>branch.properties</include>
-							</includes>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

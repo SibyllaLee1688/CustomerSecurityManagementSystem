@@ -1,4 +1,4 @@
-<!ELEMENT thresholds (threshold*)>
+﻿<!ELEMENT thresholds (threshold*)>
 <!ATTLIST thresholds focus CDATA #FIXED "CustomerInfo">
 <!ELEMENT threshold (id, attribute, type?, condition, params?, value, description?)>
 <!ELEMENT id (#PCDATA)>

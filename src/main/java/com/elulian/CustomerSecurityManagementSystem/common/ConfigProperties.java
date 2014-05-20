@@ -1,4 +1,4 @@
-package com.elulian.CustomerSecurityManagementSystem.common;
+﻿package com.elulian.CustomerSecurityManagementSystem.common;
 
 @Deprecated
 public interface ConfigProperties {

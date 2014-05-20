@@ -1,4 +1,4 @@
-package com.elulian.CustomerSecurityManagementSystem.web.listener;
+﻿package com.elulian.CustomerSecurityManagementSystem.web.listener;
 /*package com.elulian.CustomerSecurityManagementSystem.common.listener;
 
 import org.springframework.security.authentication.AuthenticationTrustResolver;
