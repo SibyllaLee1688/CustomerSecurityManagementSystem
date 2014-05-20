@@ -92,7 +92,9 @@ public class UserInfoService extends BaseService<UserInfo, Integer> implements
 	}
 
 	private void encodeUserPassword(UserInfo userInfo) {
+		//logger.debug("before encode: " + userInfo.getPassword());
 		userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
+		//logger.debug("after encode: " + userInfo.getPassword());
 	}
 
 	@Override
@@ -107,7 +109,7 @@ public class UserInfoService extends BaseService<UserInfo, Integer> implements
 			return false;
 		}
 		
-		if(passwordEncoder.matches(userInfo.getPassword(), oldPassword)){
+		if(passwordEncoder.matches(oldPassword, userInfo.getPassword())){
 			userInfo.setPassword(newPassword);
 			encodeUserPassword(userInfo);
 			save(userInfo);

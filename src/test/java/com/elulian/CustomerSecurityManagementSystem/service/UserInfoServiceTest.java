@@ -1,10 +1,16 @@
 package com.elulian.CustomerSecurityManagementSystem.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.log4j.Logger;
+import org.jmock.Expectations;
+import org.jmock.Mockery;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,8 +21,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.elulian.CustomerSecurityManagementSystem.dao.IUserInfoDAO;
+import com.elulian.CustomerSecurityManagementSystem.service.impl.UserInfoService;
 import com.elulian.CustomerSecurityManagementSystem.vo.Condition;
+import com.elulian.CustomerSecurityManagementSystem.vo.Role;
 import com.elulian.CustomerSecurityManagementSystem.vo.UserInfo;
 
 //import com.mchange.v2.c3p0.ComboPooledDataSource;
@@ -25,11 +36,10 @@ import com.elulian.CustomerSecurityManagementSystem.vo.UserInfo;
 // "classpath:applicationContext-dao.xml",
 // "classpath:applicationContext-service.xml",
 	"classpath:**/security.xml",
-"classpath:**/applicationContext*.xml" })
-/* 
+	"classpath:**/applicationContext*.xml" })
+ 
 @TransactionConfiguration(transactionManager="transactionManager",defaultRollback=true)   
 @Transactional
-*/
 public class UserInfoServiceTest {
 
 	
@@ -50,12 +60,13 @@ public class UserInfoServiceTest {
 	private final String specialUsername = "Admin";
 	private final String specialRealname = "elulian";
 
-	private final String normalUsername = "userservice";
+	private final String normalUsername = "add";
 
-	private final String normalRealname = "userservice";
+	private final String normalRealname = "add";
 	
 	private String password = "password";
 
+	private Mockery context = null;
 	
 	@Before
 	public void setUp() {
@@ -63,7 +74,7 @@ public class UserInfoServiceTest {
 		/* need to consider security testing in service layer */
 		SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("Admin","password"));
 
-		
+		context = new Mockery();
 		/*UserInfo specialUserInfo = userInfoService
 				.getUserInfoByName(specialUsername);
 
@@ -118,34 +129,41 @@ public class UserInfoServiceTest {
 		// userInfo.setRoles(roles);
 	}
 
-/*
 	@Test
 	public void testAddUser() {
 		String username = "AdminUser";
-
 		String userId = "cloudlu";	
-		UserInfo userInfo = new UserInfo();
+		final UserInfo userInfo = new UserInfo();
 		Calendar cl = Calendar.getInstance();
 		Date registerTime = cl.getTime();
 		cl.add(Calendar.MONTH, 6);
 		Date expiredTime = cl.getTime();
 		buildUser(userInfo, username, userId, registerTime, expiredTime,
-				(username + "@gmail.com"));
+				(username + "@gmail.com"),"ALL");
+		final UserInfo returnUserInfo = new UserInfo();
+		buildUser(returnUserInfo, username, userId, registerTime, expiredTime,
+				(username + "@gmail.com"),"ALL");
+		returnUserInfo.setId(5);
 		assertNull(userInfo.getId());
 		assertEquals("ROLE_ADMIN",
 				((Role) (userInfo.getRoles().toArray()[0])).getName());
-		logger.info("test add user------------------------");
-		try {
-			user = userInfoService.save(userInfo);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
+		logger.info("test add user------------------------"); // set up
+		final IUserInfoDAO userInfoDAO = context.mock(IUserInfoDAO.class);
+        // expectations
+		//((UserInfoService)userInfoService).setUserInfoDAO(userInfoDAO);
+        context.checking(new Expectations() {{
+            oneOf (userInfoDAO).save(with(same(userInfo))); will(returnValue(returnUserInfo));
+        }});
+
+        // execute
+		user = userInfoService.save(userInfo); 
+		 // verify
+        context.assertIsSatisfied();
 		assertNotNull(user.getId());
 		assertEquals(registerTime, user.getRegisterTime());
 		assertEquals(expiredTime, user.getExpiredTime());
 	}
-	
+	/*
 	@Test (expected = DataIntegrityViolationException.class)
 	public void testAddExistsUser() throws ExistsException, DataMissingException{
 		UserInfo user = new UserInfo();
@@ -270,6 +288,8 @@ public class UserInfoServiceTest {
 		UserInfo userInfo = userInfoService
 				.getUserInfoByName(normalUsername);
 		
+		 //String password = "add";
+		
 		logger.info(passwordEncoder.matches(password, userInfo.getPassword()));
 		
 		//assertEquals(passwordEncoder.encodePassword(password, slatSource), userInfo.getPassword());
@@ -279,7 +299,7 @@ public class UserInfoServiceTest {
 		userInfo = userInfoService
 		.getUserInfoByName(normalUsername);
 		
-		assertEquals(passwordEncoder.encode(normalUsername), userInfo.getPassword());
+		assertTrue(passwordEncoder.matches(normalUsername, userInfo.getPassword()));
 	}
 
 }
