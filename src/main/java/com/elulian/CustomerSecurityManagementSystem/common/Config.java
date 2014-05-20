@@ -1,4 +1,4 @@
-﻿package com.elulian.CustomerSecurityManagementSystem.common;
+package com.elulian.CustomerSecurityManagementSystem.common;
 
 import java.util.ArrayList;
 import java.util.Iterator;

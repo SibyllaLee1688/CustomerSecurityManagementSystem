@@ -1,4 +1,4 @@
-﻿package com.elulian.CustomerSecurityManagementSystem.web.customerInfo;
+package com.elulian.CustomerSecurityManagementSystem.web.customerInfo;
 
 import java.awt.Font;
 import java.util.ArrayList;

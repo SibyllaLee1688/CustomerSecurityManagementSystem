@@ -1,4 +1,4 @@
-﻿package com.elulian.CustomerSecurityManagementSystem.dao;
+package com.elulian.CustomerSecurityManagementSystem.dao;
 
 import com.elulian.CustomerSecurityManagementSystem.vo.RiskRank;
 

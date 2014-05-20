@@ -1,4 +1,4 @@
-﻿package com.elulian.CustomerSecurityManagementSystem.service;
+package com.elulian.CustomerSecurityManagementSystem.service;
 
 import com.elulian.CustomerSecurityManagementSystem.service.impl.CustomerInfoService;
 import com.elulian.CustomerSecurityManagementSystem.service.impl.RiskRankService;

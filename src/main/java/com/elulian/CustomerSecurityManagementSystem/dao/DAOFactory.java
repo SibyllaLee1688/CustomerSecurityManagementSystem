@@ -1,4 +1,4 @@
-﻿package com.elulian.CustomerSecurityManagementSystem.dao;
+package com.elulian.CustomerSecurityManagementSystem.dao;
 
 import com.elulian.CustomerSecurityManagementSystem.dao.impl.CustomerInfoDAO;
 import com.elulian.CustomerSecurityManagementSystem.dao.impl.RiskRankDAO;

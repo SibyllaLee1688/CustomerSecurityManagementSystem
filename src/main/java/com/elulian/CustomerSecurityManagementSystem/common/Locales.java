@@ -1,4 +1,4 @@
-﻿package com.elulian.CustomerSecurityManagementSystem.common;
+package com.elulian.CustomerSecurityManagementSystem.common;
 
 import static com.elulian.CustomerSecurityManagementSystem.common.ConfigServlet.getLocaleProps;
 

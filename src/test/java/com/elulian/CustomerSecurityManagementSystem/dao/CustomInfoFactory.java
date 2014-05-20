@@ -1,4 +1,4 @@
-﻿package com.elulian.CustomerSecurityManagementSystem.dao;
+package com.elulian.CustomerSecurityManagementSystem.dao;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;

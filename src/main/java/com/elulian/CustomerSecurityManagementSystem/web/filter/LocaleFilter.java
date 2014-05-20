@@ -1,4 +1,4 @@
-﻿package com.elulian.CustomerSecurityManagementSystem.web.filter;
+package com.elulian.CustomerSecurityManagementSystem.web.filter;
 /*package com.elulian.CustomerSecurityManagementSystem.common.filter;
 
 import org.springframework.context.i18n.LocaleContextHolder;

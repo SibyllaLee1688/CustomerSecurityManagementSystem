@@ -1,4 +1,4 @@
-﻿package com.elulian.CustomerSecurityManagementSystem.web.filter;
+package com.elulian.CustomerSecurityManagementSystem.web.filter;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

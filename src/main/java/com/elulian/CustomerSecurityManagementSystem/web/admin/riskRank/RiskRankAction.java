@@ -1,4 +1,4 @@
-﻿package com.elulian.CustomerSecurityManagementSystem.web.admin.riskRank;
+package com.elulian.CustomerSecurityManagementSystem.web.admin.riskRank;
 
 import java.util.List;
 

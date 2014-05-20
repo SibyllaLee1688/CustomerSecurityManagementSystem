@@ -1,4 +1,4 @@
-﻿package com.elulian.CustomerSecurityManagementSystem.vo;
+package com.elulian.CustomerSecurityManagementSystem.vo;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;

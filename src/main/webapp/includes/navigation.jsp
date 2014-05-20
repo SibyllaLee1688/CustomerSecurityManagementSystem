@@ -55,7 +55,7 @@
 			</s:url> --%>
 			<%-- <a href="<%=request.getContextPath() %>/selfService/logout.action?request_locale=<%=locale.toString() %>"><s:text name="login.logout" /></a> --%>
 			
-			<a href="/j_security_logout"><s:text name="login.logout" /></a>
+			<a href="<%=request.getContextPath() %>/j_security_logout"><s:text name="login.logout" /></a>
 			
 			</td>
 		</tr>

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * 
  * @deprecated replaced by drool rule engine, rule engine can 
  * 				enable new rules without recompile the system

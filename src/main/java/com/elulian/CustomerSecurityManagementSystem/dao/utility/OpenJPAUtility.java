@@ -1,4 +1,4 @@
-﻿package com.elulian.CustomerSecurityManagementSystem.dao.utility;
+package com.elulian.CustomerSecurityManagementSystem.dao.utility;
 
 import java.io.IOException;
 import java.sql.SQLException;

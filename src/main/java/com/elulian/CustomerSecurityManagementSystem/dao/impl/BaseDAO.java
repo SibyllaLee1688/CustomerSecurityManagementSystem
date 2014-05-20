@@ -1,4 +1,4 @@
-﻿package com.elulian.CustomerSecurityManagementSystem.dao.impl;
+package com.elulian.CustomerSecurityManagementSystem.dao.impl;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;

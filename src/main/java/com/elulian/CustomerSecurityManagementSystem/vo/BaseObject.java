@@ -1,4 +1,4 @@
-﻿package com.elulian.CustomerSecurityManagementSystem.vo;
+package com.elulian.CustomerSecurityManagementSystem.vo;
 
 import java.io.Serializable;
 

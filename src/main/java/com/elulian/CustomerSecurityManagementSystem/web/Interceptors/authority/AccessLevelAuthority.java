@@ -1,4 +1,4 @@
-﻿package com.elulian.CustomerSecurityManagementSystem.web.Interceptors.authority;
+package com.elulian.CustomerSecurityManagementSystem.web.Interceptors.authority;
 
 import java.util.Map;
 
