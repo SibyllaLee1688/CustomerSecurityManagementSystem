@@ -3,7 +3,7 @@ package com.elulian.CustomerSecurityManagementSystem.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import org.drools.event.rule.DebugWorkingMemoryEventListener;
+import org.apache.log4j.Logger;
 import org.kie.api.KieServices;
 import org.kie.api.event.rule.DebugAgendaEventListener;
 import org.kie.api.runtime.KieContainer;
@@ -25,6 +25,8 @@ public class ThresholdService implements
 	private KieServices ks = null;
 	
 	private StatelessKieSession kSession = null;
+	
+	private static Logger logger = Logger.getLogger(ThresholdService.class);
 	
 	
 	@Deprecated
@@ -125,8 +127,9 @@ public class ThresholdService implements
 	private void startThresholdService(){
 		KieContainer kContainer = ks.getKieClasspathContainer();
 		kSession = kContainer.newStatelessKieSession("ksession-rules");
-		kSession.addEventListener( new DebugAgendaEventListener() );
-       // kSession.addEventListener( new DebugWorkingMemoryEventListener() );
+		if(logger.isTraceEnabled()){
+			kSession.addEventListener( new DebugAgendaEventListener());
+		}
 	}
 
 	@Override

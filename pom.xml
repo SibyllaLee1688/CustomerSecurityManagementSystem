@@ -67,6 +67,7 @@
 		<project.checkstylePluginVersion>2.12.1</project.checkstylePluginVersion>
 		<project.jxrPluginVersion>2.4</project.jxrPluginVersion>
 		<project.pmdPluginVersion>3.1</project.pmdPluginVersion>
+		<project.surefirePluginVersion>2.17</project.surefirePluginVersion>
 		<project.surefireReportPluginVersion>2.17</project.surefireReportPluginVersion>
 		<project.findbugsPluginVersion>2.5.2</project.findbugsPluginVersion>
 		<project.sonarPluginVersion>0.1</project.sonarPluginVersion>
@@ -554,33 +555,34 @@
 			<version>${project.aspectjVersion}</version>
 		</dependency>
 		<!-- for AspectJ end -->
-		<!--  for drools  -->
+		<!-- for drools -->
 		<dependency>
-                <groupId>org.drools</groupId>
-                <artifactId>drools-core</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.drools</groupId>
-                <artifactId>drools-compiler</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.drools</groupId>
-                <artifactId>knowledge-api</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.drools</groupId>
-                <artifactId>drools-decisiontables</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.drools</groupId>
-                <artifactId>drools-jsr94</artifactId>
-            </dependency>
-            <!-- fix for SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder" issue -->
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>slf4j-simple</artifactId>
-                <version>${project.slf4j-simpleVersion}</version>
-            </dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-compiler</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>knowledge-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-decisiontables</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.drools</groupId>
+			<artifactId>drools-jsr94</artifactId>
+		</dependency>
+		<!-- fix for SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder" 
+			issue -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>${project.slf4j-simpleVersion}</version>
+		</dependency>
 		<!-- for drools end -->
 		<!-- for struts -->
 		<dependency>
@@ -679,8 +681,8 @@
 			<version>${project.jmockVersion}</version>
 			<exclusions>
 				<exclusion>
-					 <groupId>junit</groupId>
-      				<artifactId>junit-dep</artifactId>
+					<groupId>junit</groupId>
+					<artifactId>junit-dep</artifactId>
 				</exclusion>
 			</exclusions>
 			<scope>test</scope>
@@ -829,26 +831,26 @@
 				for creating the schema mapping XML file for all persistence-enabled classes 
 				manually. mvn openjpa:schema -->
 			<plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>native2ascii-maven-plugin</artifactId>
-                <version>1.0-beta-1</version>
-                <executions>
-                    <execution>
-                        <id>native2ascii-utf8</id>
-                        <!-- default phase <phase>process-classes</phase> -->
-                        <goals>
-                            <goal>native2ascii</goal>
-                        </goals>
-                        <configuration>
-                            <encoding>UTF8</encoding>
-                            <includes>
-                                <include>globalMessages_zh*.properties</include>
-                                <include>branch.properties</include>
-                            </includes>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>native2ascii-maven-plugin</artifactId>
+				<version>1.0-beta-1</version>
+				<executions>
+					<execution>
+						<id>native2ascii-utf8</id>
+						<!-- default phase <phase>process-classes</phase> -->
+						<goals>
+							<goal>native2ascii</goal>
+						</goals>
+						<configuration>
+							<encoding>UTF8</encoding>
+							<includes>
+								<include>globalMessages_zh*.properties</include>
+								<include>branch.properties</include>
+							</includes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>openjpa-maven-plugin</artifactId>
@@ -884,6 +886,7 @@
 				<configuration>
 					<source>${project.JavaVersion}</source>
 					<target>${project.JavaVersion}</target>
+				    <!-- <encoding>${project.build.sourceEncoding}</encoding> -->
 				</configuration>
 			</plugin>
 			<!-- generate sql schema file with hibernate <plugin> <groupId>org.codehaus.mojo</groupId> 
@@ -967,7 +970,7 @@
 					<url>${project.jdbc.url}</url>
 					<src>src/test/resources/sample-data.xml</src>
 					<format>xml</format>
-					
+
 					<dest>src/test/resources/sample-data.xml</dest>
 					<type>${dbunit.operation.type}</type>
 					<schema>${dbunit.schema}</schema>
@@ -1010,11 +1013,18 @@
 				<version>${project.jettyPluginVersion}</version>
 				<configuration>
 					<!-- <jvmArgs>-Xmx1024m -Xms1024m -XX:PermSize=128m -XX:MaxPermSize=256m</jvmArgs> 
-					<scanIntervalSeconds>10</scanIntervalSeconds>
-					-->
+						<scanIntervalSeconds>10</scanIntervalSeconds> -->
 					<webApp>
 						<contextPath>${project.web.deployname}</contextPath>
 					</webApp>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<version>${project.surefirePluginVersion}</version>
+				<configuration>
+					<argLine>-Dfile.encoding=utf-8</argLine>
 				</configuration>
 			</plugin>
 			<!-- clean-up previous hibernate-search indexed from integration tests, 

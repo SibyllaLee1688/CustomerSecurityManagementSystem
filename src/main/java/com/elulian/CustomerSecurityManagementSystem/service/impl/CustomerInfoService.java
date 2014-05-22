@@ -63,6 +63,8 @@ public class CustomerInfoService extends BaseService<CustomerInfo, Integer> impl
 	@Override
 	@RolesAllowed({"ROLE_ADMIN"})
 	public void setMatchThresholdsInfo(CustomerInfo info) {
+		info.setRiskType("");
+		info.setRiskValue(0);
 		thresholdService.setCustomerThresholdsInfo(info);
 		// TODO Auto-generated method stub
 		/*

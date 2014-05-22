@@ -3,6 +3,7 @@ package com.elulian.CustomerSecurityManagementSystem.service.impl
 
 //list any import classes here.
 import com.elulian.CustomerSecurityManagementSystem.vo.CustomerInfo
+import java.util.Date
 
 //declare any global variables here
 
@@ -11,84 +12,75 @@ rule "Profession Rule"
        
     when
        //conditions
-       $info:CustomerInfo(null == professionCode or professionCode == "����" or professionCode == "��ҵ")
+       info : CustomerInfo (null == professionCode || 0 == (info.getProfessionCode().trim()).length() || "其他".equals(professionCode) || "其它".equals(professionCode) || "无业".equals(professionCode) || "未知".equals(professionCode))
     then
        //actions
-       $info.setRiskValue($info.riskValue() + 20);
-       $info.setRiskType($info.riskType + "Profession is null or data fill is wrong");
-
+       info.setRiskValue(info.getRiskValue() + 20);
+       info.setRiskType(info.getRiskType() + " Invalid professionCode value: " + info.getProfessionCode());
 end
-/*
 
 rule "Certification End date Rule"
-    
-        if (info.getCertificateEndDate() == null
-                || info.getCertificateEndDate().before(new Date())) {
-            info.setRiskValue(info.getRiskValue() + 80);
-            if (info.getRiskType() != null)
-                info.setRiskType(info.getRiskType() + ", "
-                        + list.get(1).getType());
-            else
-                info.setRiskType(list.get(1).getType());
-        }
+       
     when
         //conditions
+        info : CustomerInfo (null == certificateEndDate || certificateEndDate.before(new Date()))
     then
         //actions
+       info.setRiskValue(info.getRiskValue() + 80);
+       info.setRiskType(info.getRiskType() + " Invalid Certification End date value: " + info.getCertificateEndDate());
 
 end
 
 rule "Customer Name Rule"
-    
-        if (info.getCustomerName() == null) {
-            info.setRiskValue(info.getRiskValue() + 80);
-            if (info.getRiskType() != null)
-                info.setRiskType(info.getRiskType() + ", "
-                        + list.get(2).getType());
-            else
-                info.setRiskType(list.get(2).getType());
-        }
         
     when
         //conditions
+         info : CustomerInfo (null == customerName || 0 == (info.getCustomerName().trim()).length())
     then
         //actions
+         info.setRiskValue(info.getRiskValue() + 80);
+         info.setRiskType(info.getRiskType() + " Customer Name is null");
 
 end
 
 rule "Certification ID Rule"
-    
-       if (info.getCertificateId() == null) {
-            info.setRiskValue(info.getRiskValue() + 80);
-            if (info.getRiskType() != null)
-                info.setRiskType(info.getRiskType() + ", "
-                        + list.get(3).getType());
-            else
-                info.setRiskType(list.get(3).getType());
-        }
        
     when
         //conditions
+        info : CustomerInfo (null == certificateId || 0 == (info.getCertificateId().trim()).length())
     then
         //actions
-
+        info.setRiskValue(info.getRiskValue() + 80);
+        info.setRiskType(info.getRiskType() + " Invalid Certification ID: " + info.getCertificateId());
 end
+
+/*
+rule "Certification ID Rule 2"
+   
+    when
+        //use regx here to check digital and length later
+        info : CustomerInfo ("身份证" == certificateType && (15 != (info.getCertificateId().trim()) || 18 != (info.getCertificateId().trim())))
+    then
+        info.setRiskValue(info.getRiskValue() + 80);
+        info.setRiskType(info.getRiskType() + " Invalid Certification ID: " + info.getCertificateId());
+end
+*/        
 
 rule "Foregin Flag Rule"
-    
-        if () {
-            info.setRiskValue(info.getRiskValue() + 20);
-            if (info.getRiskType() != null)
-                info.setRiskType(info.getRiskType() + ", "
-                        + list.get(4).getType());
-            else
-                info.setRiskType(list.get(4).getType());
-        }
         
     when
-        true == info.foreignFlag
+        info : CustomerInfo (null == foreignFlag || true == foreignFlag)
     then
         //actions
-
+        info.setRiskValue(info.getRiskValue() + 20);
+        info.setRiskType(info.getRiskType() + " 境外标志: " + info.getForeignFlag());
 end
-*/
+
+//execute after all other rules are fired
+rule "Trim Risk Type Rule"
+    salience -9999
+    when 
+        info : CustomerInfo (true)
+    then 
+        info.setRiskType(info.getRiskType().trim());
+end

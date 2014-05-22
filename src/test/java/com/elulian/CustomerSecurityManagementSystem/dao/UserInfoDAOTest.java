@@ -33,7 +33,7 @@ import com.elulian.CustomerSecurityManagementSystem.vo.UserInfo;
                 "classpath:**/security.xml",
                 "classpath:**/applicationContext-dao.xml"})
 @Transactional  
-@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false) 
+@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true) 
 public class UserInfoDAOTest {
 	
 	private static Logger logger = Logger.getLogger(UserInfoDAOTest.class);
