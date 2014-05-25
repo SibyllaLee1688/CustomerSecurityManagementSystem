@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.elulian</groupId>
 	<artifactId>CustomerSecurityManagementSystem</artifactId>
-	<packaging>war</packaging>
+	<packaging>pom</packaging>
 	<version>0.1-SNAPSHOT</version>
 	<name>Cloud Lu SSH/SSO Application</name>
 	<url>https://github.com/elulian/CustomerSecurityManagementSystem</url>
@@ -51,6 +51,7 @@
 		<project.powermoc-api-supportkVersion>1.5.2</project.powermoc-api-supportkVersion>
 		<project.powermock-module-junit4Version>1.5.1</project.powermock-module-junit4Version>
 		<project.mockito-allVersion>1.9.5</project.mockito-allVersion>
+		<project.log4jVersion>1.2.17</project.log4jVersion>
 		<!-- dependency plugin -->
 		<project.dependencyPluginVersion>2.8</project.dependencyPluginVersion>
 		<project.sitePluginVersion>3.3</project.sitePluginVersion>
@@ -67,8 +68,8 @@
 		<project.checkstylePluginVersion>2.12.1</project.checkstylePluginVersion>
 		<project.jxrPluginVersion>2.4</project.jxrPluginVersion>
 		<project.pmdPluginVersion>3.1</project.pmdPluginVersion>
-		<project.surefirePluginVersion>2.17</project.surefirePluginVersion>
 		<project.surefireReportPluginVersion>2.17</project.surefireReportPluginVersion>
+		<project.surefirePluginVersion>2.17</project.surefirePluginVersion>
 		<project.findbugsPluginVersion>2.5.2</project.findbugsPluginVersion>
 		<project.sonarPluginVersion>0.1</project.sonarPluginVersion>
 		<project.cargoPluginVersion>1.4.8</project.cargoPluginVersion>
@@ -131,11 +132,7 @@
 	<profiles>
 		<profile>
 			<id>integration-test</id>
-			<activation>
-				<property>
-					<name>!skipTests</name>
-				</property>
-			</activation>
+			<!-- <activation> <property> <name>!skipTests</name> </property> </activation> -->
 			<build>
 				<plugins>
 					<plugin>
@@ -342,6 +339,40 @@
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${project.log4jVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.annotation</groupId>
+				<artifactId>jsr250-api</artifactId>
+				<version>1.0</version>
+			</dependency>
+			<!-- for openjpa -->
+			<dependency>
+				<groupId>org.apache.openjpa</groupId>
+				<artifactId>openjpa</artifactId>
+				<version>${project.openjpaVersion}</version>
+			</dependency>
+			<!-- for openjpa end -->
+			<!-- for database source -->
+			<dependency>
+				<groupId>commons-dbcp</groupId>
+				<artifactId>commons-dbcp</artifactId>
+				<version>1.4</version>
+			</dependency>
+			<!-- for database source end -->
+			<dependency>
+				<groupId>cglib</groupId>
+				<artifactId>cglib-nodep</artifactId>
+				<version>${project.cglib-nodepVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>${project.jdbc.groupId}</groupId>
+				<artifactId>${project.jdbc.artifactId}</artifactId>
+				<version>${project.jdbcVersion}</version>
+			</dependency>
 			<!-- for hibernate -->
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -380,408 +411,348 @@
 				<version>${project.droolsVersion}</version>
 				<type>jar</type>
 			</dependency>
+			<dependency>
+				<groupId>org.kie</groupId>
+				<artifactId>kie-ci</artifactId>
+				<version>${project.droolsVersion}</version>
+				<type>jar</type>
+			</dependency>
 			<!-- for rule engine end -->
+			<!-- for spring -->
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-core</artifactId>
+				<version>${project.springSecurityVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-web</artifactId>
+				<version>${project.springSecurityVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-config</artifactId>
+				<version>${project.springSecurityVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-taglibs</artifactId>
+				<version>${project.springSecurityVersion}</version>
+			</dependency>
+			<!-- http://blog.csdn.net/zjh19870703/article/details/7618412 -->
+			<!-- Core utilities used by other modules. Define this if you use Spring 
+				Utility APIs (org.springframework.core, org.springframework.util) -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-core</artifactId>
+				<version>${project.springVersion}</version>
+			</dependency>
+			<!-- Expression Language (depends on spring-core) Define this if you use 
+				Spring Expression APIs (org.springframework.expression) -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-expression</artifactId>
+				<version>${project.springVersion}</version>
+			</dependency>
+			<!-- Bean Factory and JavaBeans utilities (depends on spring-core) Define 
+				this if you use Spring Bean APIs (org.springframework.beans) -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
+				<version>${project.springVersion}</version>
+			</dependency>
+			<!-- Aspect Oriented Programming (AOP) Framework (depends on spring-core, 
+				spring-beans) Define this if you use Spring AOP APIs (org.springframework.aop) -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+				<version>${project.springVersion}</version>
+			</dependency>
+			<!-- Application Context (depends on spring-core, spring-expression, spring-aop, 
+				spring-beans) This is the central artifact for Spring's Dependency Injection 
+				Container and is generally always defined -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context</artifactId>
+				<version>${project.springVersion}</version>
+			</dependency>
+			<!-- Various Application Context utilities, including EhCache, JavaMail, 
+				Quartz, and Freemarker integration Define this if you need any of these integrations -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-context-support</artifactId>
+				<version>${project.springVersion}</version>
+			</dependency>
+			<!-- Transaction Management Abstraction (depends on spring-core, spring-beans, 
+				spring-aop, spring-context) Define this if you use Spring Transactions or 
+				DAO Exception Hierarchy (org.springframework.transaction, org.springframework.dao) -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-tx</artifactId>
+				<version>${project.springVersion}</version>
+			</dependency>
+			<!-- JDBC Data Access Library (depends on spring-core, spring-beans, spring-context, 
+				spring-tx) Define this if you use Spring's JdbcTemplate API (org.springframework.jdbc) 
+				<dependency> <groupId>org.springframework</groupId> <artifactId>spring-jdbc</artifactId> 
+				<version>${org.springframework.version}</version> </dependency> -->
+			<!-- Object-to-Relation-Mapping (ORM) integration with Hibernate, JPA, 
+				and iBatis. (depends on spring-core, spring-beans, spring-context, spring-tx) 
+				Define this if you need ORM (org.springframework.orm) -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-orm</artifactId>
+				<version>${project.springVersion}</version>
+			</dependency>
+			<!-- Object-to-XML Mapping (OXM) abstraction and integration with JAXB, 
+				JiBX, Castor, XStream, and XML Beans. (depends on spring-core, spring-beans, 
+				spring-context) Define this if you need OXM (org.springframework.oxm) <dependency> 
+				<groupId>org.springframework</groupId> <artifactId>spring-oxm</artifactId> 
+				<version>${org.springframework.version}</version> </dependency> -->
+			<!-- Web application development utilities applicable to both Servlet 
+				and Portlet Environments (depends on spring-core, spring-beans, spring-context) 
+				Define this if you use Spring MVC, or wish to use Struts, JSF, or another 
+				web framework with Spring (org.springframework.web) -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-web</artifactId>
+				<version>${project.springVersion}</version>
+			</dependency>
+			<!-- Spring MVC for Servlet Environments (depends on spring-core, spring-beans, 
+				spring-context, spring-web) Define this if you use Spring MVC with a Servlet 
+				Container such as Apache Tomcat (org.springframework.web.servlet) <dependency> 
+				<groupId>org.springframework</groupId> <artifactId>spring-webmvc</artifactId> 
+				<version>${spring.version}</version> </dependency> -->
+			<!-- Spring MVC for Portlet Environments (depends on spring-core, spring-beans, 
+				spring-context, spring-web) Define this if you use Spring MVC with a Portlet 
+				Container (org.springframework.web.portlet) <dependency> <groupId>org.springframework</groupId> 
+				<artifactId>spring-webmvc-portlet</artifactId> <version>${spring.version}</version> 
+				</dependency> -->
+			<!-- Support for testing Spring applications with tools such as JUnit 
+				and TestNG This artifact is generally always defined with a 'test' scope 
+				for the integration testing framework and unit testing stubs -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${project.springVersion}</version>
+				<scope>test</scope>
+			</dependency>
+			<!-- for spring end -->
+			<!-- for AspectJ -->
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjrt</artifactId>
+				<version>${project.aspectjVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjtools</artifactId>
+				<version>${project.aspectjVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjweaver</artifactId>
+				<version>${project.aspectjVersion}</version>
+			</dependency>
+			<!-- for AspectJ end -->
+
+			<!-- for struts -->
+			<dependency>
+				<groupId>org.apache.struts</groupId>
+				<artifactId>struts2-core</artifactId>
+				<version>${project.strutsVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.struts</groupId>
+				<artifactId>struts2-convention-plugin</artifactId>
+				<version>${project.strutsVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.struts</groupId>
+				<artifactId>struts2-spring-plugin</artifactId>
+				<version>${project.strutsVersion}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-beans</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-core</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-context</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-web</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.struts</groupId>
+				<artifactId>struts2-json-plugin</artifactId>
+				<version>${project.strutsVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.struts</groupId>
+				<artifactId>struts2-sitemesh-plugin</artifactId>
+				<version>${project.strutsVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.struts</groupId>
+				<artifactId>struts2-dojo-plugin</artifactId>
+				<version>${project.strutsVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.struts</groupId>
+				<artifactId>struts2-jfreechart-plugin</artifactId>
+				<version>${project.strutsVersion}</version>
+			</dependency>
+			<!-- <dependency> <groupId>commons-fileupload</groupId> <artifactId>commons-fileupload</artifactId> 
+				<version>${commons.fileupload.version}</version> </dependency> <dependency> 
+				<groupId>commons-io</groupId> <artifactId>commons-io</artifactId> <version>${commons.io.version}</version> 
+				</dependency> -->
+			<!-- for struts end -->
+			<dependency>
+				<groupId>jstl</groupId>
+				<artifactId>jstl</artifactId>
+				<version>1.2</version>
+				<scope>runtime</scope>
+			</dependency>
+			<!-- <dependency> <groupId>displaytag</groupId> <artifactId>displaytag</artifactId> 
+				<version>${displaytag.version}</version> <exclusions> <exclusion> <groupId>org.slf4j</groupId> 
+				<artifactId>jcl104-over-slf4j</artifactId> </exclusion> </exclusions> </dependency> -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>${project.servlet-apiVersion}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet.jsp</groupId>
+				<artifactId>jsp-api</artifactId>
+				<version>${project.jsp-apiVersion}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.tuckey</groupId>
+				<artifactId>urlrewritefilter</artifactId>
+				<version>${project.urlrewritefilterVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.jmock</groupId>
+				<artifactId>jmock</artifactId>
+				<version>${project.jmockVersion}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.jmock</groupId>
+				<artifactId>jmock-junit4</artifactId>
+				<version>${project.jmockVersion}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>junit</groupId>
+						<artifactId>junit-dep</artifactId>
+					</exclusion>
+				</exclusions>
+				<scope>test</scope>
+			</dependency>
+			<!-- Upgrade junit-dep used by jmock The artifact junit:junit-dep:jar:4.11 
+				has been relocated to junit:junit:jar:4.11 <dependency> <groupId>junit</groupId> 
+				<artifactId>junit-dep</artifactId> <version>${project.junitVersion}</version> 
+				<scope>test</scope> </dependency> -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${project.junitVersion}</version>
+				<scope>test</scope>
+			</dependency>
+			<!-- <dependency> <groupId>org.subethamail</groupId> <artifactId>subethasmtp-wiser</artifactId> 
+				<version>${project.wiserVersion}</version> <scope>test</scope> </dependency> -->
+			<!-- for sitemesh -->
+
+			<!-- for sitemesh end -->
+			<!-- for jfreechar -->
+			<dependency>
+				<groupId>jfree</groupId>
+				<artifactId>jfreechart</artifactId>
+				<version>1.0.13</version>
+			</dependency>
+			<dependency>
+				<groupId>jfree</groupId>
+				<artifactId>jcommon</artifactId>
+				<version>1.0.16</version>
+			</dependency>
+			<!-- for jfreechar end -->
+			<!-- for apache common configuration -->
+			<dependency>
+				<groupId>commons-configuration</groupId>
+				<artifactId>commons-configuration</artifactId>
+				<version>${project.commons-configurationVersion}</version>
+				<!-- <exclusions> <exclusion> <groupId>commons-lang</groupId> <artifactId>commons-lang</artifactId> 
+					</exclusion> </exclusions> -->
+			</dependency>
+			<dependency>
+				<groupId>commons-beanutils</groupId>
+				<artifactId>commons-beanutils</artifactId>
+				<version>${project.commons-beanutilsVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-jxpath</groupId>
+				<artifactId>commons-jxpath</artifactId>
+				<version>1.3</version>
+			</dependency>
+			<!-- for apache common configuration end -->
+
+			<!-- for json included by struts <dependency> <groupId>net.sf.json-lib</groupId> 
+				<artifactId>json-lib</artifactId> <version>2.4</version> <classifier>jdk15</classifier> 
+				</dependency> for json end -->
+
+			<!-- for jasperreport -->
+			<dependency>
+				<groupId>net.sf.jasperreports</groupId>
+				<artifactId>jasperreports</artifactId>
+				<version>${project.jasperreportsVersion}</version>
+			</dependency>
+
+			<!-- auto included <dependency> <groupId>commons-digester</groupId> <artifactId>commons-digester</artifactId> 
+				<version>1.7</version> </dependency> <dependency> <groupId>commons-logging</groupId> 
+				<artifactId>commons-logging</artifactId> <version>1.0.2</version> </dependency> -->
+			<dependency>
+				<groupId>com.lowagie</groupId>
+				<artifactId>itext</artifactId>
+				<version>${project.itextVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.sourceforge.jexcelapi</groupId>
+				<artifactId>jxl</artifactId>
+				<version>${project.jxlVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.keypoint</groupId>
+				<artifactId>png-encoder</artifactId>
+				<version>1.5</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.poi</groupId>
+				<artifactId>poi</artifactId>
+				<version>${project.poiVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.codehaus.groovy</groupId>
+				<artifactId>groovy-all</artifactId>
+				<version>${project.groovy-allVersion}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.struts</groupId>
+				<artifactId>struts2-jasperreports-plugin</artifactId>
+				<version>${project.strutsVersion}</version>
+			</dependency>
+			<!-- for jasperreport end -->
 		</dependencies>
 	</dependencyManagement>
-	<dependencies>
-		<dependency>
-			<groupId>javax.annotation</groupId>
-			<artifactId>jsr250-api</artifactId>
-			<version>1.0</version>
-		</dependency>
-		<!-- for openjpa -->
-		<dependency>
-			<groupId>org.apache.openjpa</groupId>
-			<artifactId>openjpa</artifactId>
-			<version>${project.openjpaVersion}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>commons-lang</groupId>
-					<artifactId>commons-lang</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<!-- for openjpa end -->
-		<!-- for database source -->
-		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>1.4</version>
-		</dependency>
-		<!-- for database source end -->
-		<dependency>
-			<groupId>cglib</groupId>
-			<artifactId>cglib-nodep</artifactId>
-			<version>${project.cglib-nodepVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>${project.jdbc.groupId}</groupId>
-			<artifactId>${project.jdbc.artifactId}</artifactId>
-			<version>${project.jdbcVersion}</version>
-		</dependency>
-		<!-- for spring -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-core</artifactId>
-			<version>${project.springSecurityVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>${project.springSecurityVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-config</artifactId>
-			<version>${project.springSecurityVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-taglibs</artifactId>
-			<version>${project.springSecurityVersion}</version>
-		</dependency>
-		<!-- http://blog.csdn.net/zjh19870703/article/details/7618412 -->
-		<!-- Core utilities used by other modules. Define this if you use Spring 
-			Utility APIs (org.springframework.core, org.springframework.util) -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${project.springVersion}</version>
-		</dependency>
-		<!-- Expression Language (depends on spring-core) Define this if you use 
-			Spring Expression APIs (org.springframework.expression) -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-expression</artifactId>
-			<version>${project.springVersion}</version>
-		</dependency>
-		<!-- Bean Factory and JavaBeans utilities (depends on spring-core) Define 
-			this if you use Spring Bean APIs (org.springframework.beans) -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-beans</artifactId>
-			<version>${project.springVersion}</version>
-		</dependency>
-		<!-- Aspect Oriented Programming (AOP) Framework (depends on spring-core, 
-			spring-beans) Define this if you use Spring AOP APIs (org.springframework.aop) -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-aop</artifactId>
-			<version>${project.springVersion}</version>
-		</dependency>
-		<!-- Application Context (depends on spring-core, spring-expression, spring-aop, 
-			spring-beans) This is the central artifact for Spring's Dependency Injection 
-			Container and is generally always defined -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${project.springVersion}</version>
-		</dependency>
-		<!-- Various Application Context utilities, including EhCache, JavaMail, 
-			Quartz, and Freemarker integration Define this if you need any of these integrations -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>
-			<version>${project.springVersion}</version>
-		</dependency>
-		<!-- Transaction Management Abstraction (depends on spring-core, spring-beans, 
-			spring-aop, spring-context) Define this if you use Spring Transactions or 
-			DAO Exception Hierarchy (org.springframework.transaction, org.springframework.dao) -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-tx</artifactId>
-			<version>${project.springVersion}</version>
-		</dependency>
-		<!-- JDBC Data Access Library (depends on spring-core, spring-beans, spring-context, 
-			spring-tx) Define this if you use Spring's JdbcTemplate API (org.springframework.jdbc) 
-			<dependency> <groupId>org.springframework</groupId> <artifactId>spring-jdbc</artifactId> 
-			<version>${org.springframework.version}</version> </dependency> -->
-		<!-- Object-to-Relation-Mapping (ORM) integration with Hibernate, JPA, 
-			and iBatis. (depends on spring-core, spring-beans, spring-context, spring-tx) 
-			Define this if you need ORM (org.springframework.orm) -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-			<version>${project.springVersion}</version>
-		</dependency>
-		<!-- Object-to-XML Mapping (OXM) abstraction and integration with JAXB, 
-			JiBX, Castor, XStream, and XML Beans. (depends on spring-core, spring-beans, 
-			spring-context) Define this if you need OXM (org.springframework.oxm) <dependency> 
-			<groupId>org.springframework</groupId> <artifactId>spring-oxm</artifactId> 
-			<version>${org.springframework.version}</version> </dependency> -->
-		<!-- Web application development utilities applicable to both Servlet and 
-			Portlet Environments (depends on spring-core, spring-beans, spring-context) 
-			Define this if you use Spring MVC, or wish to use Struts, JSF, or another 
-			web framework with Spring (org.springframework.web) -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>${project.springVersion}</version>
-		</dependency>
-		<!-- Spring MVC for Servlet Environments (depends on spring-core, spring-beans, 
-			spring-context, spring-web) Define this if you use Spring MVC with a Servlet 
-			Container such as Apache Tomcat (org.springframework.web.servlet) <dependency> 
-			<groupId>org.springframework</groupId> <artifactId>spring-webmvc</artifactId> 
-			<version>${spring.version}</version> </dependency> -->
-		<!-- Spring MVC for Portlet Environments (depends on spring-core, spring-beans, 
-			spring-context, spring-web) Define this if you use Spring MVC with a Portlet 
-			Container (org.springframework.web.portlet) <dependency> <groupId>org.springframework</groupId> 
-			<artifactId>spring-webmvc-portlet</artifactId> <version>${spring.version}</version> 
-			</dependency> -->
-		<!-- Support for testing Spring applications with tools such as JUnit and 
-			TestNG This artifact is generally always defined with a 'test' scope for 
-			the integration testing framework and unit testing stubs -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${project.springVersion}</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- for spring end -->
-		<!-- for AspectJ -->
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjrt</artifactId>
-			<version>${project.aspectjVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjtools</artifactId>
-			<version>${project.aspectjVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<version>${project.aspectjVersion}</version>
-		</dependency>
-		<!-- for AspectJ end -->
-		<!-- for drools -->
-		<dependency>
-			<groupId>org.drools</groupId>
-			<artifactId>drools-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.drools</groupId>
-			<artifactId>drools-compiler</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.drools</groupId>
-			<artifactId>knowledge-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.drools</groupId>
-			<artifactId>drools-decisiontables</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.drools</groupId>
-			<artifactId>drools-jsr94</artifactId>
-		</dependency>
-		<!-- fix for SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder" 
-			issue -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<version>${project.slf4j-simpleVersion}</version>
-		</dependency>
-		<!-- for drools end -->
-		<!-- for struts -->
-		<dependency>
-			<groupId>org.apache.struts</groupId>
-			<artifactId>struts2-core</artifactId>
-			<version>${project.strutsVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.struts</groupId>
-			<artifactId>struts2-convention-plugin</artifactId>
-			<version>${project.strutsVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.struts</groupId>
-			<artifactId>struts2-spring-plugin</artifactId>
-			<version>${project.strutsVersion}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-beans</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-core</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-context</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-web</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.struts</groupId>
-			<artifactId>struts2-json-plugin</artifactId>
-			<version>${project.strutsVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.struts</groupId>
-			<artifactId>struts2-sitemesh-plugin</artifactId>
-			<version>${project.strutsVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.struts</groupId>
-			<artifactId>struts2-dojo-plugin</artifactId>
-			<version>${project.strutsVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.struts</groupId>
-			<artifactId>struts2-jfreechart-plugin</artifactId>
-			<version>${project.strutsVersion}</version>
-		</dependency>
-		<!-- <dependency> <groupId>commons-fileupload</groupId> <artifactId>commons-fileupload</artifactId> 
-			<version>${commons.fileupload.version}</version> </dependency> <dependency> 
-			<groupId>commons-io</groupId> <artifactId>commons-io</artifactId> <version>${commons.io.version}</version> 
-			</dependency> -->
-		<!-- for struts end -->
-		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
-			<scope>runtime</scope>
-		</dependency>
-		<!-- <dependency> <groupId>displaytag</groupId> <artifactId>displaytag</artifactId> 
-			<version>${displaytag.version}</version> <exclusions> <exclusion> <groupId>org.slf4j</groupId> 
-			<artifactId>jcl104-over-slf4j</artifactId> </exclusion> </exclusions> </dependency> -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>${project.servlet-apiVersion}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>${project.jsp-apiVersion}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.tuckey</groupId>
-			<artifactId>urlrewritefilter</artifactId>
-			<version>${project.urlrewritefilterVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jmock</groupId>
-			<artifactId>jmock</artifactId>
-			<version>${project.jmockVersion}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jmock</groupId>
-			<artifactId>jmock-junit4</artifactId>
-			<version>${project.jmockVersion}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>junit</groupId>
-					<artifactId>junit-dep</artifactId>
-				</exclusion>
-			</exclusions>
-			<scope>test</scope>
-		</dependency>
-		<!-- Upgrade junit-dep used by jmock The artifact junit:junit-dep:jar:4.11 
-			has been relocated to junit:junit:jar:4.11 <dependency> <groupId>junit</groupId> 
-			<artifactId>junit-dep</artifactId> <version>${project.junitVersion}</version> 
-			<scope>test</scope> </dependency> -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${project.junitVersion}</version>
-			<scope>test</scope>
-		</dependency>
-		<!-- <dependency> <groupId>org.subethamail</groupId> <artifactId>subethasmtp-wiser</artifactId> 
-			<version>${project.wiserVersion}</version> <scope>test</scope> </dependency> -->
-		<!-- for sitemesh -->
-
-		<!-- for sitemesh end -->
-		<!-- for jfreechar -->
-		<dependency>
-			<groupId>jfree</groupId>
-			<artifactId>jfreechart</artifactId>
-			<version>1.0.13</version>
-		</dependency>
-		<dependency>
-			<groupId>jfree</groupId>
-			<artifactId>jcommon</artifactId>
-			<version>1.0.16</version>
-		</dependency>
-		<!-- for jfreechar end -->
-		<!-- for apache common configuration -->
-		<dependency>
-			<groupId>commons-configuration</groupId>
-			<artifactId>commons-configuration</artifactId>
-			<version>${project.commons-configurationVersion}</version>
-			<!-- <exclusions> <exclusion> <groupId>commons-lang</groupId> <artifactId>commons-lang</artifactId> 
-				</exclusion> </exclusions> -->
-		</dependency>
-		<dependency>
-			<groupId>commons-beanutils</groupId>
-			<artifactId>commons-beanutils</artifactId>
-			<version>${project.commons-beanutilsVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-jxpath</groupId>
-			<artifactId>commons-jxpath</artifactId>
-			<version>1.3</version>
-		</dependency>
-		<!-- for apache common configuration end -->
-
-		<!-- for json included by struts <dependency> <groupId>net.sf.json-lib</groupId> 
-			<artifactId>json-lib</artifactId> <version>2.4</version> <classifier>jdk15</classifier> 
-			</dependency> for json end -->
-
-		<!-- for jasperreport -->
-		<dependency>
-			<groupId>net.sf.jasperreports</groupId>
-			<artifactId>jasperreports</artifactId>
-			<version>${project.jasperreportsVersion}</version>
-		</dependency>
-
-		<!-- auto included <dependency> <groupId>commons-digester</groupId> <artifactId>commons-digester</artifactId> 
-			<version>1.7</version> </dependency> <dependency> <groupId>commons-logging</groupId> 
-			<artifactId>commons-logging</artifactId> <version>1.0.2</version> </dependency> -->
-		<dependency>
-			<groupId>com.lowagie</groupId>
-			<artifactId>itext</artifactId>
-			<version>${project.itextVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>net.sourceforge.jexcelapi</groupId>
-			<artifactId>jxl</artifactId>
-			<version>${project.jxlVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.keypoint</groupId>
-			<artifactId>png-encoder</artifactId>
-			<version>1.5</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
-			<version>${project.poiVersion}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.groovy</groupId>
-			<artifactId>groovy-all</artifactId>
-			<version>${project.groovy-allVersion}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.struts</groupId>
-			<artifactId>struts2-jasperreports-plugin</artifactId>
-			<version>${project.strutsVersion}</version>
-		</dependency>
-		<!-- for jasperreport end -->
-	</dependencies>
-
 
 	<build>
 		<defaultGoal>install</defaultGoal>
@@ -793,270 +764,36 @@
 					<version>${project.versionsPluginVersion}</version>
 				</plugin>
 				<plugin>
+					<artifactId>maven-surefire-plugin</artifactId>
 					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-eclipse-plugin</artifactId>
-					<version>${project.eclipsePluginVersion}</version>
+					<version>${project.surefirePluginVersion}</version>
 					<configuration>
-						<!-- aligned with Using maven-eclipse-plugin in multi-module projects 
-							with WTP -->
-						<!-- http://maven.apache.org/plugins/maven-eclipse-plugin/examples/multi-module-projects.html -->
-						<projectNameTemplate>[artifactId]-[version]</projectNameTemplate>
-						<wtpmanifest>true</wtpmanifest>
-						<downloadSources>false</downloadSources>
-						<downloadJavadocs>false</downloadJavadocs>
-						<wtpapplicationxml>true</wtpapplicationxml>
-						<wtpversion>${project.wtpVersion}</wtpversion>
-						<!-- <additionalBuildcommands> <buildCommand> <name> de.mvmsoft.checkclipse.CheckclipseBuilder 
-							</name> </buildCommand> </additionalBuildcommands> <additionalProjectnatures> 
-							<projectnature> de.mvmsoft.checkclipse.CheckclipseNature </projectnature> 
-							</additionalProjectnatures> <additionalConfig> <file> <name>.checkclipse</name> 
-							<content> enabled=true projectclassloader=false </content> </file> </additionalConfig> -->
+						<argLine>-Dfile.encoding=utf-8</argLine>
 					</configuration>
 				</plugin>
+				
+				<!-- clean-up previous hibernate-search indexed from integration tests, 
+					as there could be a lock -->
 				<plugin>
-					<groupId>org.kie</groupId>
-					<artifactId>kie-maven-plugin</artifactId>
-					<version>${project.kiePluginVersion}</version>
-					<extensions>true</extensions>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>${project.cleanPluginVersion}</version>
+					<configuration>
+						<filesets>
+							<fileset>
+								<directory>${user.home}/${project.build.finalName}/index</directory>
+							</fileset>
+						</filesets>
+					</configuration>
+				</plugin>
+				<!-- will package a ready-to-run app regarding hibernate-search index 
+					location -->
+				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-release-plugin</artifactId>
 				</plugin>
 			</plugins>
 		</pluginManagement>
-		<plugins>
-			<!-- for openjpa, see http://mojo.codehaus.org/openjpa-maven-plugin/index.html 
-				for more details -->
-			<!-- Run the following goal to run OpenJPA PCEnhancer on persistence-enabled 
-				classes manually. mvn openjpa:enhance Run the following goal to run OpenJPA 
-				MappingTool for creating the database creation SQL statements for all persistence-enabled 
-				classes manually. mvn openjpa:sql Run the following goal to run OpenJPA MappingTool 
-				for creating the schema mapping XML file for all persistence-enabled classes 
-				manually. mvn openjpa:schema -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>native2ascii-maven-plugin</artifactId>
-				<version>1.0-beta-1</version>
-				<executions>
-					<execution>
-						<id>native2ascii-utf8</id>
-						<!-- default phase <phase>process-classes</phase> -->
-						<goals>
-							<goal>native2ascii</goal>
-						</goals>
-						<configuration>
-							<encoding>UTF8</encoding>
-							<includes>
-								<include>globalMessages_zh*.properties</include>
-								<include>branch.properties</include>
-							</includes>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>openjpa-maven-plugin</artifactId>
-				<version>${project.openjpaPluginVersion}</version>
-				<configuration>
-					<includes>com/elulian/CustomerSecurityManagementSystem/vo/**/*.class</includes>
-					<excludes>
-						com/elulian/CustomerSecurityManagementSystem/vo/Condition.class,
-						com/elulian/CustomerSecurityManagementSystem/vo/Role.class,
-						com/elulian/CustomerSecurityManagementSystem/vo/BaseObject.class
-					</excludes>
-					<addDefaultConstructor>true</addDefaultConstructor>
-					<enforcePropertyRestrictions>true</enforcePropertyRestrictions>
-					<!-- Pass additional properties to the Plugin here <toolProperties> 
-						<property> <name>directory</name> <value>otherdirectoryvalue</value> </property> 
-						</toolProperties> -->
-				</configuration>
-				<executions>
-					<execution>
-						<id>enhancer</id>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>enhance</goal>
-							<!-- <goal>schema</goal> -->
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- for openjpa end -->
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${project.compilerPluginVersion}</version>
-				<configuration>
-					<source>${project.JavaVersion}</source>
-					<target>${project.JavaVersion}</target>
-				    <!-- <encoding>${project.build.sourceEncoding}</encoding> -->
-				</configuration>
-			</plugin>
-			<!-- generate sql schema file with hibernate <plugin> <groupId>org.codehaus.mojo</groupId> 
-				<artifactId>hibernate3-maven-plugin</artifactId> <version>2.2</version> <configuration> 
-				<components> <component> <name>hbm2ddl</name> <implementation>annotationconfiguration</implementation> 
-				Use 'jpaconfiguration' if you're using JPA. <implementation>jpaconfiguration</implementation> 
-				</component> </components> <componentProperties> <drop>true</drop> <jdk5>true</jdk5> 
-				<propertyfile>${project.build.outputDirectory}/jdbc.properties</propertyfile> 
-				<skip>${skipTests}</skip> </componentProperties> </configuration> <executions> 
-				<execution> <phase>process-test-resources</phase> <goals> <goal>hbm2ddl</goal> 
-				</goals> </execution> </executions> <dependencies> <dependency> <groupId>${project.jdbc.groupId}</groupId> 
-				<artifactId>${project.jdbc.artifactId}</artifactId> <version>${project.jdbcVersion}</version> 
-				</dependency> </dependencies> </plugin> -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>sql-maven-plugin</artifactId>
-				<version>1.5</version>
-				<dependencies>
-					<dependency>
-						<groupId>${project.jdbc.groupId}</groupId>
-						<artifactId>${project.jdbc.artifactId}</artifactId>
-						<version>${project.jdbcVersion}</version>
-					</dependency>
-				</dependencies>
-				<!-- common configuration shared by all executions -->
-				<configuration>
-					<driver>${project.jdbc.driverClassName}</driver>
-					<username>${project.jdbc.username}</username>
-					<password>${project.jdbc.password}</password>
-					<url>${project.jdbc.url}</url>
-					<!-- You can comment out username/password configurations and have maven 
-						to look them up in your settings.xml using ${settingsKey} <settingsKey>sensibleKey</settingsKey> -->
-					<!--all executions are ignored if -Dmaven.skipTest=true -->
-					<skip>${skipTests}</skip>
-				</configuration>
-				<executions>
-					<!-- <execution> <id>drop-db-before-test-if-any</id> <phase>process-test-resources</phase> 
-						<goals> <goal>execute</goal> </goals> <configuration> need another database 
-						to drop the targeted one <url>jdbc:postgressql://localhost:5432:bootstrapdb</url> 
-						<autocommit>true</autocommit> <sqlCommand>drop database yourdb</sqlCommand> 
-						ignore error when database is not avaiable <onError>continue</onError> </configuration> 
-						</execution> -->
-					<!-- <execution> <id>create-db</id> <phase>process-test-resources</phase> 
-						<goals> <goal>execute</goal> </goals> <configuration> <url>jdbc:postgressql://localhost:5432:yourdb</url> 
-						no transaction <autocommit>true</autocommit> <sqlCommand>create database 
-						yourdb</sqlCommand> </configuration> </execution> -->
-					<execution>
-						<id>create-schema</id>
-						<phase>process-test-resources</phase>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<configuration>
-							<autocommit>true</autocommit>
-							<srcFiles>
-								<srcFile>src/main/resources/database.sql</srcFile>
-							</srcFiles>
-							<onError>continue</onError>
-						</configuration>
-					</execution>
-					<!-- <execution> <id>create-data</id> <phase>process-test-resources</phase> 
-						<goals> <goal>execute</goal> </goals> <configuration> <orderFile>ascending</orderFile> 
-						<fileset> <basedir>${basedir}</basedir> <includes> <include>src/test/sql/test-data2.sql</include> 
-						<include>src/test/sql/test-data1.sql</include> </includes> </fileset> </configuration> 
-						</execution> drop db after test <execution> <id>drop-db-after-test</id> <phase>test</phase> 
-						<goals> <goal>execute</goal> </goals> <configuration> <autocommit>true</autocommit> 
-						<sqlCommand>drop database yourdb</sqlCommand> </configuration> </execution> -->
-				</executions>
-			</plugin>
-
-			<!-- database import/export -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>dbunit-maven-plugin</artifactId>
-				<version>1.0-beta-3</version>
-				<configuration>
-					<dataTypeFactoryName>${dbunit.dataTypeFactoryName}</dataTypeFactoryName>
-					<driver>${project.jdbc.driverClassName}</driver>
-					<username>${project.jdbc.username}</username>
-					<password>${project.jdbc.password}</password>
-					<url>${project.jdbc.url}</url>
-					<src>src/test/resources/sample-data.xml</src>
-					<format>xml</format>
-
-					<dest>src/test/resources/sample-data.xml</dest>
-					<type>${dbunit.operation.type}</type>
-					<schema>${dbunit.schema}</schema>
-					<skip>${skipTests}</skip>
-					<transaction>true</transaction>
-				</configuration>
-				<executions>
-					<!-- export database content, usually not used, run mvn dbunit:export 
-						manually if required -->
-					<!-- <execution> <id>test-compile</id> <phase>test-compile</phase> <goals> 
-						<goal>export</goal> </goals> </execution> -->
-					<execution>
-						<id>test-compile</id>
-						<phase>test-compile</phase>
-						<goals>
-							<goal>operation</goal>
-						</goals>
-					</execution>
-					<!-- Runs before integration tests and jetty:run-war -->
-					<execution>
-						<id>test</id>
-						<phase>test</phase>
-						<goals>
-							<goal>operation</goal>
-						</goals>
-					</execution>
-				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>${project.jdbc.groupId}</groupId>
-						<artifactId>${project.jdbc.artifactId}</artifactId>
-						<version>${project.jdbcVersion}</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>${project.jettyPluginVersion}</version>
-				<configuration>
-					<!-- <jvmArgs>-Xmx1024m -Xms1024m -XX:PermSize=128m -XX:MaxPermSize=256m</jvmArgs> 
-						<scanIntervalSeconds>10</scanIntervalSeconds> -->
-					<webApp>
-						<contextPath>${project.web.deployname}</contextPath>
-					</webApp>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<groupId>org.apache.maven.plugins</groupId>
-				<version>${project.surefirePluginVersion}</version>
-				<configuration>
-					<argLine>-Dfile.encoding=utf-8</argLine>
-				</configuration>
-			</plugin>
-			<!-- clean-up previous hibernate-search indexed from integration tests, 
-				as there could be a lock -->
-			<plugin>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>${project.cleanPluginVersion}</version>
-				<configuration>
-					<filesets>
-						<fileset>
-							<directory>${user.home}/${project.build.finalName}/index</directory>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>
-			<!-- will package a ready-to-run app regarding hibernate-search index 
-				location -->
-			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>${project.warPluginVersion}</version>
-				<configuration>
-					<escapeString>\</escapeString>
-					<!-- <webResources> <resource> <directory>src/main/resources/packaged</directory> 
-						<targetPath>WEB-INF/classes</targetPath> <filtering>true</filtering> <includes> 
-						<include>hibernate.properties</include> </includes> </resource> </webResources> -->
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-			</plugin>
-		</plugins>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -1148,5 +885,9 @@
 			</plugin>
 		</plugins>
 	</reporting>
+
+	<modules>
+		<module></module>
+	</modules>
 
 </project>

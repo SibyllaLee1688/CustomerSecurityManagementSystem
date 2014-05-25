@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts> 
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="false" />
+    <constant name="struts.freemarker.templatesCache" value="true" /> 
+    <constant name="struts.custom.i18n.resources" value="globalMessages"/>
+    <constant name="struts.i18n.encoding" value="UTF-8" /> 
+    <constant name="struts.action.extension" value="action,"/>
+    <constant name="struts.objectFactory" value="spring"/>
+ 	<constant name="struts.codebehind.pathPrefix" value="/WEB-INF/pages/"/>  
+  	<constant name="struts.multipart.maxSize" value="41943040"/>
+  <!--  <constant name="struts.ui.theme" value="css_xhtml"/>
+    <constant name="struts.enable.SlashesInActionNames" value="true"/>
+    
+    <constant name="struts.convention.action.disableScanning" value="true"/>
+    <constant name="struts.mapper.alwaysSelectFullNamespace" value="false"/>
+   --> 
+   
+    <!-- Add packages here for each package in one xml file and then include in like: 
+    	example package: include file="example.xml"
+    -->
+	<package name="selfService" extends="struts-default" namespace="/selfService">
+		<default-action-ref name="start" />
+		<action name="*" class="com.elulian.CustomerSecurityManagementSystem.web.selfService.SelfServiceAction" method="{1}">
+            <result name="success">/WEB-INF/pages/selfService/login.jsp</result>
+            <result name="input">/WEB-INF/pages/selfService/login.jsp</result>
+            <result name="error">/WEB-INF/pages/selfService/login.jsp</result> 
+              <!-- <result name="success" type="redirect-action">
+				<param name="namespace">/common</param>
+				<param name="actionName">list</param>
+         		 <param name="reportType">pie</param>
+         <param name="width">100</param>
+         <param name="height">100</param> 
+			</result>-->
+    	</action>
+	</package>
+	
+    <!-- <package name="interceptors" extends="struts-default" abstract="true">
+    	<interceptors>
+    	<interceptor name="accessauthority" class="com.elulian.CustomerSecurityManagementSystem.web.Interceptors.authority.AccessAuthority"/>	 
+		<interceptor-stack name="access-default"> 
+		先引用系统默认拦截器栈，在引用自定义的拦截器，从而避免使系统默认拦截器栈失效
+			<interceptor-ref name="defaultStack"/> 
+			<interceptor-ref name="accessauthority"/> 
+		</interceptor-stack>
+		
+		<interceptor name="accesslevelauthority" class="com.elulian.CustomerSecurityManagementSystem.web.Interceptors.authority.AccessLevelAuthority"/>
+		<interceptor-stack name="accesslevel-default"> 
+			<interceptor-ref name="access-default"/> 
+			<interceptor-ref name="accesslevelauthority"/> 
+		</interceptor-stack> 
+		</interceptors> 
+		<default-interceptor-ref name="access-default"/> 
+		<global-results>
+			 <result name="login">/WEB-INF/pages/selfService/login.jsp</result>
+		</global-results>
+    </package> -->
+	
+	<package name="customerInfo" extends="struts-default" namespace="/customerInfo">		
+		<!-- <default-interceptor-ref name="access-default"/> -->      
+        <action name="search" class="com.elulian.CustomerSecurityManagementSystem.web.customerInfo.CustomerInfoAction" method="search">
+            <result>/WEB-INF/pages/customerInfo/index.jsp</result>
+        </action>
+        
+        <action name="processCustomerRiskInfo" class="com.elulian.CustomerSecurityManagementSystem.web.customerInfo.CustomerInfoAction" method="processCustomerRiskInfo">
+            <result>/WEB-INF/pages/customerInfo/index.jsp</result>
+        </action>
+        
+        <action name="*" class="com.elulian.CustomerSecurityManagementSystem.web.customerInfo.CustomerInfoAction" method="{1}">
+            <result name="success">/WEB-INF/pages/customerInfo/{1}.jsp</result>
+        </action>
+        
+    </package>
+    
+      <package name="example"  extends="json-default, struts-default" namespace="/example">
+      		<!-- <default-interceptor-ref name="access-default"/>  -->
+     		<action name="JSONExample" class="com.elulian.CustomerSecurityManagementSystem.web.customerInfo.CustomerInfoAction" method="extPaging">
+        		<result type="json">
+        		<!-- fields without getter method are not serialized, 'transient' fields are not serialized -->
+        			<param name="excludeProperties">
+    					customerInfo,
+    					id,
+    					condition,
+    					hasNext,
+    					hasPrevious,
+    					currentPage,
+    					totalPage,
+    					msg,
+    					success
+  					</param> 
+  						<param name="excludeNullProperties">true</param>  		
+        		</result>
+     		</action>
+     		<action name="*" class="com.elulian.CustomerSecurityManagementSystem.web.customerInfo.CustomerInfoAction" method="{1}">
+            	<result type="json" name="*">
+            		<param name="includeProperties">
+    					msg,
+    					success
+  					</param>
+            	</result>
+        	</action>
+        	<action name="*" class="com.elulian.CustomerSecurityManagementSystem.web.customerInfo.FileUpload" method="{1}">
+            	<interceptor-ref name="fileUpload">
+            			<!-- 配置允许上传的文件类型，多个用","分隔 
+		              	<param name="allowedTypes">
+		    　　　　　　		image/bmp,image/png,image/gif,image/jpeg,image/jpg,image/x-png, image/pjpeg
+		              	</param>
+              			-->
+              			<!-- 配置允许上传的文件大小，单位字节 -->
+              		<param name="maximumSize">41943040</param>
+           		</interceptor-ref>
+           		<interceptor-ref name="defaultStack"/>
+           		<!-- <interceptor-ref name="access-default" /> -->
+            	<result name="error">
+            		/WEB-INF/pages/customerInfo/error.jsp
+            	</result>
+            	<result name="input">
+            		/WEB-INF/pages/customerInfo/error.jsp
+            	</result>
+            	<result name="success">
+            		/WEB-INF/pages/customerInfo/success.jsp
+            	</result>
+        	</action>
+  </package>
+    
+		
+	<package name="chart" extends="jfreechart-default, struts-default" namespace="/chart">
+		<!-- <default-interceptor-ref name="access-default"/>  -->
+	  <!-- detail see: http://cwiki.apache.org/WW/jfreechart-plugin.html -->
+
+        <!-- default type is png, add new types, actually we should use png!!!
+        <result-types>
+            <result-type name="chart" class="common.ChartResult"></result-type>
+        </result-types>
+		 -->
+        <action name="chart" class="com.elulian.CustomerSecurityManagementSystem.web.customerInfo.JFreeChartAction" method="chart">
+       
+              <result name="success" type="chart"> 
+                   <param name="width">350</param>
+                   <param name="height">250</param>
+            </result>
+           <!--
+              <result type="chart"> 
+                   <param name="width">400</param>
+                   <param name="height">300</param>
+                   <param name="imageType">png</param>
+            </result>   -->
+        </action>
+		
+	</package>
+
+<package name="report" extends="jasperreports-default, struts-default" namespace="/report">
+
+      <action name="*" class="com.elulian.CustomerSecurityManagementSystem.web.customerInfo.JasperAction">
+        <result name="success" type="jasper">
+          <param name="location">/WEB-INF/pages/customerInfo/compiled_jasper_template.jasper</param>
+          <param name="dataSource">customerInfos</param>
+          <param name="format">{1}</param>
+        </result>
+        <result name="error">
+        <!-- Need add an error page in this project -->
+        	 /WEB-INF/pages/selfService/login.jsp
+        </result>
+      </action>
+      
+</package>
+
+	<!-- <package name="admin" extends="struts-default" abstract="true">				
+		<default-interceptor-ref name="accesslevel-default"/> 		
+    </package> -->
+
+    <package name="threshold" extends="struts-default" namespace="/threshold">
+    	<action name="*" method="{1}" class="com.elulian.CustomerSecurityManagementSystem.web.admin.threshold.ThresholdAction">
+            <result>/WEB-INF/pages/admin/threshold/list.jsp</result>
+            <result name="input">/WEB-INF/pages/admin/threshold/list.jsp</result>
+        </action>
+        
+        <action name="execute" method="execute" class="com.elulian.CustomerSecurityManagementSystem.web.admin.threshold.ThresholdAction">
+            <result>/WEB-INF/pages/admin/threshold/index.jsp</result>
+            <result name="input">/WEB-INF/pages/admin/threshold/index.jsp</result>
+        </action>
+    </package>
+    
+    <package name="riskRank" extends="struts-default" namespace="/riskRank">
+    	<action name="*" method="{1}" class="com.elulian.CustomerSecurityManagementSystem.web.admin.riskRank.RiskRankAction">
+            <result>/WEB-INF/pages/admin/riskRank/list.jsp</result>
+            <result name="input">/WEB-INF/pages/admin/riskRank/list.jsp</result>
+        </action>
+        
+        <action name="execute" method="execute" class="com.elulian.CustomerSecurityManagementSystem.web.admin.riskRank.RiskRankAction">
+            <result>/WEB-INF/pages/admin/riskRank/index.jsp</result>
+            <result name="input">/WEB-INF/pages/admin/riskRank/index.jsp</result>
+        </action>
+        
+    </package>
+
+    <package name="userInfo" extends="struts-default" namespace="/userInfo">
+    	<action name="*" method="{1}" class="com.elulian.CustomerSecurityManagementSystem.web.admin.userInfo.UserInfoAction">
+            <result>/WEB-INF/pages/admin/userInfo/index.jsp</result>
+            <result name="input">/WEB-INF/pages/admin/userInfo/index.jsp</result>
+        </action>
+        
+        <action name="save" method="save" class="com.elulian.CustomerSecurityManagementSystem.web.admin.userInfo.UserInfoAction">
+        	<interceptor-ref name="token" />
+        	<!-- <interceptor-ref name="accesslevel-default"/> -->
+            <result name="invalid.token">/WEB-INF/pages/admin/userInfo/index.jsp</result> 
+            
+            <!-- 
+            	<interceptor-refname="execAndWait"></interceptor-ref>
+　　　			<result name="wait">/includes/wait.jsp</result>　
+            -->
+            
+            <result>/WEB-INF/pages/admin/userInfo/index.jsp</result>
+            <result name="input">/WEB-INF/pages/admin/userInfo/index.jsp</result>
+        </action>
+        
+    </package>
+
+</struts>

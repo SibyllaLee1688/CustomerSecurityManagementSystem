@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE customerInfos SYSTEM "threshold.dtd">
+  
+<thresholds  focus="CustomerInfo">
+   <threshold>
+   			<id>0</id>
+    		<attribute>
+  				professionCode
+  		   </attribute>
+    		<type>
+    			java.lang.String
+    		</type>
+    			<condition>
+    		  		eq
+    			</condition>
+    			<params>
+    				<param>
+    					null
+    				</param>
+    				
+    				<param>
+    					其他
+    				</param>
+    					
+    				<param>
+    					无业
+    				</param>
+    				
+    			</params>
+    		<value>
+    			20
+    		</value>
+    		<description>
+    			用户职业没填，或者填为其他，无业
+    		</description>
+    	</threshold>
+ 
+ <threshold>
+ <id>1</id>
+  	<attribute>certificateEndDate </attribute>
+    		<type>
+    			java.util.Date
+    		</type>
+    			<condition>
+    		  		 lt
+    			</condition>
+    			<params>
+    				<param>
+    					current date
+    				</param>
+    			</params>
+    		<value>
+    			80
+    		</value>
+    		<description>
+    			身份证过期
+    		</description>
+    	</threshold>
+   
+   <threshold>
+   <id>2</id>
+    <attribute>customerName   </attribute>
+    		<type>
+    			java.lang.String
+    		</type>
+    			<condition>
+    		  		eq
+    			</condition>
+    			<params>
+    				<param>
+    					null
+    				</param>
+    			</params>
+    		<value>
+    			80
+    		</value>
+    		<description>
+    			用户名为空
+    		</description>
+    	</threshold>
+ 
+    	<threshold>
+    	<id>3</id>
+    <attribute>certificateId  </attribute>
+    	<type>
+    			java.lang.String
+    		</type>
+    			<condition>
+    		  		eq
+    			</condition>
+    			<params>
+    				<param>
+    					null
+    				</param>
+    			</params>
+    		<value>
+    			80
+    		</value>
+    		<description>
+    			用户证为空
+    		</description>
+    	</threshold>
+  
+   	<threshold>
+   	<id>4</id>
+    <attribute>foreignFlag  </attribute>
+    		<type>
+    			java.lang.Boolean
+    		</type>
+    			<condition>
+    		  		eq
+    			</condition>
+    			<params>
+    				<param>
+    					true
+    				</param>
+    			</params>
+    		<value>
+    			20
+    		</value>
+    		<description>
+    			境外用户位没填，或者为真
+    		</description>
+    	</threshold>
+   
+</thresholds>
+

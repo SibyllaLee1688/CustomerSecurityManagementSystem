@@ -1,0 +1,83 @@
+<%@ taglib prefix="s" uri="/struts-tags"%>
+
+							
+<div class="roundedlist">
+<p align="center"><font size="3"><b><s:text name="userInfo.list" /></b></font></p>
+<s:if test="userInfos.size > 0">
+	<table class="tablecloth">
+		<tr>
+			<th><s:text name="userInfo.name" /></th>
+			<th><s:text name="userInfo.realname" /></th>
+			<th><s:text name="userInfo.branch" /></th>
+			<th><s:text name="operation" /></th>
+		</tr>
+		<s:iterator value="userInfos">
+			<tr id="row_<s:property value="id"/>">
+				<td><s:property value="username" /></td>
+			<td><s:property value="realname" /></td>
+				<td><s:property value="branch" /></td>
+				<td><s:url id="removeUrl" action="remove">
+					<s:param name="id" value="id" />
+				</s:url> <s:a href="%{removeUrl}"><s:text name="remove" /></s:a>
+				<s:a id="a_%{id}" href="javascript:void(0);" onclick="javascript:fillUserInfo('a_%{id}')"><s:text name="edit" /></s:a></td>
+			</tr>
+		</s:iterator>
+		<tr>
+			<td colspan="4">
+			<table>
+				<tr>
+					<td><s:text name="show"></s:text> <s:property value="currentPage" /> / <s:property
+						value="totalPage" /> <s:text name="page" /></td>
+						<s:if test="%{currentPage != 1}"><td>
+						<s:url action="list" namespace="/userInfo" id="firstUrl">
+							<s:param name="pageNum" value="1"></s:param>
+							<s:param name="condition.searchBranch" value="%{condition.searchBranch}"></s:param>
+								<s:param name="condition.username" value="%{condition.username}"></s:param>		
+							<s:param name="condition.realname" value="%{condition.realname}"></s:param>
+						</s:url>
+						<s:a href="%{firstUrl}" title="first" cssClass="first">
+						</s:a></td>
+					</s:if> <s:if test="%{hasPrevious}"><td>
+						<s:url action="list" namespace="/userInfo" id="previousUrl">
+							<s:param name="pageNum" value="%{currentPage - 1}"></s:param>
+							<s:param name="condition.searchBranch" value="%{condition.searchBranch}"></s:param>
+							<s:param name="condition.username" value="%{condition.username}"></s:param>				
+							<s:param name="condition.realname" value="%{condition.realname}"></s:param>	
+						</s:url>
+						<s:a href="%{previousUrl}" title="previous" cssClass="prev">
+						</s:a></td>
+					</s:if>
+					<s:if test="%{hasNext}"><td>
+						
+						<s:url action="list" namespace="/userInfo" id="nextUrl">
+										<s:param name="condition.searchBranch" value="%{condition.searchBranch}" />					
+						
+								<s:param name="condition.username" value="%{condition.username}"></s:param>				
+						<s:param name="condition.realname" value="%{condition.realname}"></s:param>
+							<s:param name="pageNum" value="currentPage + 1"></s:param>
+						</s:url>	
+						
+						<s:a href="%{nextUrl}" title="next" cssClass="next">
+							
+						</s:a></td>
+					</s:if> 
+<s:if test="%{currentPage != totalPage}"><td>
+
+						<s:url action="list" namespace="/userInfo" id="lastUrl">
+							<s:param name="pageNum" value="totalPage"></s:param>
+							<s:param name="condition.searchBranch" value="%{condition.searchBranch}"></s:param>
+								<s:param name="condition.username" value="%{condition.username}"></s:param>			
+								<s:param name="condition.realname" value="%{condition.realname}"></s:param>
+							</s:url>
+						<s:a href="%{lastUrl}" title="last" cssClass="last">
+						</s:a></td>
+					</s:if>
+
+				</tr>
+			</table>
+			</td>
+		</tr>
+	</table>
+</s:if>
+
+</div>

@@ -1,0 +1,266 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.elulian</groupId>
+		<artifactId>CustomerSecurityManagementSystem</artifactId>
+		<version>0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>CustomerSecurityManagementDAO</artifactId>
+
+	<packaging>jar</packaging>
+
+	<name>CustomerSecurityManagementDAO</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.annotation</groupId>
+			<artifactId>jsr250-api</artifactId>
+		</dependency>
+		<!-- for openjpa -->
+		<dependency>
+			<groupId>org.apache.openjpa</groupId>
+			<artifactId>openjpa</artifactId>
+		</dependency>
+		<!-- for openjpa end -->
+		<!-- for database source -->
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+		</dependency>
+		<!-- for database source end -->
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib-nodep</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>${project.jdbc.groupId}</groupId>
+			<artifactId>${project.jdbc.artifactId}</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+		</dependency>
+		<!-- http://blog.csdn.net/zjh19870703/article/details/7618412 -->
+		<!-- Core utilities used by other modules. Define this if you use Spring 
+			Utility APIs (org.springframework.core, org.springframework.util) -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</dependency>
+		<!-- Expression Language (depends on spring-core) Define this if you use 
+			Spring Expression APIs (org.springframework.expression) -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-expression</artifactId>
+		</dependency>
+		<!-- Bean Factory and JavaBeans utilities (depends on spring-core) Define 
+			this if you use Spring Bean APIs (org.springframework.beans) -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+		<!-- Application Context (depends on spring-core, spring-expression, spring-aop, 
+			spring-beans) This is the central artifact for Spring's Dependency Injection 
+			Container and is generally always defined -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<!-- Various Application Context utilities, including EhCache, JavaMail, 
+			Quartz, and Freemarker integration Define this if you need any of these integrations -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<defaultGoal>install</defaultGoal>
+
+		<plugins>
+
+			<!-- for openjpa, see http://mojo.codehaus.org/openjpa-maven-plugin/index.html 
+				for more details -->
+			<!-- Run the following goal to run OpenJPA PCEnhancer on persistence-enabled 
+				classes manually. mvn openjpa:enhance Run the following goal to run OpenJPA 
+				MappingTool for creating the database creation SQL statements for all persistence-enabled 
+				classes manually. mvn openjpa:sql Run the following goal to run OpenJPA MappingTool 
+				for creating the schema mapping XML file for all persistence-enabled classes 
+				manually. mvn openjpa:schema -->
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>openjpa-maven-plugin</artifactId>
+				<version>${project.openjpaPluginVersion}</version>
+				<configuration>
+					<includes>com/elulian/CustomerSecurityManagementSystem/vo/**/*.class</includes>
+					<excludes>
+						com/elulian/CustomerSecurityManagementSystem/vo/Condition.class,
+						com/elulian/CustomerSecurityManagementSystem/vo/Role.class,
+						com/elulian/CustomerSecurityManagementSystem/vo/BaseObject.class
+					</excludes>
+					<addDefaultConstructor>true</addDefaultConstructor>
+					<enforcePropertyRestrictions>true</enforcePropertyRestrictions>
+					<!-- Pass additional properties to the Plugin here <toolProperties> 
+						<property> <name>directory</name> <value>otherdirectoryvalue</value> </property> 
+						</toolProperties> -->
+				</configuration>
+				<executions>
+					<execution>
+						<id>enhancer</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>enhance</goal>
+							<!-- <goal>schema</goal> -->
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- for openjpa end -->
+			<!-- generate sql schema file with hibernate <plugin> <groupId>org.codehaus.mojo</groupId> 
+				<artifactId>hibernate3-maven-plugin</artifactId> <version>2.2</version> <configuration> 
+				<components> <component> <name>hbm2ddl</name> <implementation>annotationconfiguration</implementation> 
+				Use 'jpaconfiguration' if you're using JPA. <implementation>jpaconfiguration</implementation> 
+				</component> </components> <componentProperties> <drop>true</drop> <jdk5>true</jdk5> 
+				<propertyfile>${project.build.outputDirectory}/jdbc.properties</propertyfile> 
+				<skip>${skipTests}</skip> </componentProperties> </configuration> <executions> 
+				<execution> <phase>process-test-resources</phase> <goals> <goal>hbm2ddl</goal> 
+				</goals> </execution> </executions> <dependencies> <dependency> <groupId>${project.jdbc.groupId}</groupId> 
+				<artifactId>${project.jdbc.artifactId}</artifactId> <version>${project.jdbcVersion}</version> 
+				</dependency> </dependencies> </plugin> -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sql-maven-plugin</artifactId>
+				<version>1.5</version>
+				<dependencies>
+					<dependency>
+						<groupId>${project.jdbc.groupId}</groupId>
+						<artifactId>${project.jdbc.artifactId}</artifactId>
+						<version>${project.jdbcVersion}</version>
+					</dependency>
+				</dependencies>
+				<!-- common configuration shared by all executions -->
+				<configuration>
+					<driver>${project.jdbc.driverClassName}</driver>
+					<username>${project.jdbc.username}</username>
+					<password>${project.jdbc.password}</password>
+					<url>${project.jdbc.url}</url>
+					<!-- You can comment out username/password configurations and have maven 
+						to look them up in your settings.xml using ${settingsKey} <settingsKey>sensibleKey</settingsKey> -->
+					<!--all executions are ignored if -Dmaven.skipTest=true -->
+					<skip>${skipTests}</skip>
+				</configuration>
+				<executions>
+					<!-- <execution> <id>drop-db-before-test-if-any</id> <phase>process-test-resources</phase> 
+						<goals> <goal>execute</goal> </goals> <configuration> need another database 
+						to drop the targeted one <url>jdbc:postgressql://localhost:5432:bootstrapdb</url> 
+						<autocommit>true</autocommit> <sqlCommand>drop database yourdb</sqlCommand> 
+						ignore error when database is not avaiable <onError>continue</onError> </configuration> 
+						</execution> -->
+					<!-- <execution> <id>create-db</id> <phase>process-test-resources</phase> 
+						<goals> <goal>execute</goal> </goals> <configuration> <url>jdbc:postgressql://localhost:5432:yourdb</url> 
+						no transaction <autocommit>true</autocommit> <sqlCommand>create database 
+						yourdb</sqlCommand> </configuration> </execution> -->
+					<execution>
+						<id>create-schema</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>execute</goal>
+						</goals>
+						<configuration>
+							<autocommit>true</autocommit>
+							<srcFiles>
+								<srcFile>src/main/resources/database.sql</srcFile>
+							</srcFiles>
+							<onError>continue</onError>
+						</configuration>
+					</execution>
+					<!-- <execution> <id>create-data</id> <phase>process-test-resources</phase> 
+						<goals> <goal>execute</goal> </goals> <configuration> <orderFile>ascending</orderFile> 
+						<fileset> <basedir>${basedir}</basedir> <includes> <include>src/test/sql/test-data2.sql</include> 
+						<include>src/test/sql/test-data1.sql</include> </includes> </fileset> </configuration> 
+						</execution> drop db after test <execution> <id>drop-db-after-test</id> <phase>test</phase> 
+						<goals> <goal>execute</goal> </goals> <configuration> <autocommit>true</autocommit> 
+						<sqlCommand>drop database yourdb</sqlCommand> </configuration> </execution> -->
+				</executions>
+			</plugin>
+
+			<!-- database import/export -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>dbunit-maven-plugin</artifactId>
+				<version>1.0-beta-3</version>
+				<configuration>
+					<dataTypeFactoryName>${dbunit.dataTypeFactoryName}</dataTypeFactoryName>
+					<driver>${project.jdbc.driverClassName}</driver>
+					<username>${project.jdbc.username}</username>
+					<password>${project.jdbc.password}</password>
+					<url>${project.jdbc.url}</url>
+					<src>src/test/resources/sample-data.xml</src>
+					<format>xml</format>
+
+					<dest>src/test/resources/sample-data.xml</dest>
+					<type>${dbunit.operation.type}</type>
+					<schema>${dbunit.schema}</schema>
+					<skip>${skipTests}</skip>
+					<transaction>true</transaction>
+				</configuration>
+				<executions>
+					<!-- export database content, usually not used, run mvn dbunit:export 
+						manually if required -->
+					<!-- <execution> <id>test-compile</id> <phase>test-compile</phase> <goals> 
+						<goal>export</goal> </goals> </execution> -->
+					<execution>
+						<id>test-compile</id>
+						<phase>test-compile</phase>
+						<goals>
+							<goal>operation</goal>
+						</goals>
+					</execution>
+					<!-- Runs before integration tests and jetty:run-war -->
+					<execution>
+						<id>test</id>
+						<phase>test</phase>
+						<goals>
+							<goal>operation</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>${project.jdbc.groupId}</groupId>
+						<artifactId>${project.jdbc.artifactId}</artifactId>
+						<version>${project.jdbcVersion}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+</project>
