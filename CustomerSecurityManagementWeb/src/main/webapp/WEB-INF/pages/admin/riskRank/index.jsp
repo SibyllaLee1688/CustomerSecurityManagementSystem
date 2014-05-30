@@ -1,64 +1,166 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<!-- <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+ -->
+<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.9.3/dojo/dojo.js"></script>
 
-		<sx:head debug="false" cache="true"/>
-		<script type="text/javascript">
-			dojo.event.topic.subscribe("/save", function(data, type, request) {
-			    if(type == "before" && validateForm_save()) {
-					dojo.byId("submit").disabled = true;
-				}
-			if(type == "load") {
-					dojo.byId("id").value = "";
-					dojo.byId("rankType").value = "";
-					dojo.byId("minValue").value = "";
-					dojo.byId("maxValue").value = "";
-					dojo.byId("submit").disabled = false;
-				}
-			});
-
-			dojo.event.topic.subscribe("/edit", function(data, type, request) {
-			    if(type == "before") {
-					var id = data.split("_")[1];
-
-					var tr = dojo.byId("row_"+id);
-					var tds = tr.getElementsByTagName("td");
-
-					dojo.byId("id").value = id;
-					dojo.byId("rankType").value = dojo.string.trim(dojo.dom.textContent(tds[0]));
-					dojo.byId("minValue").value = dojo.string.trim(dojo.dom.textContent(tds[1]));
-					dojo.byId("maxValue").value = dojo.string.trim(dojo.dom.textContent(tds[2]));
-				}
-			});
+		<script type="text/javascript" >
+		
+			require(["dojo/dom", "dojo/request", "dojo/request/notify", "dojo/dom-construct", "dojo/domReady!"],
+				function(dom, request, notify, domConstruct){
+					notify("load", function(data){
+	                    domConstruct.place("<p>" + dom.byId('LoadingHint').innerHTML + "</p>","riskRanks");                      
+	                }); 
+					domConstruct.empty("riskRanks");                
+	                // Request the text file
+	                request.get("/CustomerSecurityManagementSystem/riskRank/list.action").then(
+	                    function(response){
+	                        // Display the text file content
+	                        dom.byId('riskRanks').innerHTML = response;
+	                    });
+	                }
+			);
+			
+			function refreshRiskRankList(){
+				require(["dojo/dom", "dojo/on", "dojo/request", "dojo/request/notify", "dojo/dom-construct"],
+					    function(dom, on, request, notify, domConstruct){
+							notify("load", function(data){
+			                    //i18n is required
+			                    domConstruct.place("<p>" + dom.byId('LoadingHint').innerHTML + "</p>","riskRanks");
+			                    
+			                }); 
+						    
+							
+							// Attach the onclick event handler to the textButton
+					        //on(dom.byId("notifyTopics_refresh"), "click", function(evt){
+					        	// prevent the page from navigating
+	                      //      evt.stopPropagation();
+	                       //     evt.preventDefault();
+	                 
+	                            domConstruct.empty("riskRanks");
+					            // Request the text file
+					            request.get("/CustomerSecurityManagementSystem/riskRank/list.action").then(
+					            	function(response){
+					                    // Display the text file content
+					            		dom.byId('riskRanks').innerHTML = response;
+					                });
+					       // });
+					    }
+					);
+			}
+		 	
+			require(["dojo/dom", "dojo/on", "dojo/request", "dojo/dom-form", "dojo/request/notify", "dojo/dom-construct", "dojo/domReady!"],
+                    function(dom, on, request, domForm, notify, domConstruct){
+                 
+                        var form = dom.byId('save');
+                        
+                       notify("load", function(data){
+                             //i18n is required
+                             domConstruct.place("<p>" + dom.byId('LoadingHint').innerHTML + "</p>","riskRanks");
+                             
+                         });
+                        
+                         // Attach the onsubmit event handler of the form
+                        on(form, "submit", function(evt){
+                            // prevent the page from navigating after submit
+                            evt.stopPropagation();
+                            evt.preventDefault();
+                 
+                            domConstruct.empty("riskRanks");
+                            // Post the data to the server
+                            request.post("/CustomerSecurityManagementSystem/riskRank/save.action", {
+                                // Send the username and password
+                                data: domForm.toObject("save"),
+                                // Wait 5 seconds for a response
+                                timeout: 5000
+                 
+                            }).then(function(response){
+                                dom.byId('riskRanks').innerHTML = response;
+                                //domConstruct.place(response, 'riskRanks');
+                                dom.byId("id").value = "";
+                                dom.byId("rankType").value = "";
+                                dom.byId("minValue").value = "";
+                                dom.byId("maxValue").value = "";
+                                dom.byId("version").value = """;
+                            });
+                        });
+                    }
+                );
+			
+			function removeRiskRank(removeRiskRankURL){
+				require(["dojo/dom", "dojo/request", "dojo/request/notify", "dojo/dom-construct"],
+                        function(dom,  request, notify, domConstruct) {
+		                    notify("load", function(data){
+		                        //i18n is required
+		                        domConstruct.place("<p>" + dom.byId('LoadingHint').innerHTML + "</p>","riskRanks");                      
+		                    }); 
+		                    domConstruct.empty("riskRanks"); 
+		                 // Request the text file
+		                    request.del(removeRiskRankURL).then(
+		                    		function(response){
+                                        // Display the text file content
+                                        dom.byId("riskRanks").innerHTML = response;
+                                    });                                        
+		               }
+				);
+			}
+			
+			function fillRiskRank(riskRankId){
+				require(["dojo/dom", "dojo/string"],
+                        function(dom, string) {
+                            var id = riskRankId.split("_")[1];
+                            var tr = dom.byId("row_"+id);
+                            var tds = tr.getElementsByTagName("td");
+                            dom.byId("id").value = id;
+                            //alert(dom.textcontext(tds[0]));
+                            dom.byId("rankType").value = string.trim(tds[0].innerHTML);
+                            dom.byId("minValue").value = string.trim(tds[1].innerHTML);
+                            dom.byId("maxValue").value = string.trim(tds[2].innerHTML);
+                            dom.byId("version").value = string.trim(tds[3].innerHTML);   
+                                                                
+                       }
+                );
+			}
+			 
 		</script>
 	</head>
 	<body>
+	
+	<text id="LoadingHint" style="display:none"><s:property value="getText('Load')" /></text>
 	    <s:url namespace="/riskRank" action="list" id="descrsUrl"/>
 
         <div class="roundedlist">
         	<div style="text-align: right;">
-    			<sx:a notifyTopics="/refresh"><s:text name="refresh" /></sx:a>
+    			<a id="notifyTopics_refresh" href="javascript:void(0)" onclick="javascript:refreshRiskRankList()"><s:text name="refresh" /></a>
     		</div>
-    		<sx:div id="riskRanks" theme="ajax" href="%{descrsUrl}" loadingText="%{getText('Load')}" showLoadingText="true"  listenTopics="/refresh, /remove"/>
+    		
+    		<div id="riskRanks" >
+    		  
+    		</div>
         </div>
 
         <br/>
 
 		<div class="roundedsave">
 			<p><s:text name="riskRank.data" /></p>
-			<s:form action="save" validate="true" namespace="/riskRank" method="post">
+			
+            <table class="wwFormTable"><tr><td><form  id="save">
 			    <s:textfield id="id" name="riskRank.id" cssStyle="display:none" />
 				<s:textfield id="rankType" name="riskRank.rankType" key="riskRank.rankType"/>
 				<s:textfield id="minValue" key="riskRank.minvalue" name="riskRank.minValue"/>
 				<s:textfield id="maxValue" key="riskRank.maxvalue" name="riskRank.maxValue"/>
-				<sx:submit id="submit" key="form.submit" targets="riskRanks" notifyTopics="/save" loadingText="%{getText('Load')}"
+				<s:submit id="submit" key="form.submit" loadingText="%{getText('Load')}"
         showLoadingText="true"/>
 				<s:reset type="button" key="form.clear"/>
-			</s:form>
+			</form></td></tr>
+			</table>
+      
 		</div>
 	</body>
 </html>

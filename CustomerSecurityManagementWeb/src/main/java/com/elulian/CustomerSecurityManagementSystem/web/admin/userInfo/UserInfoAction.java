@@ -4,27 +4,24 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ParameterAware;
-
-import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.stereotype.Controller;
 
-
-import com.opensymphony.xwork2.Action;
-import com.opensymphony.xwork2.ActionSupport;
 import com.elulian.CustomerSecurityManagementSystem.common.Config;
-import com.elulian.CustomerSecurityManagementSystem.exception.DataMissingException;
-import com.elulian.CustomerSecurityManagementSystem.exception.UserExistsException;
 import com.elulian.CustomerSecurityManagementSystem.service.IUserInfoService;
-import com.elulian.CustomerSecurityManagementSystem.service.impl.UserInfoService;
 import com.elulian.CustomerSecurityManagementSystem.vo.Condition;
 import com.elulian.CustomerSecurityManagementSystem.vo.UserInfo;
+import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.Preparable;
 
 @Controller("userInfoAction") @Scope("prototype")
-public class UserInfoAction extends ActionSupport implements ParameterAware {
+public class UserInfoAction extends ActionSupport implements Preparable, ParameterAware {
 
 
 	private static Logger logger = Logger.getLogger(UserInfoAction.class);
@@ -91,11 +88,11 @@ public class UserInfoAction extends ActionSupport implements ParameterAware {
 			logger.debug("First time to access userInfoAction, create a condition object");
 			condition = new Condition();
 		}else{
-			if(condition.getRealname() != null && condition.getRealname().length() ==0)
+			if(condition.getRealname() != null && condition.getRealname().trim().length() ==0)
 				 condition.setRealname(null);
-			if(condition.getUsername() != null && condition.getUsername().length() ==0)
+			if(condition.getUsername() != null && condition.getUsername().trim().length() ==0)
 				 condition.setUsername(null);
-			if(condition.getSearchBranch() != null && condition.getSearchBranch().length() ==0)
+			if(condition.getSearchBranch() != null && condition.getSearchBranch().trim().length() ==0)
 				 condition.setSearchBranch(null);
 		}
 		
@@ -105,8 +102,7 @@ public class UserInfoAction extends ActionSupport implements ParameterAware {
 		
 		if (!flag && params.get("pageNum") != null) {
 			int pageNum = Integer.valueOf((params.get("pageNum"))[0]);
-			logger.debug(pageNum);
-			logger.debug("********************");
+			logger.debug(pageNum + "********************");
 			if (pageNum >= 1 && pageNum <= totalPage) {
 				currentPage = pageNum;
 			}
@@ -140,17 +136,15 @@ public class UserInfoAction extends ActionSupport implements ParameterAware {
 			// currentPage = 1;
 			flag = true;
 		}
-		logger.debug(logger.getName() + userInfo.getUsername());
+		logger.debug(userInfo);
 		try {
 			this.userInfoService.save(userInfo);
 		} catch (DataIntegrityViolationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		} catch (InvalidDataAccessApiUsageException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e);
 		}
-		this.userInfo = new UserInfo();
+		//this.userInfo = new UserInfo();
 		return list();
 	}
 
@@ -162,9 +156,18 @@ public class UserInfoAction extends ActionSupport implements ParameterAware {
 		return list();
 	}
 
+	/**
+	 * prepare userinfo before edit execution
+	 */
 	public void prepare() throws Exception {
-		if (id != null)
-			userInfo = userInfoService.findById(id);
+		if ( ServletActionContext.getRequest().getMethod().equalsIgnoreCase("post")){
+			String inputIdString = ServletActionContext.getRequest().getParameter("userInfo.id");
+			/* just for integer >= 0 */
+			logger.error(inputIdString);
+			if((inputIdString.matches("^\\d+$"))) {
+				userInfo = userInfoService.findById(Integer.parseInt(inputIdString));
+			}
+		}
 	}
 
 	public boolean isHasNext() {

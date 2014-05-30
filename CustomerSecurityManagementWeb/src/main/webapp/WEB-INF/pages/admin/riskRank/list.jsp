@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -23,6 +22,7 @@
 				<th>
 					<s:text name="riskRank.maxvalue" />
 				</th>
+				<th style="display:none;"><s:text name="riskRankVersion" /></th>
 				<th>
 					<s:text name="operation" />
 				</th>
@@ -39,13 +39,14 @@
 					<s:property value="maxValue" />
 				</td>
 				<td>
+                    <s:property value="version" />
+                </td>
+				<td>
 					<s:url id="removeUrl" action="remove">
 						<s:param name="id" value="id" />
 					</s:url>
-					<sx:a href="%{removeUrl}" targets="riskRanks" loadingText="%{getText('Load')}"
-        showLoadingText="true"
-><s:text name="remove" /></sx:a>
-					<sx:a id="a_%{id}" notifyTopics="/edit"><s:text name="edit" /></sx:a>
+					<s:a href="javascript:void(0);" onclick="javascript:removeRiskRank('%{removeUrl}')"><s:text name="remove" /></s:a>
+					<s:a href="javascript:void(0);" onclick="javascript:fillRiskRank('a_%{id}')" ><s:text name="edit" /></s:a>
 				</td>
 			</tr>
 		</s:iterator>

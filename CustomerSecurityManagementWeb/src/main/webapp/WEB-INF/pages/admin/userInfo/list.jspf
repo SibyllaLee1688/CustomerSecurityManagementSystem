@@ -9,13 +9,16 @@
 			<th><s:text name="userInfo.name" /></th>
 			<th><s:text name="userInfo.realname" /></th>
 			<th><s:text name="userInfo.branch" /></th>
+			<th style="display:none;"><s:text name="userInfoVersion" /></th>
 			<th><s:text name="operation" /></th>
+			
 		</tr>
 		<s:iterator value="userInfos">
 			<tr id="row_<s:property value="id"/>">
 				<td><s:property value="username" /></td>
 			<td><s:property value="realname" /></td>
 				<td><s:property value="branch" /></td>
+				<td style="display:none;"><s:property value="version" /></td>
 				<td><s:url id="removeUrl" action="remove">
 					<s:param name="id" value="id" />
 				</s:url> <s:a href="%{removeUrl}"><s:text name="remove" /></s:a>
