@@ -168,6 +168,46 @@ public class UserInfoDAOTest {
     	 assertNotNull(user.getId());
     	 assertEquals(registerTime, user.getRegisterTime());
     	 assertEquals(expiredTime, user.getExpiredTime());
+    	 assertTrue(1 == user.getVersion());
+    	 //userInfoDAO.remove(user.getId());    	 
+     }
+     
+     /* test save */
+	 /**
+	  * test modify a existing user in database
+	  */
+     @Test (expected = org.apache.openjpa.persistence.InvalidStateException.class)
+     public void testDAOEditUserVersion(){
+    	 logger.info("modify a existing user in database--------------");
+    	 int id = 1;   	 
+    	 UserInfo userInfo = userInfoDAO.findById(id);
+    	 assertNotNull(userInfo);
+    	 userInfo.setVersion(3);
+    	 userInfoDAO.save(userInfo);    	 
+     }
+     
+     /* test save */
+	 /**
+	  * test modify a existing user in database
+	  * version is not sync between openjpa and database, see
+	  * @see BaseDAO.merge
+	  */
+     @Ignore 
+     //@Test
+     public void testDAOEditUser(){
+    	 logger.info("modify a existing user in database--------------");
+    	 int id = 1;   	 
+    	 UserInfo userInfo = userInfoDAO.findById(id);
+    	 assertNotNull(userInfo);
+    	 assertTrue(1 == userInfo.getVersion());
+    	 userInfo.setPasswordHint("for edit");
+    	 userInfo = userInfoDAO.save(userInfo);
+    	 assertEquals("for edit", userInfo.getPasswordHint());
+    	// assertEquals(2, userInfo.getVersion().intValue());
+    	 userInfo.setPasswordHint("for edit 2");
+    	 userInfoDAO.save(userInfo);
+    	 System.out.println(userInfo.getVersion());
+    	 //assertTrue(2 == userInfo.getVersion());
     	 //userInfoDAO.remove(user.getId());    	 
      }
      

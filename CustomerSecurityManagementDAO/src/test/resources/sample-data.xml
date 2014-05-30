@@ -26,6 +26,60 @@
     <column>riskValue</column>
     <column>sex</column>
     <column>zipcode</column>
+    <row>
+      <value>1</value>
+      <value></value>
+      <value></value>
+      <value></value>
+      <value></value>
+      <value>1970-02-12</value>
+      <value>2020-02-11</value>
+      <value></value>
+      <value></value>
+      <value>1</value>
+      <value></value>
+      <value></value>
+      <value>0</value>
+      <value></value>
+      <value></value>
+      <value></value>
+      <value></value>
+      <value></value>
+      <value></value>
+      <value></value>
+      <value></value>
+      <value></value>
+      <value>0</value>
+      <value>男</value>
+      <value></value>
+    </row>
+    <row>
+      <value>2</value>
+      <value></value>
+      <value></value>
+      <value></value>
+      <value></value>
+      <value>1970-02-12</value>
+      <value>2000-02-12</value>
+      <value></value>
+      <value></value>
+      <value></value>
+      <value></value>
+      <value></value>
+      <value>1</value>
+      <value></value>
+      <value></value>
+      <value>2</value>
+      <value></value>
+      <value></value>
+      <value></value>
+      <value></value>
+      <value></value>
+      <value></value>
+      <value>0</value>
+      <value>男</value>
+      <value></value>
+    </row>
   </table>
   <table name="persistent_logins">
     <column>username</column>
@@ -44,23 +98,27 @@
     <column>maxVal</column>
     <column>minVal</column>
     <column>rankType</column>
+    <column>version</column>
     <row>
       <value>1</value>
       <value>999</value>
       <value>80</value>
       <value>高</value>
+      <value>1</value>
     </row>
     <row>
       <value>2</value>
       <value>79</value>
       <value>60</value>
       <value>中</value>
+      <value>1</value>
     </row>
     <row>
       <value>3</value>
       <value>59</value>
       <value>0</value>
       <value>低</value>
+      <value>1</value>
     </row>
   </table>
   <table name="threshold">
@@ -114,6 +172,7 @@
     <column>realname</column>
     <column>registerTime</column>
     <column>name</column>
+    <column>version</column>
     <row>
       <value>1</value>
       <value>false</value>
@@ -129,6 +188,7 @@
       <value>elulian</value>
       <value><![CDATA[2014-05-19 11:06:31.0]]></value>
       <value>Admin</value>
+      <value>1</value>
     </row>
     <row>
       <value>2</value>
@@ -145,6 +205,7 @@
       <value>remove</value>
       <value><![CDATA[2014-05-19 11:06:31.0]]></value>
       <value>remove</value>
+      <value>1</value>
     </row>
     <row>
       <value>3</value>
@@ -161,6 +222,7 @@
       <value>add</value>
       <value><![CDATA[2014-05-19 11:06:32.0]]></value>
       <value>add</value>
+      <value>1</value>
     </row>
   </table>
 </dataset>

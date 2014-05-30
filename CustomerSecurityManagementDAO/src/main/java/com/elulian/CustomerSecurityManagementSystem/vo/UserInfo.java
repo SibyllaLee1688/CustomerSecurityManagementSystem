@@ -14,13 +14,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Table(name = "userinfo")
 public class UserInfo extends BaseObject implements UserDetails {
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6013770907577732201L;
-	/**
-	 * 
-	 */
+	private static final long serialVersionUID = 3500669012158219743L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -71,6 +69,17 @@ public class UserInfo extends BaseObject implements UserDetails {
 	@Transient
 	private Set<Role> roles = new HashSet<Role>();
 
+	@Version
+	private Integer version;
+	
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+	
 	public UserInfo() {
 
 	}

@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
 
 @Entity
 @Table(name="riskrank", uniqueConstraints=@UniqueConstraint(columnNames={"rankType"}))   
@@ -16,7 +17,7 @@ public class RiskRank extends BaseObject {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1425736767627206841L;
+	private static final long serialVersionUID = -3064443427658286103L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -29,7 +30,17 @@ public class RiskRank extends BaseObject {
 	@Basic(optional=false)
 	@Column(name="maxVal")
 	private Integer maxValue;
-	
+	@Version
+	private Integer version;
+
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
 	public RiskRank(){
 		
 	}
