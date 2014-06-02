@@ -48,7 +48,6 @@ public interface IBaseDAO <T, ID extends Serializable>{
      * @param object the object to save
      * @return the persisted object
      */
-  //  @Transactional
     T save(T object);
 
 
@@ -56,14 +55,12 @@ public interface IBaseDAO <T, ID extends Serializable>{
      * Generic method to delete an object
      * @param object the object to remove
      */
-  //  @Transactional
     void remove(T object);
 
     /**
      * Generic method to delete an object
      * @param id the identifier (primary key) of the object to remove
      */
- //   @Transactional
     void remove(ID id);
 
     /**

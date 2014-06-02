@@ -225,4 +225,44 @@
       <value>1</value>
     </row>
   </table>
+  <table name="role">
+        <column>id</column>
+        <column>name</column>
+        <column>description</column>
+        <row>
+            <value description="id">1</value>
+            <value description="name">ROLE_ADMIN</value>
+            <value description="description"><![CDATA[Administrator role]]></value>
+        </row>
+        <row>
+            <value description="id">2</value>
+            <value description="name">ROLE_USER</value>
+            <value description="description"><![CDATA[Default role for registered Users]]></value>
+        </row>
+        <row>
+            <value description="id">3</value>
+            <value description="name">ROLE_ANONYMOUS</value>
+            <value description="description"><![CDATA[Default role for unregistered Users]]></value>
+        </row>
+    </table>
+    <table name="user_role">
+        <column>user_id</column>
+        <column>role_id</column>
+        <row>
+            <value description="user_id">1</value>
+            <value description="role_id">1</value>
+        </row>
+        <row>
+            <value description="user_id">2</value>
+            <value description="role_id">2</value>
+        </row>
+        <row>
+            <value description="user_id">3</value>
+            <value description="role_id">1</value>
+        </row>
+       <!--  <row>
+            <value description="user_id">3</value>
+            <value description="role_id">100</value>
+        </row> -->
+    </table>
 </dataset>

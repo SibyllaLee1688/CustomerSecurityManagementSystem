@@ -1,4 +1,4 @@
-package com.elulian.CustomerSecurityManagementSystem.dao.impl;
+package com.elulian.CustomerSecurityManagementSystem.dao.impl.jpa;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import com.elulian.CustomerSecurityManagementSystem.vo.Condition;
 import com.elulian.CustomerSecurityManagementSystem.vo.UserInfo;
 
 @Repository("userInfoDAO")
-public class UserInfoDAO extends BaseDAO<UserInfo, Integer> implements
+public class UserInfoJPADAO extends BaseJPADAO<UserInfo, Integer> implements
 		IUserInfoDAO, UserDetailsService {
 
 	private final Logger logger = Logger.getLogger(getClass());

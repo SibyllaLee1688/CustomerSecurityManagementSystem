@@ -1,22 +1,15 @@
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">  
-      <persistence-unit name="mysql" transaction-type="RESOURCE_LOCAL">  
+      <persistence-unit name="mysqlOpenJPA" transaction-type="RESOURCE_LOCAL">  
         <provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>  
-    <!--     
+       <!--  <class>com.elulian.CustomerSecurityManagementSystem.vo.Role</class>
             <class>com.elulian.CustomerSecurityManagementSystem.vo.UserInfo</class>
 	         <class>com.elulian.CustomerSecurityManagementSystem.vo.Threshold</class>
 	         <class>com.elulian.CustomerSecurityManagementSystem.vo.RiskRank</class>
-	         <class>com.elulian.CustomerSecurityManagementSystem.vo.CustomerInfo</class>
-         -->
+	         <class>com.elulian.CustomerSecurityManagementSystem.vo.CustomerInfo</class> -->
         <properties>  
-         
-    <!--       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />  
-          <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/money_laundering_rank" />  
-          <property name="javax.persistence.jdbc.user" value="root" />  
-          <property name="javax.persistence.jdbc.password" value="root" />  
-      -->
    <!-- required by maven openjpa schema/sql generation and customer risk setting -->
-    	<!-- <property name="openjpa.ConnectionURL" 
-	                value="jdbc:mysql://localhost:3306/money_laundering_rank"/>
+    <!-- 	<property name="openjpa.ConnectionURL" 
+	                value="jdbc:mysql://localhost:3306/money_laundering_rank?useUnicode=true&amp;characterEncoding=UTF-8"/>
 	            <property name="openjpa.ConnectionDriverName" 
 	                value="com.mysql.jdbc.Driver"/>
 	            <property name="openjpa.ConnectionUserName" 
@@ -24,20 +17,28 @@
 	            <property name="openjpa.ConnectionPassword" 
 	                value="root"/> -->
 	           
-   
-          <property name="openjpa.Log" value="DefaultLevel=WARN, Runtime=WARN, Tool=INFO, SQL=ERROR"/> <!-- TRACE, INFO, WARN, ERROR  -->  
-      
+          <!-- TRACE, INFO, WARN, ERROR  -->
+          <property name="openjpa.Log" value="DefaultLevel=TRACE, Runtime=TRACE, Tool=INFO, SQL=ERROR"/>   
           <property name="openjpa.RemoteCommitProvider" value="sjvm" />  
-           
           <property name="openjpa.DataCache" value="true(CacheSize=5000, SoftReferenceSize=100)" />  
-           
           <property name="openjpa.QueryCache" value="true(CacheSize=5000, SoftReferenceSize=100)" />  
-           
           <property name="openjpa.QueryCompilationCache" value="true" />  
-           
           <property name="openjpa.ConnectionFactoryProperties" value="PrettyPrint=true, PrettyPrintLineLength=100" />  
-           
           <property name="openjpa.FetchBatchSize" value="-1" />  
         </properties>  
       </persistence-unit>  
+      
+    <!--    <persistence-unit name="mysqlHibernateJPA" transaction-type="RESOURCE_LOCAL">  
+        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <properties>  
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />  
+            <property name="hibernate.max_fetch_depth" value="3" />  
+            <property name="hibernate.hbm2ddl.auto" value="update" />  
+            <property name="hibernate.jdbc.fetch_size" value="18" />  
+            <property name="hibernate.jdbc.batch_size" value="10" />  
+            <property name="hibernate.show_sql" value="false" />  
+            <property name="hibernate.format_sql" value="false" />  
+        </properties>  
+      </persistence-unit>   -->
+      
     </persistence>  

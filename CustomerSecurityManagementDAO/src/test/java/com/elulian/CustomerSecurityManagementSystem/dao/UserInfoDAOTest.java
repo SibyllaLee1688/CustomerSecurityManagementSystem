@@ -44,6 +44,9 @@ public class UserInfoDAOTest {
 	@Autowired
 	private IUserInfoDAO userInfoDAO;
 
+	@Autowired
+	private IRoleDAO roleDAO;
+	
 	private Condition con;
 	private UserInfo user; 
 	 
@@ -158,8 +161,8 @@ public class UserInfoDAOTest {
     	 cl.add(Calendar.MONTH, 6);
     	 Date expiredTime = cl.getTime(); 
     	 buildUser(userInfo, username, userId, registerTime, expiredTime, (username + "@gmail.com"),"ALL");
+    	 userInfo.addRole(roleDAO.findById(1));
     	 assertNull(userInfo.getId());
-    	 assertEquals("ROLE_ADMIN", ((Role)(userInfo.getRoles().toArray()[0])).getName());
     	 logger.info("add a new user to database--------------");
     	 long startTime = System.currentTimeMillis();
     	 user = userInfoDAO.save(userInfo);
@@ -168,6 +171,9 @@ public class UserInfoDAOTest {
     	 assertNotNull(user.getId());
     	 assertEquals(registerTime, user.getRegisterTime());
     	 assertEquals(expiredTime, user.getExpiredTime());
+    	 assertEquals("ROLE_ADMIN", ((Role)(userInfo.getRoles().toArray()[0])).getName());
+    	 /* for oenjpa, version starts from 1 */
+    	 /* for hibernate, version starts from 0 */
     	 assertTrue(1 == user.getVersion());
     	 //userInfoDAO.remove(user.getId());    	 
      }
@@ -177,20 +183,47 @@ public class UserInfoDAOTest {
 	  * test modify a existing user in database
 	  */
      @Test (expected = org.apache.openjpa.persistence.InvalidStateException.class)
+     //@Test 
      public void testDAOEditUserVersion(){
-    	 logger.info("modify a existing user in database--------------");
+    	 logger.info("modify a existing user's version in database--------------");
     	 int id = 1;   	 
     	 UserInfo userInfo = userInfoDAO.findById(id);
     	 assertNotNull(userInfo);
-    	 userInfo.setVersion(3);
-    	 userInfoDAO.save(userInfo);    	 
+    	 userInfo.setVersion(100);
+    	 userInfo = userInfoDAO.save(userInfo);
+    	 /* hibernate implementation is difference compare with openjpa 
+    	  * it doesn't check the modification to version field, and update
+    	  * the database with version++ based on the current version value
+    	  * in database */
+    	 System.out.println(userInfo.getVersion());
+    	 userInfo = userInfoDAO.findById(id);
+    	 assertTrue(100 == userInfo.getVersion());
+     }
+     
+     @Test
+     public void testDAOEditUserRole(){
+        	 logger.info("modify a existing user's role in database--------------");
+        	 int id = 1;   	 
+        	 UserInfo userInfo = userInfoDAO.findById(id);
+        	 assertNotNull(userInfo);
+        	 assertEquals(1, userInfo.getRoles().size());
+        	 assertEquals(roleDAO.findById(1).getName(), ((Role)(userInfo.getRoles().toArray()[0])).getName());
+        	 userInfo.addRole(roleDAO.findById(3));
+        	 userInfo = userInfoDAO.save(userInfo);
+        	 assertEquals(2, userInfo.getRoles().size());
+        	 assertEquals(roleDAO.findById(3).getName(), ((Role)(userInfo.getRoles().toArray()[1])).getName());
+        	 userInfo.removeRole(roleDAO.findById(1));
+        	 userInfo = userInfoDAO.save(userInfo);
+        	 assertEquals(1, userInfo.getRoles().size());
+        	 assertEquals(roleDAO.findById(3).getName(), ((Role)(userInfo.getRoles().toArray()[0])).getName());
+        	 
      }
      
      /* test save */
 	 /**
 	  * test modify a existing user in database
 	  * version is not sync between openjpa and database, see
-	  * @see BaseDAO.merge
+	  * @see BaseJPADAO.merge
 	  */
      @Ignore 
      //@Test
@@ -216,6 +249,7 @@ public class UserInfoDAOTest {
      * @throws InterruptedException 
       */
      @Test (expected = org.apache.openjpa.persistence.EntityExistsException.class)
+     //@Test (expected = javax.persistence.PersistenceException.class)
      public void testDAOAddExistsUsernameUser() throws InterruptedException{
     	 Date registerTime = null;
     	 Date expiredTime = null; 
@@ -240,6 +274,7 @@ public class UserInfoDAOTest {
       * test add a exists email user to database
       */
      @Test (expected = org.apache.openjpa.persistence.EntityExistsException.class)
+     //@Test (expected = javax.persistence.PersistenceException.class)
      public void testDAOAddExistsEmailUser(){
     	 Date registerTime = null;
     	 Date expiredTime = null; 
@@ -264,6 +299,7 @@ public class UserInfoDAOTest {
       */
      @Test(expected=org.apache.openjpa.persistence.InvalidStateException.class)
      //org.springframework.dao.InvalidDataAccessApiUsageException.class for commit to database
+     //@Test (expected = javax.persistence.PersistenceException.class)
      public void testDAOAddMissingInfoUser(){
     	 Date registerTime = null;
     	 Date expiredTime = null; 
@@ -352,7 +388,17 @@ public class UserInfoDAOTest {
     	 int id = 1;   	 
     	 UserInfo userInfo = userInfoDAO.findById(id);
     	 assertNotNull(userInfo);
+    	 assertEquals(1, userInfo.getRoles().size());
+    	 assertEquals(roleDAO.findById(1).getName(), ((Role)(userInfo.getRoles().toArray()[0])).getName());
      }    
+     
+     @Test 
+     public void testDAOFindUserWithNoExistsRole(){
+    	 int id = 3;   	 
+    	 UserInfo userInfo = userInfoDAO.findById(id);
+    	 assertNotNull(userInfo);
+    	 assertEquals(1, userInfo.getRoles().size());
+     }  
      
      @Test
      public void testDAOGetTotalUser(){

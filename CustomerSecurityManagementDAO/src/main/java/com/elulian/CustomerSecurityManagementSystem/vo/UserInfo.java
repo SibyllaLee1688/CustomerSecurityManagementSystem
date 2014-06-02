@@ -6,7 +6,20 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.persistence.Version;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,10 +28,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name = "userinfo")
 public class UserInfo extends BaseObject implements UserDetails {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 3500669012158219743L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -66,7 +75,12 @@ public class UserInfo extends BaseObject implements UserDetails {
 	@Transient
 	private String confirmPassword;
 	
-	@Transient
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST/* , CascadeType.MERGE */ })
+    @JoinTable(
+            name = "user_role",
+            joinColumns = { @JoinColumn(name = "user_id",  referencedColumnName="id") },
+            inverseJoinColumns = @JoinColumn(name = "role_id",  referencedColumnName="id")
+    )
 	private Set<Role> roles = new HashSet<Role>();
 
 	@Version
@@ -208,14 +222,14 @@ public class UserInfo extends BaseObject implements UserDetails {
 
 	public Set<Role> getRoles() {
 		
-		if(roles.isEmpty()){
+		/*if(roles.isEmpty()){
 			if(null == branch)
 				roles.add(new Role("ROLE_ANONYMOUS"));
 			if("ALL".equalsIgnoreCase(branch)){
 				roles.add(new Role("ROLE_ADMIN"));
 			} else
 				roles.add(new Role("ROLE_USER"));			
-		}
+		}*/
 		
 		return roles;
 	}
@@ -228,6 +242,16 @@ public class UserInfo extends BaseObject implements UserDetails {
 	 */
 	public void addRole(Role role) {
 		getRoles().add(role);
+	}
+	
+	/**
+	 * Adds a role for the user
+	 * 
+	 * @param role
+	 *            the fully instantiated role
+	 */
+	public boolean removeRole(Role role) {
+		return getRoles().remove(role);
 	}
 
 	public Date getRegisterTime() {

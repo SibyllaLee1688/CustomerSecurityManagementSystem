@@ -1,14 +1,61 @@
 package com.elulian.CustomerSecurityManagementSystem.vo;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.security.core.GrantedAuthority;
 
+@Entity
+@Table(name = "role")
+@NamedQueries({
+    @NamedQuery(
+            name = "findRoleByName",
+            query = "select r from Role r where r.name = :name "
+    )
+})
 public class Role extends BaseObject implements Serializable, GrantedAuthority {
 
-	private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	public Integer getId() {
+		return id;
+	}
+
+	@Basic(optional = false)
+	@Column(nullable = false, length = 50, unique = true)
 	private String name;
+	@Column(length = 150)
 	private String description;
+
+	
+	/*
+	 * without this, when delete role, relationship in database
+	 * is not deleted, dirty data remains
+	 * unless manually remove them during remove role
+	 * the other idea is to stop remove role unless all the 
+	 * users are not bind to this role */
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles")
+	private Set<UserInfo> users; // = new HashSet<UserInfo>();
+	
+	public Set<UserInfo> getUsers() {
+		return users;
+	}
 
 	/**
 	 * Default constructor - creates a new instance with no values set.
@@ -26,17 +73,12 @@ public class Role extends BaseObject implements Serializable, GrantedAuthority {
 		this.name = name;
 	}
 
-	/*
-	 * @Id
-	 * 
-	 * @GeneratedValue(strategy = GenerationType.AUTO) public Long getId() {
-	 * return id; }
-	 *//**
+	/**
 	 * @return the name property (getAuthority required by Acegi's
 	 *         GrantedAuthority interface)
 	 * @see org.springframework.security.core.GrantedAuthority#getAuthority()
 	 */
-
+	@Transient
 	public String getAuthority() {
 		return getName();
 	}

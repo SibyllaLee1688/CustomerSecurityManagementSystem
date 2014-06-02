@@ -1,8 +1,14 @@
 DROP TABLE IF EXISTS khxx;
 DROP TABLE IF EXISTS riskrank;
 DROP TABLE IF EXISTS threshold;
+DROP TABLE IF EXISTS user_role;
 DROP TABLE IF EXISTS userinfo;
+DROP TABLE IF EXISTS role;
 CREATE TABLE khxx (id INTEGER NOT NULL AUTO_INCREMENT, address VARCHAR(255), birthday VARCHAR(255), branch VARCHAR(255), certificateAddress VARCHAR(255), certificateBeginDate DATETIME, certificateEndDate DATETIME, certificateId VARCHAR(255), certificateType VARCHAR(255), customerId VARCHAR(255) NOT NULL, customerName VARCHAR(255), customerType VARCHAR(255), foreignFlag BIT, instrperName VARCHAR(255), mobileNumber VARCHAR(255), nationality VARCHAR(255), phoneNumber VARCHAR(255), professionCode VARCHAR(255), relationcertificateId VARCHAR(255), relationcertificateType VARCHAR(255), remark VARCHAR(255), riskType VARCHAR(255), riskValue INTEGER, sex VARCHAR(255), zipcode VARCHAR(255), PRIMARY KEY (id), UNIQUE U_KHXX_CUSTOMERID (customerId)) ENGINE = innodb;
 CREATE TABLE riskrank (id INTEGER NOT NULL AUTO_INCREMENT, maxVal INTEGER, minVal INTEGER, rankType VARCHAR(255) NOT NULL, version INTEGER, PRIMARY KEY (id), UNIQUE U_RISKRNK_RANKTYPE (rankType)) ENGINE = innodb;
+CREATE TABLE role (id INTEGER NOT NULL AUTO_INCREMENT, description VARCHAR(150), name VARCHAR(50) NOT NULL, PRIMARY KEY (id), UNIQUE U_ROLE_NAME (name)) ENGINE = innodb;
 CREATE TABLE threshold (risk_id INTEGER NOT NULL AUTO_INCREMENT, remark VARCHAR(255), risk_type VARCHAR(255) NOT NULL, risk_value INTEGER NOT NULL, PRIMARY KEY (risk_id), UNIQUE U_THRSHLD_RISK_TYPE (risk_type)) ENGINE = innodb;
 CREATE TABLE userinfo (id INTEGER NOT NULL AUTO_INCREMENT, accountExpired BIT NOT NULL, accountLocked BIT NOT NULL, branch VARCHAR(50) NOT NULL, credentialsExpired BIT NOT NULL, email VARCHAR(50) NOT NULL, accountEnabled BIT NOT NULL, expiredTime DATETIME NOT NULL, password VARCHAR(150) NOT NULL, passwordHint VARCHAR(255) NOT NULL, phoneNumber VARCHAR(20) NOT NULL, realname VARCHAR(50) NOT NULL, registerTime DATETIME NOT NULL, name VARCHAR(50) NOT NULL, version INTEGER, PRIMARY KEY (id), UNIQUE U_USRINFO_EMAIL (email), UNIQUE U_USRINFO_NAME (name)) ENGINE = innodb;
+CREATE TABLE user_role (user_id INTEGER, role_id INTEGER, FOREIGN KEY  (role_id) REFERENCES role (id),  FOREIGN KEY  (user_id) REFERENCES userinfo (id) ) ENGINE = innodb;
+CREATE INDEX I_USR_ROL_ELEMENT ON user_role (role_id);
+CREATE INDEX I_USR_ROL_USER_ID ON user_role (user_id);

@@ -1,9 +1,9 @@
 package com.elulian.CustomerSecurityManagementSystem.dao;
 
-import com.elulian.CustomerSecurityManagementSystem.dao.impl.CustomerInfoDAO;
-import com.elulian.CustomerSecurityManagementSystem.dao.impl.RiskRankDAO;
-import com.elulian.CustomerSecurityManagementSystem.dao.impl.ThresholdDAO;
-import com.elulian.CustomerSecurityManagementSystem.dao.impl.UserInfoDAO;
+import com.elulian.CustomerSecurityManagementSystem.dao.impl.jpa.CustomerInfoJPADAO;
+import com.elulian.CustomerSecurityManagementSystem.dao.impl.jpa.RiskRankJPADAO;
+import com.elulian.CustomerSecurityManagementSystem.dao.impl.jpa.ThresholdJPADAO;
+import com.elulian.CustomerSecurityManagementSystem.dao.impl.jpa.UserInfoJPADAO;
 
 /**
  * 
@@ -43,7 +43,7 @@ public class DAOFactory {
 		if (thresholdDAO == null) {
 			synchronized (this) {
 				if (thresholdDAO == null)
-					thresholdDAO = new ThresholdDAO();
+					thresholdDAO = new ThresholdJPADAO();
 			}
 		}
 		return thresholdDAO;
@@ -53,7 +53,7 @@ public class DAOFactory {
 		if (userInfoDAO == null) {
 			synchronized (this) {
 				if (userInfoDAO == null)
-					userInfoDAO = new UserInfoDAO();
+					userInfoDAO = new UserInfoJPADAO();
 			}
 		}
 		return userInfoDAO;
@@ -63,7 +63,7 @@ public class DAOFactory {
 		if (riskRankDAO == null) {
 			synchronized (this) {
 				if (riskRankDAO == null)
-					riskRankDAO = new RiskRankDAO();
+					riskRankDAO = new RiskRankJPADAO();
 			}
 		}
 		return riskRankDAO;
@@ -73,7 +73,7 @@ public class DAOFactory {
 		if (customerInfoDAO == null) {
 			synchronized (this) {
 				if (customerInfoDAO == null)
-					customerInfoDAO = new CustomerInfoDAO();
+					customerInfoDAO = new CustomerInfoJPADAO();
 			}
 		}
 		return customerInfoDAO;

@@ -17,13 +17,12 @@
     </bean> -->
 
     <!-- JNDI DataSource for J2EE environments -->
-    <!--<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/appfuse"/>-->
-    
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+    <!--<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/CustomerSecurityManagementSystem"/>-->
+
+	<bean id="dbcpDataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="${project.jdbc.driverClassName}" />
-		<property name="url"
-			value="${project.jdbc.url}" />
+		<property name="url" value="${project.jdbc.url}" />
 		<property name="username" value="${project.jdbc.username}" />
 		<property name="password" value="${project.jdbc.password}" />
 		<property name="maxActive" value="100" />
@@ -33,5 +32,15 @@
 		<property name="validationQuery" value="SELECT 1+1" />
 		<property name="testOnBorrow" value="true" />
 	</bean>
-    
+
+	<bean id="c3p0DataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${project.jdbc.driverClassName}" />
+		<property name="jdbcUrl" value="${project.jdbc.url}" />
+		<property name="user" value="${project.jdbc.username}" />
+		<property name="password" value="${project.jdbc.password}" />
+		<property name="minPoolSize" value="10" />
+		<property name="maxPoolSize" value="100" />
+		<property name="initialPoolSize" value="20" />
+	</bean> 
 </beans>

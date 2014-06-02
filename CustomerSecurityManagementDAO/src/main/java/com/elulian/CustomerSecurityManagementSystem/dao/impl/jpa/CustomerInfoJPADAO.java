@@ -1,4 +1,4 @@
-package com.elulian.CustomerSecurityManagementSystem.dao.impl;
+package com.elulian.CustomerSecurityManagementSystem.dao.impl.jpa;
 
 import java.lang.reflect.Field;
 import java.util.Date;
@@ -13,10 +13,10 @@ import com.elulian.CustomerSecurityManagementSystem.vo.Condition;
 import com.elulian.CustomerSecurityManagementSystem.vo.CustomerInfo;
 
 @Repository("customerInfoDAO")
-public class CustomerInfoDAO extends BaseDAO<CustomerInfo, Integer> implements
+public class CustomerInfoJPADAO extends BaseJPADAO<CustomerInfo, Integer> implements
 		ICustomerInfoDAO {
 
-	private static Logger logger = Logger.getLogger(CustomerInfoDAO.class);
+	private static Logger logger = Logger.getLogger(CustomerInfoJPADAO.class);
 	
 	@Override
 	public long getTotalCount(Condition condition) {
@@ -121,7 +121,7 @@ public class CustomerInfoDAO extends BaseDAO<CustomerInfo, Integer> implements
 		CustomerInfo entity = new CustomerInfo();
 		entity.setCustomerId("100");
 		entity.setCustomerName("customerName");
-		ICustomerInfoDAO dao = new CustomerInfoDAO();
+		ICustomerInfoDAO dao = new CustomerInfoJPADAO();
 		entity = dao.findById(46);
 		//entity.setCertificateBeginDate(null);
 		//entity.setCertificateEndDate(null);

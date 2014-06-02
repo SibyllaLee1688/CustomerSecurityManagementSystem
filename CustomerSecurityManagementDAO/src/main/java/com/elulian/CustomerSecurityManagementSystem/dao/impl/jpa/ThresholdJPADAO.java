@@ -6,7 +6,7 @@
  * @author elulian
  *
  */
-package com.elulian.CustomerSecurityManagementSystem.dao.impl;
+package com.elulian.CustomerSecurityManagementSystem.dao.impl.jpa;
 
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +15,6 @@ import com.elulian.CustomerSecurityManagementSystem.vo.Threshold;
 
 @Deprecated
 @Repository("thresholdDAO")
-public class ThresholdDAO extends BaseDAO<Threshold, Integer> implements IThresholdDAO {
+public class ThresholdJPADAO extends BaseJPADAO<Threshold, Integer> implements IThresholdDAO {
 
 }

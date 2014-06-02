@@ -24,17 +24,44 @@
 			<artifactId>jsr250-api</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- for openjpa -->
+		<!-- for jpa implementation-->
 		<dependency>
 			<groupId>org.apache.openjpa</groupId>
 			<artifactId>openjpa</artifactId>
 		</dependency>
-		<!-- for openjpa end -->
+		<!-- <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+		</dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+            </dependency>
+            Use Javassist as Hibernate's bytecode provider
+            <dependency>
+                <groupId>javassist</groupId>
+                <artifactId>javassist</artifactId>
+            </dependency>
+            Enable EhCache support
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-ehcache</artifactId>
+            </dependency>
+            Upgrade version of EhCache used
+            <dependency>
+                <groupId>net.sf.ehcache</groupId>
+                <artifactId>ehcache-core</artifactId>
+            </dependency> -->
+		<!-- for jpa implementation end -->
 		<!-- for database source -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
 		</dependency>
+		<dependency>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+        </dependency>
 		<!-- for database source end -->
 		<dependency>
 			<groupId>cglib</groupId>
@@ -124,14 +151,10 @@
 					<includes>com/elulian/CustomerSecurityManagementSystem/vo/**/*.class</includes>
 					<excludes>
 						com/elulian/CustomerSecurityManagementSystem/vo/Condition.class,
-						com/elulian/CustomerSecurityManagementSystem/vo/Role.class,
 						com/elulian/CustomerSecurityManagementSystem/vo/BaseObject.class
 					</excludes>
 					<addDefaultConstructor>true</addDefaultConstructor>
 					<enforcePropertyRestrictions>true</enforcePropertyRestrictions>
-					<!-- Pass additional properties to the Plugin here <toolProperties> 
-						<property> <name>directory</name> <value>otherdirectoryvalue</value> </property> 
-						</toolProperties> -->
 				</configuration>
 				<executions>
 					<execution>
@@ -246,13 +269,13 @@
 						</goals>
 					</execution>
 					<!-- Runs before integration tests and jetty:run-war -->
-					<execution>
+					<!-- <execution>
 						<id>test</id>
 						<phase>test</phase>
 						<goals>
 							<goal>operation</goal>
 						</goals>
-					</execution>
+					</execution> -->
 				</executions>
 				<dependencies>
 					<dependency>
