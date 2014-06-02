@@ -15,8 +15,8 @@
      <aop:config>
 <!--        <aop:advisor id="rollbackTx" advice-ref="rollbackTxAdvice" pointcut="execution(* *..service.*Service.save(..))" order="0"/>
         <aop:advisor id="userManagerSecurity" advice-ref="userSecurityAdvice" pointcut="execution(* *..service.*.save(..))" order="1"/> -->
-        <aop:advisor id="perfMonitor" advice-ref="perfInterceptor" pointcut="execution(* *..service.*.*(..))" order="1"/>
-        <aop:advisor id="managerTx" advice-ref="txAdvice" pointcut="execution(* *..service.*Service.*(..))" order="2"/>
+       <!--  <aop:advisor id="perfMonitor" advice-ref="perfInterceptor" pointcut="execution(* *..service.*.*(..))" order="1"/>
+        <aop:advisor id="managerTx" advice-ref="txAdvice" pointcut="execution(* *..service.*Service.*(..))" order="2"/> -->
     </aop:config> 
 
     <!-- Enable @Transactional support -->

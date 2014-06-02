@@ -58,54 +58,31 @@ public class ThresholdService implements
 	 * 2. For performance, we should get threshold in KHXXController directly
 	 */
 	public void setMatchThresholdsInfo(CustomerInfo info) {
-		info.setRiskValue(0);
-		info.setRiskType(null);
 		String temp = info.getProfessionCode();
-		List<Threshold> list = getThresholdDAO().findAll();
 		// boolean flag = false;
-		if (temp == null || temp.equalsIgnoreCase("����")
-				|| temp.equalsIgnoreCase("��ҵ")) {
+		if (null == temp || 0 == (temp.trim()).length() || "其他".equals(temp) || "其它".equals(temp) || "无业".equals(temp) || "未知".equals(temp)) {
 			info.setRiskValue(info.getRiskValue() + 20);
-			info.setRiskType(list.get(0).getType());
+		    info.setRiskType(info.getRiskType() + " Invalid professionCode value: " + info.getProfessionCode());
 		}
 		if (info.getCertificateEndDate() == null
 				|| info.getCertificateEndDate().before(new Date())) {
-			info.setRiskValue(info.getRiskValue() + 80);
-			if (info.getRiskType() != null)
-				info.setRiskType(info.getRiskType() + ", "
-						+ list.get(1).getType());
-			else
-				info.setRiskType(list.get(1).getType());
+			 info.setRiskValue(info.getRiskValue() + 80);
+		     info.setRiskType(info.getRiskType() + " Invalid Certification End date value: " + info.getCertificateEndDate());
 		}
-		if (info.getCustomerName() == null) {
+		if (info.getCustomerName() == null || info.getCustomerName().trim().length() == 0) {
 			info.setRiskValue(info.getRiskValue() + 80);
-			if (info.getRiskType() != null)
-				info.setRiskType(info.getRiskType() + ", "
-						+ list.get(2).getType());
-			else
-				info.setRiskType(list.get(2).getType());
+			info.setRiskType(info.getRiskType() + " Customer Name is null");
 		}
-		if (info.getCertificateId() == null) {
+		if (info.getCertificateId() == null || 0 == (info.getCertificateId().trim()).length()) {
 			info.setRiskValue(info.getRiskValue() + 80);
-			if (info.getRiskType() != null)
-				info.setRiskType(info.getRiskType() + ", "
-						+ list.get(3).getType());
-			else
-				info.setRiskType(list.get(3).getType());
+			 info.setRiskType(info.getRiskType() + " Invalid Certification ID: " + info.getCertificateId());
 		}
-		if (info.isForeignFlag()) {
+		if (null == info.isForeignFlag() ||info.isForeignFlag()) {
 			info.setRiskValue(info.getRiskValue() + 20);
-			if (info.getRiskType() != null)
-				info.setRiskType(info.getRiskType() + ", "
-						+ list.get(4).getType());
-			else
-				info.setRiskType(list.get(4).getType());
+			info.setRiskType(info.getRiskType() + " 境外标志: " + info.getForeignFlag());
 		}
-		/*
-		 * if(info.getRiskType().startsWith("��")){
-		 * info.setRiskType(info.getRiskType
-		 * ().substring(info.getRiskType().indexOf("��"))); }
-		 */
+		
+		info.setRiskType(info.getRiskType().trim());
 	}
 
 	/**

@@ -52,6 +52,8 @@ public class UserInfoServiceTest {
 	
 	@Autowired
 	private IUserInfoService userInfoService;
+	
+	
 
 	private Condition con;
 	private UserInfo user;
@@ -144,8 +146,6 @@ public class UserInfoServiceTest {
 				(username + "@gmail.com"),"ALL");
 		returnUserInfo.setId(5);*/
 		assertNull(userInfo.getId());
-		assertEquals("ROLE_ADMIN",
-				((Role) (userInfo.getRoles().toArray()[0])).getName());
 		logger.info("test add user------------------------"); // set up
 		/*final IUserInfoDAO userInfoDAO = context.mock(IUserInfoDAO.class);
         // expectations

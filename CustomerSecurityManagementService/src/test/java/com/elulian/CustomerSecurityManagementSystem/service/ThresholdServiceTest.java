@@ -79,6 +79,37 @@ public class ThresholdServiceTest {
 		thresholdService.refreshThresholdService(IThresholdService.defaultGroupId, IThresholdService.defaultArtifactId, "wrong-version");
 		
 	}
+	
+	/**
+	 * some performance test point
+	 */
+	//@org.junit.Ignore
+	@Test
+	public void testExeuctionTime(){
+		long recordsNumber = 100000;
+		long start = System.currentTimeMillis();
+		long used1 = 0;
+		long used2 = 0;
+		for(int i = 0; i < recordsNumber ; i++){
+			CustomerInfo info = new CustomerInfo();
+			info.setRiskType("");
+			info.setRiskValue(0);
+			thresholdService.setMatchThresholdsInfo(info);
+		}
+		used1 = System.currentTimeMillis() - start;
+		System.out.println(used1);
+		
+		start = System.currentTimeMillis();
+		for(int i = 0; i < recordsNumber; i++){
+			CustomerInfo info = new CustomerInfo();
+			info.setRiskType("");
+			info.setRiskValue(0);
+			thresholdService.setCustomerThresholdsInfo(info);
+		}
+		used2 = System.currentTimeMillis() - start;
+		System.out.println(used2);
+		assertTrue( used1 < used2);
+	}
 
 	/**
 	 * Test method for {@link com.elulian.CustomerSecurityManagementSystem.service.impl.ThresholdService#setCustomerThresholdsInfo(com.elulian.CustomerSecurityManagementSystem.vo.CustomerInfo)}.

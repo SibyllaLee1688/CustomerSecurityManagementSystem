@@ -104,11 +104,11 @@
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
 		</dependency>
-		<!-- <dependency>
+		<dependency>
 			<groupId>com.elulian</groupId>
 			<artifactId>CustomerSecurityManagementDAO</artifactId>
 			<version>${project.version}</version>
-		</dependency> -->
+		</dependency>
 		<dependency>
 			<groupId>com.elulian</groupId>
 			<artifactId>CustomerSecurityManagementRules</artifactId>
