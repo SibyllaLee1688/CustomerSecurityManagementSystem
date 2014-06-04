@@ -213,8 +213,9 @@
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>${project.jettyPluginVersion}</version>
 				<configuration>
-					<!-- <jvmArgs>-Xmx1024m -Xms1024m -XX:PermSize=128m -XX:MaxPermSize=256m</jvmArgs> 
-						<scanIntervalSeconds>10</scanIntervalSeconds> -->
+					<!-- <jvmArgs>-Xmx1024m -Xms1024m -XX:PermSize=128m -XX:MaxPermSize=256m</jvmArgs> -->
+					<jettyconfig>src/test/resource/jetty-jmx.xml</jettyconfig>
+					<scanIntervalSeconds>10</scanIntervalSeconds> 
 					<webApp>
 						<contextPath>${project.web.deployname}</contextPath>
 					</webApp>

@@ -18,7 +18,7 @@
 	                value="root"/> -->
 	           
           <!-- TRACE, INFO, WARN, ERROR  -->
-          <property name="openjpa.Log" value="DefaultLevel=TRACE, Runtime=TRACE, Tool=INFO, SQL=ERROR"/>   
+          <property name="openjpa.Log" value="DefaultLevel=WARN, Runtime=WARN, Tool=INFO, SQL=ERROR"/>   
           <property name="openjpa.RemoteCommitProvider" value="sjvm" />  
           <property name="openjpa.DataCache" value="true(CacheSize=5000, SoftReferenceSize=100)" />  
           <property name="openjpa.QueryCache" value="true(CacheSize=5000, SoftReferenceSize=100)" />  

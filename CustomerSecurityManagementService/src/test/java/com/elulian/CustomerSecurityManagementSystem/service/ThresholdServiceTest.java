@@ -86,7 +86,9 @@ public class ThresholdServiceTest {
 	//@org.junit.Ignore
 	@Test
 	public void testExeuctionTime(){
-		long recordsNumber = 100000;
+		/* add and !execution(* *..service.IThresholdService.*(..)) 
+		 * in perfmonitor for large number test*/
+		long recordsNumber = 100;
 		long start = System.currentTimeMillis();
 		long used1 = 0;
 		long used2 = 0;

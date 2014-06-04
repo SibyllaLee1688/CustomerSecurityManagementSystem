@@ -38,7 +38,7 @@
 				<td>
 					<s:property value="maxValue" />
 				</td>
-				<td>
+				<td style="display:none;">
                     <s:property value="version" />
                 </td>
 				<td>

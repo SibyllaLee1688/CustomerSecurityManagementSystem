@@ -12,7 +12,7 @@ rule "Profession Rule"
        
     when
        //conditions
-       info : CustomerInfo (null == professionCode || 0 == (info.getProfessionCode().trim()).length() || "其他".equals(professionCode) || "其它".equals(professionCode) || "无业".equals(professionCode) || "未知".equals(professionCode))
+       info : CustomerInfo (null == professionCode || 0 == (professionCode.trim()).length() || "其他".equals(professionCode) || "其它".equals(professionCode) || "无业".equals(professionCode) || "未知".equals(professionCode))
     then
        //actions
        info.setRiskValue(info.getRiskValue() + 20);
@@ -35,7 +35,7 @@ rule "Customer Name Rule"
         
     when
         //conditions
-         info : CustomerInfo (null == customerName || 0 == (info.getCustomerName().trim()).length())
+         info : CustomerInfo (null == customerName || 0 == (customerName.trim()).length())
     then
         //actions
          info.setRiskValue(info.getRiskValue() + 80);
@@ -47,7 +47,7 @@ rule "Certification ID Rule"
        
     when
         //conditions
-        info : CustomerInfo (null == certificateId || 0 == (info.getCertificateId().trim()).length())
+        info : CustomerInfo (null == certificateId || 0 == (certificateId.trim()).length())
     then
         //actions
         info.setRiskValue(info.getRiskValue() + 80);

@@ -87,7 +87,7 @@
                                 dom.byId("rankType").value = "";
                                 dom.byId("minValue").value = "";
                                 dom.byId("maxValue").value = "";
-                                dom.byId("version").value = """;
+                                dom.byId("version").value = "";
                             });
                         });
                     }
