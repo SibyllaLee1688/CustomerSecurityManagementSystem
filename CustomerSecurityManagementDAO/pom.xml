@@ -16,10 +16,6 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>javax.annotation</groupId>
 			<artifactId>jsr250-api</artifactId>
 			<scope>test</scope>
@@ -61,6 +57,10 @@
 		<dependency>
             <groupId>c3p0</groupId>
             <artifactId>c3p0</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
         </dependency>
 		<!-- for database source end -->
 		<dependency>

@@ -16,6 +16,15 @@
         </property>
     </bean> -->
 
+    <!-- 
+        for datasource selection
+        http://blog.csdn.net/sqjhwl/article/details/8900568
+        http://jolbox.com/dynamic-benchmark.html
+        https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing
+        
+        https://github.com/brettwooldridge/HikariCP
+     -->
+
     <!-- JNDI DataSource for J2EE environments -->
     <!--<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/CustomerSecurityManagementSystem"/>-->
 
@@ -43,4 +52,47 @@
 		<property name="maxPoolSize" value="100" />
 		<property name="initialPoolSize" value="20" />
 	</bean> 
+	
+	<!-- BoneCP configuration
+	<bean id="boneCPDataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
+	   <property name="driverClass" value="${project.jdbc.driverClassName}" />
+	   <property name="jdbcUrl" value="${project.jdbc.url}" />
+	   <property name="username" value="${project.jdbc.username}"/>
+	   <property name="password" value="${project.jdbc.password}"/>
+	   <property name="idleConnectionTestPeriod" value="60"/>
+	   <property name="idleMaxAge" value="240"/>
+	   <property name="maxConnectionsPerPartition" value="30"/>
+	   <property name="minConnectionsPerPartition" value="10"/>
+	   <property name="partitionCount" value="3"/>
+	   <property name="acquireIncrement" value="5"/>
+	   <property name="statementsCacheSize" value="100"/>
+	   <property name="releaseHelperThreads" value="3"/>
+	</bean>
+	  -->
+	  
+	
+    <bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+	    <property name="maximumPoolSize" value="10" />
+	    <property name="minimumPoolSize" value="5" />
+	    <property name="dataSourceClassName" value="${project.jdbc.dataSourceClassName}" />
+	     <property name="connectionTestQuery" value="SELECT 1" />
+	    <property name="dataSourceProperties">
+		    <props>
+			    <prop key="url">${project.jdbc.url}</prop>
+			    <prop key="user">${project.jdbc.username}</prop>
+			    <prop key="password">${project.jdbc.password}</prop>
+			    <!-- mysql special config from https://github.com/brettwooldridge/HikariCP/wiki/MySQL-Configuration -->
+                <prop key="cachePrepStmts">true</prop>
+                <prop key="prepStmtCacheSize">250</prop>
+                <prop key="prepStmtCacheSqlLimit">2048</prop>
+                <prop key="useServerPrepStmts">true</prop>        
+		    </props>
+	    </property>
+	    <property name="poolName" value="springHikariCP" />
+    </bean>
+
+    <bean id="hikariCPDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="shutdown">
+        <constructor-arg ref="hikariConfig" />
+    </bean>   
+	  
 </beans>

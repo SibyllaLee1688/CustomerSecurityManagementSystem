@@ -8,7 +8,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -36,7 +37,7 @@ import com.elulian.CustomerSecurityManagementSystem.vo.UserInfo;
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true) 
 public class UserInfoDAOTest {
 	
-	private static Logger logger = Logger.getLogger(UserInfoDAOTest.class);
+	private static Logger logger = LoggerFactory.getLogger(UserInfoDAOTest.class);
 
 	@Autowired
 	private PasswordEncoder bcryptEncoder;
@@ -167,7 +168,7 @@ public class UserInfoDAOTest {
     	 long startTime = System.currentTimeMillis();
     	 user = userInfoDAO.save(userInfo);
     	 long endTime = System.currentTimeMillis();
-    	 logger.info(endTime - startTime);
+    	 logger.info("" + (endTime - startTime));
     	 assertNotNull(user.getId());
     	 assertEquals(registerTime, user.getRegisterTime());
     	 assertEquals(expiredTime, user.getExpiredTime());

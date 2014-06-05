@@ -13,14 +13,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.elulian.CustomerSecurityManagementSystem.dao.IBaseDAO;
 
 public class BaseJPADAO<T, ID extends Serializable> implements IBaseDAO<T, ID> {
 
-	private final Logger logger = Logger.getLogger(getClass());
+	private final static Logger logger = LoggerFactory.getLogger(BaseJPADAO.class);
 
 	private Class<T> persistentClass;
 

@@ -1,11 +1,10 @@
 package com.elulian.CustomerSecurityManagementSystem.dao.impl.jpa;
 
 import java.lang.reflect.Field;
-import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.elulian.CustomerSecurityManagementSystem.dao.ICustomerInfoDAO;
@@ -16,7 +15,7 @@ import com.elulian.CustomerSecurityManagementSystem.vo.CustomerInfo;
 public class CustomerInfoJPADAO extends BaseJPADAO<CustomerInfo, Integer> implements
 		ICustomerInfoDAO {
 
-	private static Logger logger = Logger.getLogger(CustomerInfoJPADAO.class);
+	private static Logger logger = LoggerFactory.getLogger(CustomerInfoJPADAO.class);
 	
 	@Override
 	public long getTotalCount(Condition condition) {

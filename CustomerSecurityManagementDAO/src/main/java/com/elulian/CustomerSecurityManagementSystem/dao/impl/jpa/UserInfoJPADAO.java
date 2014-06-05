@@ -4,7 +4,8 @@ import java.util.List;
 
 import javax.persistence.Query;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,7 +21,7 @@ import com.elulian.CustomerSecurityManagementSystem.vo.UserInfo;
 public class UserInfoJPADAO extends BaseJPADAO<UserInfo, Integer> implements
 		IUserInfoDAO, UserDetailsService {
 
-	private final Logger logger = Logger.getLogger(getClass());
+	private static final Logger logger = LoggerFactory.getLogger(UserInfoJPADAO.class);
 	
 	@Transactional
 	@Override

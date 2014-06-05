@@ -7,7 +7,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ import com.elulian.CustomerSecurityManagementSystem.vo.UserInfo;
 @TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = true)
 public class RoleDAOTest {
 
-	private static Logger logger = Logger.getLogger(RoleDAOTest.class);
+	private static Logger logger = LoggerFactory.getLogger(RoleDAOTest.class);
 	
 	@Autowired
 	private IRoleDAO roleDAO;
