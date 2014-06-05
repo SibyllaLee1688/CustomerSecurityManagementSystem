@@ -7,10 +7,11 @@ import static org.junit.Assert.*;
 
 import java.util.Calendar;
 
-import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.elulian.CustomerSecurityManagementSystem.vo.CustomerInfo;
 
@@ -20,7 +21,7 @@ import com.elulian.CustomerSecurityManagementSystem.vo.CustomerInfo;
  */
 public class ThresholdServiceTest {
 
-	private static final Logger logger = Logger.getLogger(ThresholdServiceTest.class);
+	private static final Logger logger = LoggerFactory.getLogger(ThresholdServiceTest.class);
 	
 	private static ThresholdServiceRule thresholdService = null;
 	

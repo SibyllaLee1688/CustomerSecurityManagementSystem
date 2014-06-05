@@ -34,13 +34,6 @@
 			<groupId>org.drools</groupId>
 			<artifactId>drools-jsr94</artifactId>
 		</dependency>
-		<!-- fix for SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder" 
-			issue -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<version>${project.slf4j-simpleVersion}</version>
-		</dependency>
 		<!-- for drools end -->
 		<dependency>
 			<groupId>com.elulian</groupId>
@@ -50,10 +43,6 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
 		</dependency>
 	</dependencies>
 	<build>
