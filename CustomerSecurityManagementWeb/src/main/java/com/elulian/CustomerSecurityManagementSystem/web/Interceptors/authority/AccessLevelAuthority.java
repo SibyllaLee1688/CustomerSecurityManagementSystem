@@ -2,7 +2,8 @@ package com.elulian.CustomerSecurityManagementSystem.web.Interceptors.authority;
 
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.elulian.CustomerSecurityManagementSystem.service.IUserInfoService;
@@ -17,7 +18,7 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 public class AccessLevelAuthority extends AbstractInterceptor{
 	
 	
-	private static Logger logger = Logger.getLogger(AccessLevelAuthority.class);
+	private static Logger logger = LoggerFactory.getLogger(AccessLevelAuthority.class);
 	
 	@Autowired
 	private IUserInfoService userInfoService;

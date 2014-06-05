@@ -5,7 +5,8 @@ import java.util.Map;
 
 import javax.persistence.Query;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.struts2.interceptor.ParameterAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.apache.struts2.json.annotations.JSON;
@@ -32,7 +33,7 @@ import com.elulian.CustomerSecurityManagementSystem.vo.CustomerInfo;
 public class CustomerInfoAction extends ActionSupport implements
 		ParameterAware, SessionAware {
 
-	private static Logger logger = Logger.getLogger(CustomerInfoAction.class);
+	private static Logger logger = LoggerFactory.getLogger(CustomerInfoAction.class);
 
 	@Autowired
 	private ICustomerInfoService customerInfoService;

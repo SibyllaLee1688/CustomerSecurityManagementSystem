@@ -9,11 +9,12 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Locales {
 
-	private static Logger logger = Logger.getLogger(Locales.class);
+	private static Logger logger = LoggerFactory.getLogger(Locales.class);
 
 	private static Map<String, Locale> locales = new HashMap<String, Locale>();
 

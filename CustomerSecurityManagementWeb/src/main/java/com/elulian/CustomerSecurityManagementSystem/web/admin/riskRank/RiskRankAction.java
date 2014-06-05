@@ -2,7 +2,8 @@ package com.elulian.CustomerSecurityManagementSystem.web.admin.riskRank;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -20,7 +21,7 @@ import com.opensymphony.xwork2.Preparable;
 @Controller("riskRankAction") @Scope("prototype")
 public class RiskRankAction extends ActionSupport implements Preparable{
 
-	private static Logger logger = Logger.getLogger(RiskRankAction.class);
+	private static Logger logger = LoggerFactory.getLogger(RiskRankAction.class);
 	
 	@Autowired
 	private IRiskRankService riskRankService;
@@ -67,7 +68,7 @@ public class RiskRankAction extends ActionSupport implements Preparable{
 	}*/
 
 	public String save() {
-		logger.debug(riskRank);
+		logger.debug(riskRank.toString());
 		if (riskRank.getMinValue() > riskRank.getMaxValue()){
 			ActionContext.getContext().put("tip", "Max Value should >= Min Value!");
 			// return list();
@@ -77,9 +78,9 @@ public class RiskRankAction extends ActionSupport implements Preparable{
 			try {
 				this.riskRankService.save(riskRank);
 			} catch (DataIntegrityViolationException e) {
-				logger.error(e);
+				logger.error(e.getMessage(), e);
 			} catch (InvalidDataAccessApiUsageException e) {
-				logger.error(e);
+				logger.error(e.getMessage(), e);
 			}
 			//this.riskRank = new RiskRank();
 		}

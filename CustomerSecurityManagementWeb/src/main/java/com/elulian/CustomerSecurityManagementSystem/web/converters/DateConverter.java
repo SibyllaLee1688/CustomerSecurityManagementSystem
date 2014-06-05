@@ -5,14 +5,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.struts2.util.StrutsTypeConverter;
 
 public class DateConverter extends StrutsTypeConverter {
 
 	private static SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 	
-	private static Logger logger = Logger.getLogger(DateConverter.class);
+	private static Logger logger = LoggerFactory.getLogger(DateConverter.class);
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -31,7 +32,7 @@ public class DateConverter extends StrutsTypeConverter {
 			}
 		}
 		logger.debug(logger.getName() + "****************convertFromString");
-		logger.debug(date);
+		logger.debug(date.toString());
 		return date;
 	}
 

@@ -213,12 +213,15 @@
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>${project.jettyPluginVersion}</version>
 				<configuration>
-					<!-- <jvmArgs>-Xmx1024m -Xms1024m -XX:PermSize=128m -XX:MaxPermSize=256m</jvmArgs> -->
-					<jettyconfig>src/test/resource/jetty-jmx.xml</jettyconfig>
+					<!-- <jvmArgs>-Xmx1024m -Xms1024m </jvmArgs> -->
+					<jvmArgs>-Dcom.sun.management.jmxremote -XX:PermSize=128m -XX:MaxPermSize=256m</jvmArgs>
+					<jettyConfig>src/test/resources/jetty-jmx.xml</jettyConfig>
 					<scanIntervalSeconds>10</scanIntervalSeconds> 
 					<webApp>
 						<contextPath>${project.web.deployname}</contextPath>
+						
 					</webApp>
+					<!-- <war>${basedir}/target/${project.web.deployname}.war</war> -->
 				</configuration>
 			</plugin>
 			<!-- clean-up previous hibernate-search indexed from integration tests, 

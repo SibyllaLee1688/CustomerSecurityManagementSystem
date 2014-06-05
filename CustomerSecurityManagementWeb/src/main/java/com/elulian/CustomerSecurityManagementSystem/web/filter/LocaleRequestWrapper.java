@@ -1,7 +1,7 @@
 package com.elulian.CustomerSecurityManagementSystem.web.filter;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -15,7 +15,7 @@ import java.util.Locale;
  * the user's preferred locale.
  */
 public class LocaleRequestWrapper extends HttpServletRequestWrapper {
-    private final transient Log log = LogFactory.getLog(LocaleRequestWrapper.class);
+    private static final Logger log = LoggerFactory.getLogger(LocaleRequestWrapper.class);
     private final Locale preferredLocale;
 
     /**

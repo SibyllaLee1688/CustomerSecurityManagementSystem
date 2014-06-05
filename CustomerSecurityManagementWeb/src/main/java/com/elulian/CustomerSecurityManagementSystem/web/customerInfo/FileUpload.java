@@ -11,7 +11,8 @@ import java.io.OutputStream;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -23,7 +24,7 @@ import com.opensymphony.xwork2.ActionContext;
 @Controller("fileUploadAction") @Scope("prototype")
 public class FileUpload extends com.opensymphony.xwork2.ActionSupport {
 
-	private static Logger logger = Logger.getLogger(FileUpload.class);
+	private static Logger logger = LoggerFactory.getLogger(FileUpload.class);
 	
 	private static String savePath = "./";
 	
@@ -115,21 +116,21 @@ public class FileUpload extends com.opensymphony.xwork2.ActionSupport {
             }
             return true;
         } catch (Exception e) {
-            logger.error(e);
+            logger.error(e.getMessage(), e);
             return false;
         } finally {
             if (null != in) {
                 try {
                     in.close();
                 } catch (IOException e) {
-                    logger.error(e);
+                    logger.error(e.getMessage(), e);
                 }
             }
             if (null != out) {
                 try {
                     out.close();
                 } catch (IOException e) {
-                	logger.error(e);
+                	logger.error(e.getMessage(), e);
                 }
             }
         }

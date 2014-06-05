@@ -3,7 +3,8 @@ package com.elulian.CustomerSecurityManagementSystem.web.admin.userInfo;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ParameterAware;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ import com.opensymphony.xwork2.Preparable;
 public class UserInfoAction extends ActionSupport implements Preparable, ParameterAware {
 
 
-	private static Logger logger = Logger.getLogger(UserInfoAction.class);
+	private static Logger logger = LoggerFactory.getLogger(UserInfoAction.class);
 	
 	@Autowired
 	private IUserInfoService userInfoService;
@@ -136,13 +137,13 @@ public class UserInfoAction extends ActionSupport implements Preparable, Paramet
 			// currentPage = 1;
 			flag = true;
 		}
-		logger.debug(userInfo);
+		logger.debug(userInfo.toString());
 		try {
 			this.userInfoService.save(userInfo);
 		} catch (DataIntegrityViolationException e) {
-			logger.error(e);
+			logger.error(e.getMessage(), e);
 		} catch (InvalidDataAccessApiUsageException e) {
-			logger.error(e);
+			logger.error(e.getMessage(), e);
 		}
 		//this.userInfo = new UserInfo();
 		return list();

@@ -5,7 +5,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.Action;
@@ -15,7 +17,7 @@ import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
 
 public class AccessAuthority extends AbstractInterceptor {
 
-	private static Logger logger = Logger.getLogger(AccessAuthority.class);
+	private static Logger logger = LoggerFactory.getLogger(AccessAuthority.class);
 	
 	@Override
 	public String intercept(ActionInvocation invocation) throws Exception {

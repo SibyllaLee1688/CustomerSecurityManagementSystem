@@ -9,7 +9,8 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.configuration.reloading.FileChangedReloadingStrategy;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Servlet implementation class for Servlet: HelperServlet  
@@ -23,7 +24,7 @@ public class ConfigServlet extends javax.servlet.http.HttpServlet implements
 
 
 
-	private static final Logger logger = Logger.getLogger(ConfigServlet.class);
+	private static final Logger logger = LoggerFactory.getLogger(ConfigServlet.class);
 
 	private static String CONFIG_PROPERTY_FILE;
 	private static String BRANCH_PROPERTY_FILE;

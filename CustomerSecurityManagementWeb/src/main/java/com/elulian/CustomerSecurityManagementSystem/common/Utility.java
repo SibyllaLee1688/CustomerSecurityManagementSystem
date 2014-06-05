@@ -8,7 +8,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.TreeMap;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @see ConfigServlet
@@ -19,7 +20,7 @@ import org.apache.log4j.Logger;
 
 @Deprecated
 public class Utility {
-	private static Logger logger = Logger.getLogger(Utility.class);
+	private static Logger logger = LoggerFactory.getLogger(Utility.class);
 
 	private static Utility m_instance;
 
@@ -93,9 +94,9 @@ public class Utility {
 			in.close();
 			return true;
 		} catch (FileNotFoundException e) {
-			logger.error(e);
+			logger.error(e.getMessage(), e);
 		} catch (IOException e) {
-			logger.error(e);
+			logger.error(e.getMessage(), e);
 		}
 		return false;
 	}

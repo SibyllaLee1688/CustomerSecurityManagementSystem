@@ -8,7 +8,8 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.elulian.CustomerSecurityManagementSystem.service.IThresholdService;
 import com.elulian.CustomerSecurityManagementSystem.service.ServiceFactory;
@@ -16,7 +17,7 @@ import com.elulian.CustomerSecurityManagementSystem.vo.CustomerInfo;
 
 public class KHXXController {
 
-	private static Logger logger = Logger.getLogger(KHXXController.class);
+	private static Logger logger = LoggerFactory.getLogger(KHXXController.class);
 	/**
 	 * @param args
 	 */
