@@ -9,12 +9,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.jmock.Mockery;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.SaltSource;
@@ -42,7 +43,7 @@ import com.elulian.CustomerSecurityManagementSystem.vo.UserInfo;
 public class UserInfoServiceTest {
 
 	
-	private static  final Logger logger = Logger.getLogger(UserInfoServiceTest.class);
+	private static  final Logger logger = LoggerFactory.getLogger(UserInfoServiceTest.class);
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -272,7 +273,8 @@ public class UserInfoServiceTest {
 		
 		 //String password = "add";
 		
-		logger.info(passwordEncoder.matches(password, userInfo.getPassword()));
+		logger.info("input password matches with old password: " + passwordEncoder.matches(password, userInfo.getPassword()));
+		
 		
 		//assertEquals(passwordEncoder.encodePassword(password, slatSource), userInfo.getPassword());
 		

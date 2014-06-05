@@ -5,7 +5,9 @@ import com.elulian.CustomerSecurityManagementSystem.exception.DataMissingExcepti
 import com.elulian.CustomerSecurityManagementSystem.exception.ExistsException;
 import com.elulian.CustomerSecurityManagementSystem.service.IBaseService;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -27,10 +29,8 @@ import javax.annotation.security.RolesAllowed;
  */
 @RolesAllowed({"ROLE_ADMIN"})
 public class BaseService<T, ID extends Serializable> implements IBaseService<T, ID> {
-    /**
-     * Log variable for all child classes. Uses LogFactory.getLog(getClass()) from Commons Logging
-     */
-    protected final Logger logger = Logger.getLogger(getClass());
+
+    private static final Logger logger = LoggerFactory.getLogger(BaseService.class);
 
     /**
      * GenericDao instance, set by constructor of child classes

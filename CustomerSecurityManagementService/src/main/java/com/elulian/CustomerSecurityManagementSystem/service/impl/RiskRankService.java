@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ import com.elulian.CustomerSecurityManagementSystem.vo.RiskRank;
 @RolesAllowed({"ROLE_ADMIN"})
 public class RiskRankService extends BaseService<RiskRank, Integer> implements IRiskRankService {
 
+	private static final Logger logger = LoggerFactory.getLogger(RiskRankService.class);
+	
 	private IRiskRankDAO riskRankDAO;
 	
 	/*protected IRiskRankDAO getRiskRankDAO(){

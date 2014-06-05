@@ -5,19 +5,15 @@ package com.elulian.CustomerSecurityManagementSystem.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStreamWriter;
-import java.nio.charset.Charset;
 import java.util.Calendar;
-import java.util.Date;
 
-import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -37,7 +33,7 @@ import com.elulian.CustomerSecurityManagementSystem.vo.CustomerInfo;
 "classpath:**/applicationContext*.xml" })
 public class ThresholdServiceTest {
 
-	private final Logger logger = Logger.getLogger(getClass());
+	private static final Logger logger = LoggerFactory.getLogger(ThresholdServiceTest.class);
 	
 	@Autowired
 	private IThresholdService thresholdService;

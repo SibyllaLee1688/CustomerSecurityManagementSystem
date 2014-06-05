@@ -4,13 +4,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 //org.springframework.aop.interceptor.PerformanceMonitorInterceptor	 
 
 public class PerfInterceptor implements MethodInterceptor {
 
-	private final Logger logger = Logger.getLogger(this.getClass());
+	private static final Logger logger = LoggerFactory.getLogger(PerfInterceptor.class);
 
 	private static ConcurrentHashMap<String, MethodStats> methodStats = new ConcurrentHashMap<String, MethodStats>();
 
