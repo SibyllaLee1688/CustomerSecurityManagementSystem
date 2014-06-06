@@ -107,7 +107,7 @@ public class RiskRankAction extends ActionSupport implements Preparable{
 		if ( ServletActionContext.getRequest().getMethod().equalsIgnoreCase("post")){
 			String inputIdString = ServletActionContext.getRequest().getParameter("riskRank.id");
 			/* just for integer >= 0 */
-			if((inputIdString.matches("^\\d+$"))) {
+			if((null != inputIdString) && (inputIdString.matches("^\\d+$"))) {
 				riskRank = this.riskRankService.findById(Integer.parseInt(inputIdString));
 			}
 		}

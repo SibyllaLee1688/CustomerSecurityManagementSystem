@@ -155,6 +155,7 @@
 				<s:textfield id="rankType" name="riskRank.rankType" key="riskRank.rankType"/>
 				<s:textfield id="minValue" key="riskRank.minvalue" name="riskRank.minValue"/>
 				<s:textfield id="maxValue" key="riskRank.maxvalue" name="riskRank.maxValue"/>
+				<s:textfield id="version" name="riskRank.version" cssStyle="display:none"/>
 				<s:submit id="submit" key="form.submit" loadingText="%{getText('Load')}"
         showLoadingText="true"/>
 				<s:reset type="button" key="form.clear"/>

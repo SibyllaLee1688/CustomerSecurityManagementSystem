@@ -164,8 +164,8 @@ public class UserInfoAction extends ActionSupport implements Preparable, Paramet
 		if ( ServletActionContext.getRequest().getMethod().equalsIgnoreCase("post")){
 			String inputIdString = ServletActionContext.getRequest().getParameter("userInfo.id");
 			/* just for integer >= 0 */
-			logger.error(inputIdString);
-			if((inputIdString.matches("^\\d+$"))) {
+			logger.debug(inputIdString);
+			if((null != inputIdString) && (inputIdString.matches("^\\d+$"))) {
 				userInfo = userInfoService.findById(Integer.parseInt(inputIdString));
 			}
 		}
