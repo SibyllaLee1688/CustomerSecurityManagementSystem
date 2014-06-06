@@ -1,4 +1,7 @@
-package com.elulian.CustomerSecurityManagementSystem.dao.impl.jpa;
+/**
+ * 
+ */
+package com.elulian.CustomerSecurityManagementSystem.dao.impl.hibernate;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -11,11 +14,15 @@ import com.elulian.CustomerSecurityManagementSystem.dao.ICustomerInfoDAO;
 import com.elulian.CustomerSecurityManagementSystem.vo.Condition;
 import com.elulian.CustomerSecurityManagementSystem.vo.CustomerInfo;
 
+/**
+ * @author elulian
+ *
+ */
 @Repository("customerInfoDAO")
-public class CustomerInfoJPADAO extends BaseJPADAO<CustomerInfo, Integer> implements
+public class CustomerInfoDAO extends BaseDAO<CustomerInfo, Integer> implements
 		ICustomerInfoDAO {
 
-	private static Logger logger = LoggerFactory.getLogger(CustomerInfoJPADAO.class);
+	private static Logger logger = LoggerFactory.getLogger(CustomerInfoDAO.class);
 	
 	@Override
 	public long getTotalCount(Condition condition) {
@@ -103,30 +110,5 @@ public class CustomerInfoJPADAO extends BaseJPADAO<CustomerInfo, Integer> implem
 			return false;
 		return true;
 	}
-	
-	// For test, TBD
-	public static void main(String[] args) {
-		/*Condition con = new Condition();
-		con.setSearchBranch("1");
-		con.setSortBy("branch");
-//		con.setMaxRow(50);
-//		con.setStartRow(0);
-//		q.setParameter("name", "1");
-		System.out.println(new CustomerInfoDAO().getTotalCount(con));
-		List<CustomerInfo> list = new CustomerInfoDAO().getCustomerInfoByCondition(con);
-		for(CustomerInfo info : list){
-			System.out.println(info.getBranch());
-		}*/
-		CustomerInfo entity = new CustomerInfo();
-		entity.setCustomerId("100");
-		entity.setCustomerName("customerName");
-		ICustomerInfoDAO dao = new CustomerInfoJPADAO();
-		entity = dao.findById(46);
-		//entity.setCertificateBeginDate(null);
-		//entity.setCertificateEndDate(null);
-		entity.setCustomerName("customerName");
-		dao.save(entity);
-		if(dao.findById(46).getCustomerName() != null)
-			System.out.println(dao.findById(46).getCustomerName());
-	}
+
 }

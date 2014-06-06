@@ -6,26 +6,46 @@
             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
            	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd"
 	default-lazy-init="true">
-	<!-- <bean class="org.springframework.orm.hibernate4.HibernateExceptionTranslator"/> 
-		<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/> 
-		Hibernate SessionFactory <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" 
-		destroy-method="destroy"> <property name="dataSource" ref="dataSource"/> 
-		<property name="configLocation" value="classpath:hibernate.cfg.xml"/> <property 
-		name="hibernateProperties"> <props> <prop key="hibernate.dialect">${hibernate.dialect}</prop> 
-		<prop key="hibernate.query.substitutions">true 'Y', false 'N'</prop> <prop 
-		key="hibernate.cache.use_second_level_cache">true</prop> <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop> 
-		Hibernate Search index directory <prop key="hibernate.search.default.indexBase">${app.search.index.basedir}</prop> 
-		</props> Turn batching off for better error messages under PostgreSQL hibernate.jdbc.batch_size=0 
-		</property> </bean> Transaction manager for a single Hibernate SessionFactory 
-		(alternative to JTA) <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"> 
-		<property name="sessionFactory" ref="sessionFactory"/> </bean> -->
+	
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/> 
+	
+	<bean class="org.springframework.orm.hibernate4.HibernateExceptionTranslator" />
+
+	
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
+		destroy-method="destroy">
+		<property name="dataSource" ref="hikariCPDataSource" />
+		<property name="configLocation">
+		    <value> classpath:hibernate.cfg.xml </value>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${project.hibernateDialect}</prop>
+				<!-- Booleans can be easily used in expressions by 
+				     declaring HQL query substitutions in Hibernate configuration -->
+				<prop key="hibernate.query.substitutions">true 'Y', false 'N'</prop>
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+				<!-- http://www.tutorialspoint.com/hibernate/hibernate_caching.htm -->
+				<!-- hibernate.cache.use_query_cache "true" -->
+				<!-- Hibernate Search index directory
+				<prop key="hibernate.search.default.indexBase">${app.search.index.basedir}</prop> -->
+			</props>
+		</property>
+	</bean> 
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
 
 	<!-- Activates scanning of @Autowired -->
 	<context:annotation-config />
 
 	<!-- Activates scanning of @Repository -->
 	<context:component-scan
-		base-package="com.elulian.CustomerSecurityManagementSystem.dao" />
+		base-package="com.elulian.CustomerSecurityManagementSystem.dao.impl.hibernate" />
 
 	<!-- It is not necessary to configure a Spring loadTimeWeaver when using 
 		OpenJPA build time enhancement. The following warning message will be logged 
@@ -35,22 +55,28 @@
 		it, set your openjpa.Runtime log level to TRACE. Load-time class transformation 
 		will not be available. -->
 
-	<!-- <context:load-time-weaver/> -->
-	<bean id="entityManagerFactory"
+	<!-- mysqlOpenJPA mysqlHibernateJPA -->
+	<!-- openjpaVendorAdapter hibernateJpaVendorAdapter -->
+	<!-- Specify the JpaVendorAdapter implementation for the desired JPA provider, if any. 
+	        This will initialize appropriate defaults for the given provider, 
+	        such as persistence provider class and JpaDialect, unless locally overridden in this FactoryBean -->
+	<!-- <bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="persistenceUnitName" value="mysqlOpenJPA" /> <!-- mysqlHibernateJPA -->
+		<property name="persistenceUnitName" value="mysqlOpenJPA" /> 
 		<property name="dataSource" ref="hikariCPDataSource" />
-		<property name="jpaVendorAdapter" ref="openjpaVendorAdapter" />
-		<!-- <property name="loadTimeWeaver"> <bean class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" 
-			/> </property> -->
-			<!-- <property name="jpaProperties">
+		
+		<property name="jpaVendorAdapter" ref="openjpaVendorAdapter" /> 
+			
+			JPA properties would usually be specified in the persistence.xml file; 
+			alternatively, the properties can be specified directly to the entity manager factory bean:
+			 <property name="jpaProperties">
             <value>
                 hibernate.cache.use_second_level_cache = true
                 hibernate.cache.region.factory_class = org.hibernate.cache.ehcache.EhCacheRegionFactory
                 hibernate.cache.use_query_cache = true
                 hibernate.generate_statistics = true
             </value>
-         </property> -->
+         </property>
 	</bean>
 	
 	<bean id="openjpaVendorAdapter" class="org.springframework.orm.jpa.vendor.OpenJpaVendorAdapter">
@@ -60,16 +86,17 @@
                     value="org.apache.openjpa.jdbc.sql.MySQLDictionary" />
             </bean>
             
-    <!-- <bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		<property name="dataSource" ref="hikariCPDataSource" />
+	</bean> -->
+	
+	<!--     <bean id="hibernateJpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
                 <property name="showSql" value="false" />
                 <property name="generateDdl" value="true" />
                 <property name="databasePlatform"
                     value="org.hibernate.dialect.MySQL5Dialect" />
             </bean> -->
-
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManagerFactory" />
-		<property name="dataSource" ref="hikariCPDataSource" />
-	</bean>
 
 </beans>

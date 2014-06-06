@@ -6,6 +6,7 @@ package com.elulian.CustomerSecurityManagementSystem.dao;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,16 +53,19 @@ public class RoleDAOTest {
 		assertNotNull(role.getId());
 	}
 	
-	@Test (expected = org.apache.openjpa.persistence.InvalidStateException.class)
-	//@Test (expected = javax.persistence.PersistenceException.class) //org.hibernate.PropertyValueException
+	//@Test (expected = org.apache.openjpa.persistence.InvalidStateException.class)
+	//@Test (expected = javax.persistence.PersistenceException.class) 
+	//@Test (expected = org.springframework.dao.InvalidDataAccessApiUsageException.class)
+	@Test (expected = org.springframework.dao.DataIntegrityViolationException.class)
 	public void addNullName(){
 		logger.info("---------------------addNullName-------------");
 		roleDAO.save(new Role());
 		roleDAO.findAll();
 	}
 	
-	@Test (expected = org.apache.openjpa.persistence.EntityExistsException.class)
+	//@Test (expected = org.apache.openjpa.persistence.EntityExistsException.class)
 	//@Test (expected = javax.persistence.PersistenceException.class) //org.hibernate.exception.ConstraintViolationException
+	@Test (expected = org.springframework.dao.DataIntegrityViolationException.class)
 	public void addDuplicatedName(){
 		logger.info("---------------------addDuplicatedName-------------");
 		Role role = new Role();
@@ -76,6 +80,14 @@ public class RoleDAOTest {
 		Role role = roleDAO.findById(1);
 		assertNotNull(role.getId());
 		assertEquals("ROLE_ADMIN", role.getName());
+	}
+
+	@Test
+	public void getRoleUsers(){
+		logger.info("---------------------getRoleUsers-------------");
+		Role role = roleDAO.findById(1);
+		assertNotNull(role.getUsers());
+		assertTrue(0 != role.getUsers().size());
 	}
 	
 	@Test

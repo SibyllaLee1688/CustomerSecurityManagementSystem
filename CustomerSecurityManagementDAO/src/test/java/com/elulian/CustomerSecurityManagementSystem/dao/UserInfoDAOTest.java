@@ -175,7 +175,7 @@ public class UserInfoDAOTest {
     	 assertEquals("ROLE_ADMIN", ((Role)(userInfo.getRoles().toArray()[0])).getName());
     	 /* for oenjpa, version starts from 1 */
     	 /* for hibernate, version starts from 0 */
-    	 assertTrue(1 == user.getVersion());
+    	 assertTrue(0 == user.getVersion());
     	 //userInfoDAO.remove(user.getId());    	 
      }
      
@@ -183,8 +183,9 @@ public class UserInfoDAOTest {
 	 /**
 	  * test modify a existing user in database
 	  */
-     @Test (expected = org.apache.openjpa.persistence.InvalidStateException.class)
-     //@Test 
+     //@Test (expected = org.apache.openjpa.persistence.InvalidStateException.class)
+     //@Test (expected = org.springframework.dao.InvalidDataAccessApiUsageException.class)
+     @Test
      public void testDAOEditUserVersion(){
     	 logger.info("modify a existing user's version in database--------------");
     	 int id = 1;   	 
@@ -224,7 +225,7 @@ public class UserInfoDAOTest {
 	 /**
 	  * test modify a existing user in database
 	  * version is not sync between openjpa and database, see
-	  * @see BaseJPADAO.merge
+	  * @see BaseDAO.merge
 	  */
      @Ignore 
      //@Test
@@ -249,8 +250,9 @@ public class UserInfoDAOTest {
       * test add a exists username user to database
      * @throws InterruptedException 
       */
-     @Test (expected = org.apache.openjpa.persistence.EntityExistsException.class)
+     //@Test (expected = org.apache.openjpa.persistence.EntityExistsException.class)
      //@Test (expected = javax.persistence.PersistenceException.class)
+     @Test (expected = org.springframework.dao.DataIntegrityViolationException.class)
      public void testDAOAddExistsUsernameUser() throws InterruptedException{
     	 Date registerTime = null;
     	 Date expiredTime = null; 
@@ -274,8 +276,9 @@ public class UserInfoDAOTest {
      /**
       * test add a exists email user to database
       */
-     @Test (expected = org.apache.openjpa.persistence.EntityExistsException.class)
+     //@Test (expected = org.apache.openjpa.persistence.EntityExistsException.class)
      //@Test (expected = javax.persistence.PersistenceException.class)
+     @Test (expected = org.springframework.dao.DataIntegrityViolationException.class)
      public void testDAOAddExistsEmailUser(){
     	 Date registerTime = null;
     	 Date expiredTime = null; 
@@ -298,9 +301,12 @@ public class UserInfoDAOTest {
      /**
       * test add a miss data user into database, use spring,
       */
-     @Test(expected=org.apache.openjpa.persistence.InvalidStateException.class)
-     //org.springframework.dao.InvalidDataAccessApiUsageException.class for commit to database
+     // for openjpa
+     //@Test(expected=org.apache.openjpa.persistence.InvalidStateException.class)
+     //@Test (expected = org.springframework.dao.InvalidDataAccessApiUsageException.class)
+     // for hibernate
      //@Test (expected = javax.persistence.PersistenceException.class)
+     @Test (expected = org.springframework.dao.DataIntegrityViolationException.class)
      public void testDAOAddMissingInfoUser(){
     	 Date registerTime = null;
     	 Date expiredTime = null; 

@@ -28,7 +28,7 @@
         </properties>  
       </persistence-unit>  
       
-    <!--    <persistence-unit name="mysqlHibernateJPA" transaction-type="RESOURCE_LOCAL">  
+<!--        <persistence-unit name="mysqlHibernateJPA" transaction-type="RESOURCE_LOCAL">  
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
         <properties>  
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect" />  
@@ -37,8 +37,12 @@
             <property name="hibernate.jdbc.fetch_size" value="18" />  
             <property name="hibernate.jdbc.batch_size" value="10" />  
             <property name="hibernate.show_sql" value="false" />  
-            <property name="hibernate.format_sql" value="false" />  
+            <property name="hibernate.format_sql" value="false" />
+            <property name="hibernate.cache.use_second_level_cache" value="true" />
+            <property name="hibernate.cache.region.factory_class" value="org.hibernate.cache.ehcache.EhCacheRegionFactory" />
+            <property name="hibernate.cache.use_query_cache" value="true" />
+            <property name="hibernate.generate_statistics" value="true" /> 
         </properties>  
-      </persistence-unit>   -->
+      </persistence-unit>  --> 
       
     </persistence>  

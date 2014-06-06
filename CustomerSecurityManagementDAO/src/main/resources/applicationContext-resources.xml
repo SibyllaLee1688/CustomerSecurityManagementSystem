@@ -17,7 +17,7 @@
     </bean> -->
 
     <!-- 
-        for datasource selection
+        for data source pool selection
         http://blog.csdn.net/sqjhwl/article/details/8900568
         http://jolbox.com/dynamic-benchmark.html
         https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing
@@ -28,7 +28,7 @@
     <!-- JNDI DataSource for J2EE environments -->
     <!--<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/CustomerSecurityManagementSystem"/>-->
 
-	<bean id="dbcpDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+	<!-- <bean id="dbcpDataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="${project.jdbc.driverClassName}" />
 		<property name="url" value="${project.jdbc.url}" />
@@ -41,8 +41,8 @@
 		<property name="validationQuery" value="SELECT 1+1" />
 		<property name="testOnBorrow" value="true" />
 	</bean>
-
-	<bean id="c3p0DataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+ -->
+	<!-- <bean id="c3p0DataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
 		<property name="driverClass" value="${project.jdbc.driverClassName}" />
 		<property name="jdbcUrl" value="${project.jdbc.url}" />
@@ -51,7 +51,7 @@
 		<property name="minPoolSize" value="10" />
 		<property name="maxPoolSize" value="100" />
 		<property name="initialPoolSize" value="20" />
-	</bean> 
+	</bean>  -->
 	
 	<!-- BoneCP configuration
 	<bean id="boneCPDataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">

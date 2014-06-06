@@ -1,12 +1,14 @@
-package com.elulian.CustomerSecurityManagementSystem.dao.impl.jpa;
+/**
+ * 
+ */
+package com.elulian.CustomerSecurityManagementSystem.dao.impl.hibernate;
 
 import java.util.List;
 
-import javax.persistence.Query;
 
+import org.hibernate.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,11 +19,15 @@ import com.elulian.CustomerSecurityManagementSystem.dao.IUserInfoDAO;
 import com.elulian.CustomerSecurityManagementSystem.vo.Condition;
 import com.elulian.CustomerSecurityManagementSystem.vo.UserInfo;
 
+/**
+ * @author elulian
+ *
+ */
 @Repository("userInfoDAO")
-public class UserInfoJPADAO extends BaseJPADAO<UserInfo, Integer> implements
-		IUserInfoDAO, UserDetailsService {
+public class UserInfoDAO extends BaseDAO<UserInfo, Integer> implements
+IUserInfoDAO, UserDetailsService {
 
-	private static final Logger logger = LoggerFactory.getLogger(UserInfoJPADAO.class);
+private static final Logger logger = LoggerFactory.getLogger(UserInfoDAO.class);
 	
 	@Transactional
 	@Override
@@ -37,40 +43,16 @@ public class UserInfoJPADAO extends BaseJPADAO<UserInfo, Integer> implements
 	
 	@Override
 	public UserInfo getUserByName(String name) {
-		/*EntityManagerFactory factory = Persistence
-				.createEntityManagerFactory("mysql");
-		// �� EntityManagerFactory ʵ�� factory �л�ȡ EntityManager
-		EntityManager em = factory.createEntityManager();*/
-		Query q = entityManager.createQuery("select t from UserInfo t where t.username = '"
+		Query q = getSession().createQuery("select t from UserInfo t where t.username = '"
 				+ name + "'");
+		
 		@SuppressWarnings("unchecked")
-		List<UserInfo> list = q.getResultList();
-		/*em.close();
-		factory.close();*/
+		List<UserInfo> list = q.list();
 		if(list.isEmpty())
 			return null;
 		return list.get(0);
 	}
 
-	
-	/*@Override
-	public UserInfo getUserInfoByUserId(String userId) {
-		EntityManagerFactory factory = Persistence
-				.createEntityManagerFactory("mysql");
-		// �� EntityManagerFactory ʵ�� factory �л�ȡ EntityManager
-		EntityManager em = factory.createEntityManager();
-		Query q = entityManager.createQuery("select t from UserInfo t where t.userId = '"
-				+ userId + "'");
-		q.setHint("openjpa.hint.OptimizeResultCount", new Integer(1));
-		@SuppressWarnings("unchecked")
-		List<UserInfo> list = q.getResultList();
-		em.close();
-		factory.close();
-		if(list.isEmpty())
-			return null;
-		return list.get(0);
-	}
-*/
 	@Override
 	public long getTotalCount(Condition condition) {
 		StringBuffer hql = new StringBuffer(
@@ -144,73 +126,4 @@ public class UserInfoJPADAO extends BaseJPADAO<UserInfo, Integer> implements
 				condition.getMaxRow());
 	}
 
-	/*public static void main(String[] args) {
-
-		UserInfoDAO dao = new UserInfoDAO();
-		UserInfo user = null;
-
-		// test save
-
-		
-		 * for(int i = 2; i < 20; i++){ user = new UserInfo();
-		 * user.setName("test" + i); user.setPassword("test" + i);
-		 * user.setBranch("test" + i); dao.saveOrUpdate(user); }
-		 
-
-		
-		 * // test list for (UserInfo u : dao.findAll()) {
-		 * System.out.println(u.getName()); System.out.println(u.getId());
-		 * System.out.println(u.getPassword());
-		 * System.out.println(u.getBranch()); }
-		 
-
-		
-		 * //test update user = dao.findById(new Integer(4)); //
-		 * user.setName("test1"); user.setPassword("test2");
-		 * user.setBranch("test2"); dao.saveOrUpdate(user);
-		 * 
-		 * user = dao.findById(new Integer(4));
-		 * System.out.println(user.getName()); System.out.println(user.getId());
-		 * System.out.println(user.getPassword());
-		 * System.out.println(user.getBranch());
-		 
-
-		
-		 * //test delete user = dao.findById(new Integer(2));
-		 * System.out.println(user.getName()); System.out.println(user.getId());
-		 * System.out.println(user.getPassword());
-		 * System.out.println(user.getBranch()); dao.delete(user);
-		 
-		
-		 * //test total count
-		 * 
-		 * System.out.println(dao.getTotalCount());
-		 
-		
-		 * //test get user by name
-		 * 
-		 * user = dao.getUserByName("test10");
-		 * System.out.println(user.getName()); System.out.println(user.getId());
-		 * System.out.println(user.getPassword());
-		 * System.out.println(user.getBranch());
-		 
-		// test Condition
-		Condition condition = new Condition();
-		condition.setSearchBranch("1");
-		condition.setUsername("");
-		condition.setStartRow(-5);
-		condition.setMaxRow(0);
-		System.out.println(dao.getTotalCount(condition));
-		for (UserInfo u : dao.getUserInfoByCondition(condition)) {
-			System.out.println(u.getName());
-		}
-	
-		user = dao.getUserInfoByUserId("admin");
-		System.out.println(user.getName()); 
-		System.out.println(user.getUserId());
-		System.out.println(user.getId());
-		System.out.println(user.getPassword());
-		System.out.println(user.getBranch());
-//		System.out.println(dao.findById(new Integer(400)));
-	}*/
 }

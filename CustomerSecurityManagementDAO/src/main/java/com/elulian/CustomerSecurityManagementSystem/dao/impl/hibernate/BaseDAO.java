@@ -1,76 +1,81 @@
 /**
- * BaseDAO implementation (CRUD) with openjpa
- * 1. Transaction configuration is done in service layer
- * 2. EntityManager is injected by Spring
+ * 
  */
-package com.elulian.CustomerSecurityManagementSystem.dao.impl.jpa;
+package com.elulian.CustomerSecurityManagementSystem.dao.impl.hibernate;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.annotation.Resource;
 
+import org.hibernate.HibernateException;
+import org.hibernate.IdentifierLoadAccess;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 
 import com.elulian.CustomerSecurityManagementSystem.dao.IBaseDAO;
 
-public class BaseJPADAO<T, ID extends Serializable> implements IBaseDAO<T, ID> {
-
-	private final static Logger logger = LoggerFactory.getLogger(BaseJPADAO.class);
-
+/**
+ * @author elulian
+ *
+ */
+public class BaseDAO<T, ID extends Serializable> implements IBaseDAO<T, ID> {
+	
+	private final static Logger logger = LoggerFactory.getLogger(BaseDAO.class);
+		  
 	private Class<T> persistentClass;
-
-	/*
-	 * The @PersistenceContext annotation has an optional attribute type, which
-	 * defaults to PersistenceContextType.TRANSACTION. This default is what you
-	 * need to receive a shared EntityManager proxy. The alternative,
-	 * PersistenceContextType.EXTENDED, is a completely different affair: This
-	 * results in a so-called extended EntityManager, which is not thread-safe
-	 * and hence must not be used in a concurrently accessed component such as a
-	 * Spring-managed singleton bean. Extended EntityManagers are only supposed
-	 * to be used in stateful components
-	 * http://docs.spring.io/spring/docs/3.0.x/spring-framework-reference/html/orm.html#orm-jpa
-	 */
-	@PersistenceContext
-	@Autowired
-	protected EntityManager entityManager;
-
+		  
+	@Resource
+	private SessionFactory sessionFactory;
+		  
 	@SuppressWarnings("unchecked")
-	public BaseJPADAO() {
+	public BaseDAO() {
 		this.persistentClass = (Class<T>) ((ParameterizedType) getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[0];
 	}
+	
+	public SessionFactory getSessionFactory() {
+	   return this.sessionFactory;
+	}
+	  
+    public Session getSession() throws HibernateException {
+	   Session sess = getSessionFactory().getCurrentSession();
+	   if (sess == null) {
+	     sess = getSessionFactory().openSession();
+	   }
+	   return sess;
+	}
+		  
+	@Autowired
+	@Required
+	public void setSessionFactory(SessionFactory sessionFactory) {
+	  this.sessionFactory = sessionFactory;
+	}
 
-	/*
-	 * @Override public void delete(T entity) { EntityManagerFactory factory =
-	 * Persistence .createEntityManagerFactory("mysql");
-	 * 
-	 * EntityManager em = factory.createEntityManager();
-	 * 
-	 * EntityTransaction tx = entityManager.getTransaction(); tx.begin();
-	 * entityManager.remove(entityManager.merge(entity));
-	 * 
-	 * tx.commit(); em.close(); factory.close(); }
-	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public T findById(ID id) {
+	    IdentifierLoadAccess byId = getSession().byId(this.persistentClass);
+	    T entity = (T) byId.load(id);
+	    return entity;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findAll() {
-		Query q = entityManager.createQuery("select t from "
-				+ persistentClass.getSimpleName() + " t");
-		List<T> list = q.getResultList();
-		return list;
+	    return getSession().createCriteria(this.persistentClass).list();
 	}
 
 	@Override
-	public T findById(ID id) {
-		T t = entityManager.find(persistentClass, id);
-		return t;
+	public List<T> search(String searchTerm) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Deprecated
@@ -100,7 +105,7 @@ public class BaseJPADAO<T, ID extends Serializable> implements IBaseDAO<T, ID> {
 		 * 
 		 * EntityManager em = factory.createEntityManager();
 		 */
-		Query q = entityManager.createQuery(hql);
+		Query q = getSession().createQuery(hql);
 		if (startRow < 0)
 			startRow = 0;
 		q.setFirstResult(startRow);
@@ -109,18 +114,19 @@ public class BaseJPADAO<T, ID extends Serializable> implements IBaseDAO<T, ID> {
 		/*
 		 * em.close(); factory.close();
 		 */
-		return q.getResultList();
+		return q.list();
 	}
-
+	
+	
 	@Override
 	public long getTotalCount() {
 		Long count = new Long(0);
-		Query q = entityManager.createQuery("select count(t) from "
+		Query q = getSession().createQuery("select count(t) from "
 				+ persistentClass.getSimpleName() + " t");
-		if (!q.getResultList().isEmpty()) {
-			count = (Long) q.getResultList().get(0);
+		if (!q.list().isEmpty()) {
+			count = (Long) q.list().get(0);
 		}
-		return count;
+		return count.longValue();
 	}
 
 	/**
@@ -155,51 +161,42 @@ public class BaseJPADAO<T, ID extends Serializable> implements IBaseDAO<T, ID> {
 			buff.append(") ");
 			buff.append(hql.substring(fromIndex));
 		}
+		
 		logger.debug(buff.toString());
-		Query q = entityManager.createQuery(buff.toString());
-		if (!q.getResultList().isEmpty()) {
-			count = (Long) q.getResultList().get(0);
+		
+		Query q = getSession().createQuery(buff.toString());
+		
+		if (!q.list().isEmpty()) {
+			count = (Long) q.list().get(0);
 		}
 		return count.longValue();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean exists(ID id) {
-		Query q = entityManager.createQuery("select count(t) from "
-				+ persistentClass.getSimpleName() + " t");
-		return q.getResultList().isEmpty();
+		IdentifierLoadAccess byId = getSession().byId(this.persistentClass);
+	    T entity = (T) byId.load(id);
+	    return null != entity;
 	}
 
-	/**
-	 * Flush is not required, default openjpa.FlushBeforeQueries = true and
-	 * openjpa.IgnoreChanges = false
-	 * http://openjpa.apache.org/builds/2.3.0/apache
-	 * -openjpa/docs/manual.html#ref_guide_dbsetup_retain
-	 * */
+	@SuppressWarnings("unchecked")
 	@Override
 	public T save(T object) {
-		// T o =
-		return entityManager.merge(object);
-		// entityManager.flush();
-
-		// return o;
+		return (T) getSession().merge(object);
 	}
 
 	@Override
 	public void remove(T object) {
-		entityManager.remove(object);
+		getSession().delete(object);
 	}
 
 	@Override
-	// @Transactional
 	public void remove(ID id) {
-		entityManager.remove(findById(id));
+		T entity = findById(id);	
+		if(null != entity)
+			remove(entity);
 	}
-
-	@Override
-	public List<T> search(String searchTerm) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+		  
+		  
 }

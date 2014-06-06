@@ -13,7 +13,7 @@ import com.elulian.CustomerSecurityManagementSystem.vo.Role;
  *
  */
 @Repository("roleDAO")
-public class RoleJPADAO extends BaseJPADAO<Role, Integer> implements IRoleDAO {
+public class RoleDAO extends BaseDAO<Role, Integer> implements IRoleDAO {
 
 	@Override
 	public Role getRoleByName(String name) {
