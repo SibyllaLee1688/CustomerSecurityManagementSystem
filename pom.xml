@@ -94,7 +94,8 @@
 		<project.commons-dbcpVersion>1.4</project.commons-dbcpVersion>
 		<project.hikariCPVersion>1.3.8</project.hikariCPVersion>
         <project.ehcacheVersion>2.6.9</project.ehcacheVersion>
-		<project.hibernateVersion>4.3.5.Final</project.hibernateVersion>
+        <!-- 4.3 requires jpa2.1 jee7 -->
+		<project.hibernateVersion>4.2.7.Final</project.hibernateVersion>
 		<project.openjpaVersion>2.3.0</project.openjpaVersion>
 		<!-- rules -->
 		<project.slf4j-simpleVersion>1.7.2</project.slf4j-simpleVersion>

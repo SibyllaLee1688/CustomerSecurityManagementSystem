@@ -38,7 +38,7 @@
 		</session-management>
 		<!-- 3600 * 24 * 90 c3p0DataSource-->
 		<remember-me user-service-ref="userInfoDAO"
-			data-source-ref="c3p0DataSource" token-validity-seconds="7776000"
+			data-source-ref="hikariCPDataSource" token-validity-seconds="7776000"
 			key="e37f4b31-0c45-11dd-bd0b-0800200c9a66" />
 	</http>
 
