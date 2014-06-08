@@ -42,13 +42,68 @@
         -->
 
     <defaultCache
-        maxElementsInMemory="10000"
+        maxElementsInMemory="100000"
         eternal="false"
         overflowToDisk="true"
-        timeToIdleSeconds="120"
-        timeToLiveSeconds="120"
+        timeToIdleSeconds="300"
+        timeToLiveSeconds="600"
         diskPersistent="false"
         diskExpiryThreadIntervalSeconds="120"/>
         
     <!-- See http://ehcache.sourceforge.net/documentation/#mozTocId258426 for how to configure caching for your objects -->
+    
+    <!-- for hibernate query -->
+    <cache
+		name="org.hibernate.cache.internal.StandardQueryCache"
+		maxEntriesLocalHeap="5"
+		eternal="false"
+		timeToLiveSeconds="120"
+	/>
+    
+    <cache
+	name="org.hibernate.cache.spi.UpdateTimestampsCache"
+	maxEntriesLocalHeap="5000"
+	eternal="true"
+	/>
+    
+    <cache name="com.elulian.CustomerSecurityManagementSystem.vo.Role"
+	    maxEntriesLocalHeap="10"
+	    eternal="false"
+	    timeToIdleSeconds="300"
+	    timeToLiveSeconds="600"
+    />
+   <!--  <cache name="com.elulian.CustomerSecurityManagementSystem.vo.Role.users"
+    maxEntriesLocalHeap="10000"
+    eternal="false"
+    timeToIdleSeconds="300"
+    timeToLiveSeconds="600"
+    /> -->
+    
+    <cache name="com.elulian.CustomerSecurityManagementSystem.vo.UserInfo"
+    maxEntriesLocalHeap="10000"
+    eternal="false"
+    timeToIdleSeconds="300"
+    timeToLiveSeconds="600"
+    />
+    
+    <cache name="com.elulian.CustomerSecurityManagementSystem.vo.CustomerInfo"
+    maxEntriesLocalHeap="80000"
+    eternal="false"
+    timeToIdleSeconds="300"
+    timeToLiveSeconds="600"
+    />
+    
+    <cache name="com.elulian.CustomerSecurityManagementSystem.vo.RiskRank"
+    maxEntriesLocalHeap="10"
+    eternal="false"
+    timeToIdleSeconds="300"
+    timeToLiveSeconds="600"
+    />
+    
+    <cache name="com.elulian.CustomerSecurityManagementSystem.vo.Threshold"
+    maxEntriesLocalHeap="100"
+    eternal="false"
+    timeToIdleSeconds="300"
+    timeToLiveSeconds="600"
+    />
 </ehcache>

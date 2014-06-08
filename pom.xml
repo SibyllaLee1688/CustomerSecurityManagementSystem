@@ -94,6 +94,7 @@
 		<project.commons-dbcpVersion>1.4</project.commons-dbcpVersion>
 		<project.hikariCPVersion>1.3.8</project.hikariCPVersion>
         <project.ehcacheVersion>2.6.9</project.ehcacheVersion>
+        <project.javassistVersion>3.18.1-GA</project.javassistVersion>
         <!-- 4.3 requires jpa2.1 jee7 -->
 		<project.hibernateVersion>4.2.7.Final</project.hibernateVersion>
 		<project.openjpaVersion>2.3.0</project.openjpaVersion>
@@ -423,10 +424,11 @@
             </dependency>
 			<!-- Use Javassist as Hibernate's bytecode provider -->
 	        <dependency>
-	            <groupId>javassist</groupId>
+	            <groupId>org.javassist</groupId>
 	            <artifactId>javassist</artifactId>
-	            <version>3.12.1.GA</version>
+	            <version>${project.javassistVersion}</version>
 	        </dependency>
+	        
 	        <!-- Enable EhCache support -->
 	        <dependency>
 	            <groupId>org.hibernate</groupId>
@@ -620,6 +622,12 @@
 				<groupId>org.apache.struts</groupId>
 				<artifactId>struts2-core</artifactId>
 				<version>${project.strutsVersion}</version>
+				<exclusions>
+				    <exclusion>
+				        <groupId>javassist</groupId>
+                        <artifactId>javassist</artifactId>
+				    </exclusion>
+				</exclusions>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.struts</groupId>

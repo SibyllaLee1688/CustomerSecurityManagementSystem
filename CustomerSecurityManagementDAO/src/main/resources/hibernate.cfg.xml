@@ -12,5 +12,10 @@
         <mapping class="com.elulian.CustomerSecurityManagementSystem.vo.CustomerInfo"/>
         <mapping class="com.elulian.CustomerSecurityManagementSystem.vo.RiskRank"/>
         <mapping class="com.elulian.CustomerSecurityManagementSystem.vo.Threshold"/>
+        <class-cache usage="read-only" class="com.elulian.CustomerSecurityManagementSystem.vo.Role"/> 
+        <class-cache usage="read-write" class="com.elulian.CustomerSecurityManagementSystem.vo.UserInfo"/>
+        <class-cache usage="read-write" class="com.elulian.CustomerSecurityManagementSystem.vo.CustomerInfo"/>
+        <class-cache usage="read-write" class="com.elulian.CustomerSecurityManagementSystem.vo.RiskRank"/>
+        <class-cache usage="read-write" class="com.elulian.CustomerSecurityManagementSystem.vo.Threshold"/> 
     </session-factory>
 </hibernate-configuration>

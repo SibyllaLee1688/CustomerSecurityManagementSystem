@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.elulian.CustomerSecurityManagementSystem.vo.Condition;
 import com.elulian.CustomerSecurityManagementSystem.vo.Role;
 import com.elulian.CustomerSecurityManagementSystem.vo.UserInfo;
+import com.mysql.fabric.xmlrpc.base.Data;
 
 @RunWith(SpringJUnit4ClassRunner.class)  
 @ContextConfiguration(
@@ -154,29 +155,75 @@ public class UserInfoDAOTest {
 	  */
      @Test
      public void testDAOAddUser(){
-    	 String username = "addTest";
-    	 String userId = "addTest";
-    	 UserInfo userInfo = new UserInfo();
     	 Calendar cl = Calendar.getInstance();
     	 Date registerTime = cl.getTime();
     	 cl.add(Calendar.MONTH, 6);
-    	 Date expiredTime = cl.getTime(); 
+    	 Date expiredTime = cl.getTime();
+    	 user = addUser(registerTime, expiredTime);
+    	 assertEquals(registerTime, user.getRegisterTime());
+    	 assertEquals(expiredTime, user.getExpiredTime());
+    	 assertEquals("ROLE_ADMIN", ((Role)(user.getRoles().toArray()[0])).getName());
+    	 /* for oenjpa, version starts from 1 */
+    	 /* for hibernate, version starts from 0 */
+    	 assertTrue(0 == user.getVersion());
+    	 //userInfoDAO.remove(user.getId());  
+    	 
+    	 addUser(registerTime, expiredTime);
+    	 addUser(registerTime, expiredTime);
+    	 addUser(registerTime, expiredTime);
+    	 
+    	/* userInfoDAO.findById(1);
+    	 userInfoDAO.findById(2);
+    	 userInfoDAO.findById(3);
+    	 userInfoDAO.findById(1);
+    	 userInfoDAO.findById(2);
+    	 userInfoDAO.findById(3);
+    	 
+    	 addUser(registerTime, expiredTime);
+    	 addUser(registerTime, expiredTime);
+    	 addUser(registerTime, expiredTime);
+    	 
+    	 userInfoDAO.findById(1);
+    	 userInfoDAO.findById(2);
+    	 userInfoDAO.findById(3);
+    	 userInfoDAO.findById(1);
+    	 userInfoDAO.findById(2);
+    	 userInfoDAO.findById(3);
+    	 
+    	 try {
+			Thread.sleep(1000 * 60 * 5);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	 
+    	 addUser(registerTime, expiredTime);
+    	 addUser(registerTime, expiredTime);
+    	 addUser(registerTime, expiredTime);
+    	 
+    	 userInfoDAO.findById(1);
+    	 userInfoDAO.findById(2);
+    	 userInfoDAO.findById(3);
+    	 userInfoDAO.findById(1);
+    	 userInfoDAO.findById(2);
+    	 userInfoDAO.findById(3);*/
+     }
+
+     
+     private UserInfo addUser(Date registerTime, Date expiredTime){
+    	 String username = "addTest" + System.nanoTime() + Thread.currentThread().getName();
+    	 String userId = username;
+    	 UserInfo userInfo = new UserInfo();
+    	  
     	 buildUser(userInfo, username, userId, registerTime, expiredTime, (username + "@gmail.com"),"ALL");
     	 userInfo.addRole(roleDAO.findById(1));
     	 assertNull(userInfo.getId());
     	 logger.info("add a new user to database--------------");
-    	 long startTime = System.currentTimeMillis();
-    	 user = userInfoDAO.save(userInfo);
-    	 long endTime = System.currentTimeMillis();
-    	 logger.info("" + (endTime - startTime));
-    	 assertNotNull(user.getId());
-    	 assertEquals(registerTime, user.getRegisterTime());
-    	 assertEquals(expiredTime, user.getExpiredTime());
-    	 assertEquals("ROLE_ADMIN", ((Role)(userInfo.getRoles().toArray()[0])).getName());
-    	 /* for oenjpa, version starts from 1 */
-    	 /* for hibernate, version starts from 0 */
-    	 assertTrue(0 == user.getVersion());
-    	 //userInfoDAO.remove(user.getId());    	 
+    	 long startTime = System.nanoTime();
+    	 userInfo = userInfoDAO.save(userInfo);
+    	 long endTime = System.nanoTime();
+    	 logger.info("save a new user spent time: " + (endTime - startTime));
+    	 return userInfo;
      }
      
      /* test save */

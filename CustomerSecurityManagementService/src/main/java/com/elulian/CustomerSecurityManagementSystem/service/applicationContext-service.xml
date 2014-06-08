@@ -15,7 +15,7 @@
      <aop:config>
 <!--        <aop:advisor id="rollbackTx" advice-ref="rollbackTxAdvice" pointcut="execution(* *..service.*Service.save(..))" order="0"/>
         <aop:advisor id="userManagerSecurity" advice-ref="userSecurityAdvice" pointcut="execution(* *..service.*.save(..))" order="1"/> -->
-       <aop:advisor id="perfMonitor" advice-ref="perfInterceptor" pointcut="execution(* *..service.*.*(..))" order="1"/> 
+       <aop:advisor id="perfMonitor" advice-ref="perfInterceptor" pointcut="execution(* *..service.*.*(..)) " order="1"/> 
        <aop:advisor id="managerTx" advice-ref="txAdvice" pointcut="execution(* *..service.*Service.*(..)) and !execution(* *..service.IThresholdService.*(..))" order="2"/>
     </aop:config> 
 
@@ -33,12 +33,12 @@
 
     <tx:advice id="txAdvice">
         <tx:attributes>
-    <!--         Read-only commented out to make things easier for end-users
-            http://issues.appfuse.org/browse/APF-556
-            tx:method name="get*" read-only="true"/ -->
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="find*" read-only="true"/>
+            <tx:method name="search*" read-only="true"/>
             <tx:method name="*"/>
         </tx:attributes>
-    </tx:advice>
+    </tx:advice> 
 
 <!-- spring will automatically rollback for runtime excetpion 
     <tx:advice id="rollbackTxAdvice">
@@ -48,9 +48,7 @@
     </tx:advice>
 
 -->
-   <!--  <bean id="userSecurityAdvice" class="org.appfuse.service.UserSecurityAdvice"/> -->
-
-	<bean id="perfInterceptor" class="com.elulian.CustomerSecurityManagementSystem.service.PerfInterceptor" />
+	<bean id="perfInterceptor" class="com.elulian.CustomerSecurityManagementSystem.service.PerfInterceptor" />	
 
 <!--     ===================================================================
     Mail: Sender and Velocity configuration                            

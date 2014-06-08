@@ -25,6 +25,10 @@
           <property name="openjpa.QueryCompilationCache" value="true" />  
           <property name="openjpa.ConnectionFactoryProperties" value="PrettyPrint=true, PrettyPrintLineLength=100" />  
           <property name="openjpa.FetchBatchSize" value="-1" />  
+          <property name="openjpa.Log" value="SQL=TRACE" /> 
+<!-- 			<property name="openjpa.QueryCache" value="ehcache" /> 
+			<property name="openjpa.DataCache" value="true"/> 
+			<property name="openjpa.DataCacheManager" value="ehcache" />  -->
         </properties>  
       </persistence-unit>  
       

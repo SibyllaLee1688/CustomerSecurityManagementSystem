@@ -25,16 +25,58 @@
 				<!-- Booleans can be easily used in expressions by 
 				     declaring HQL query substitutions in Hibernate configuration -->
 				<prop key="hibernate.query.substitutions">true 'Y', false 'N'</prop>
-				<prop key="hibernate.cache.use_second_level_cache">true</prop>
-				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+				<!-- http://ehcache.org/documentation/integrations/hibernate -->
 				<!-- http://www.tutorialspoint.com/hibernate/hibernate_caching.htm -->
-				<!-- hibernate.cache.use_query_cache "true" -->
+				<prop key="hibernate.cache.use_second_level_cache">false</prop>
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+				<!-- hibernate只会缓存使用load()方法获得的单个持久化对象，如果想缓存使用findall()、 list()、Iterator()、createCriteria()、createQuery()
+				                等方法获得的数据结果集的话，就需要设置hibernate.cache.use_query_cache true  -->
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+				<!-- <prop key="hibernate.cache.provider_configuration_file_resource_path">/ehcache.xml</prop> -->
 				<!-- Hibernate Search index directory
 				<prop key="hibernate.search.default.indexBase">${app.search.index.basedir}</prop> -->
+				<!-- <prop key="hibernate.generate_statistics">true</prop> -->
 			</props>
 		</property>
 	</bean> 
 
+<!--     <context:mbean-server /> -->
+   
+<!--        <bean id="htmlAdaptor" class="com.sun.jdmk.comm.HtmlAdaptorServer"
+        init-method="start">
+        <constructor-arg index="0" value="9070" />
+        <constructor-arg index="1">
+            <bean id="authInfo" class="com.sun.jdmk.comm.AuthInfo">
+                <property name="login" value="admin" />
+                <property name="password" value="admin" />
+            </bean>
+        </constructor-arg>
+    </bean>
+   
+   <bean id="mbeanServer"
+        class="org.springframework.jmx.support.MBeanServerFactoryBean">
+        <property name="locateExistingServerIfPossible" value="false" />
+        <property name="defaultDomain" value="elulian" />
+    </bean> -->
+   
+    <bean id="mbeanExporter" class="org.springframework.jmx.export.MBeanExporter" lazy-init="false">
+        <property name="beans">
+            <map>
+                <entry key="bean:name=hibernateStatisticsMBean"
+                    value-ref="hibernateStatisticsMBean" />
+                <!-- <entry key="bean:name=ehCacheManagerMBean" value-ref="ehCacheManagerMBean" /> -->
+<!--                 <entry key="com.elulian:name=htmlAdaptor" value-ref="htmlAdaptor" /> -->                
+            </map>
+        </property>
+    </bean>
+    <bean name="hibernateStatisticsMBean" class="org.hibernate.jmx.StatisticsService">
+        <property name="sessionFactory" ref="sessionFactory" />
+        <property name="statisticsEnabled" value="true" />
+    </bean>
+
+	<!-- <bean name="ehCacheManagerMBean" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" 
+		/> -->
+ 
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
