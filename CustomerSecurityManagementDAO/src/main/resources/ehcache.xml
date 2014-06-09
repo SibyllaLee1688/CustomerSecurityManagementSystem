@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ehcache updateCheck="false">
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="false" >
+<!-- updateCheck="true" monitoring="autodetect" dynamicConfig="true" http://ehcache.org/ehcache.xsd-->
 
     <!-- Sets the path to the directory where cache .data files are created.
 
@@ -42,7 +44,8 @@
         -->
 
     <defaultCache
-        maxElementsInMemory="100000"
+        statistics="true"
+        maxElementsInMemory="10000"
         eternal="false"
         overflowToDisk="true"
         timeToIdleSeconds="300"
@@ -53,57 +56,70 @@
     <!-- See http://ehcache.sourceforge.net/documentation/#mozTocId258426 for how to configure caching for your objects -->
     
     <!-- for hibernate query -->
-    <cache
-		name="org.hibernate.cache.internal.StandardQueryCache"
+    <cache name="org.hibernate.cache.internal.StandardQueryCache"
+        statistics="true"
 		maxEntriesLocalHeap="5"
 		eternal="false"
-		timeToLiveSeconds="120"
-	/>
+		timeToLiveSeconds="120">
+	   <persistence strategy="localTempSwap" /> <!-- distributed -->
+	</cache>
     
-    <cache
-	name="org.hibernate.cache.spi.UpdateTimestampsCache"
-	maxEntriesLocalHeap="5000"
-	eternal="true"
-	/>
+    <cache name="org.hibernate.cache.spi.UpdateTimestampsCache"
+        statistics="true"
+		maxEntriesLocalHeap="5000"
+		eternal="true">
+	   <persistence strategy="localTempSwap" />
+	</cache>
     
     <cache name="com.elulian.CustomerSecurityManagementSystem.vo.Role"
+	    statistics="true"
 	    maxEntriesLocalHeap="10"
 	    eternal="false"
 	    timeToIdleSeconds="300"
-	    timeToLiveSeconds="600"
-    />
+	    timeToLiveSeconds="600">
+	    <persistence strategy="localTempSwap" />
+    </cache>
    <!--  <cache name="com.elulian.CustomerSecurityManagementSystem.vo.Role.users"
-    maxEntriesLocalHeap="10000"
-    eternal="false"
-    timeToIdleSeconds="300"
-    timeToLiveSeconds="600"
-    /> -->
+	    maxEntriesLocalHeap="10000"
+	    eternal="false"
+	    timeToIdleSeconds="300"
+	    timeToLiveSeconds="600"
+        <persistence strategy="localTempSwap" />
+    </cache> -->
     
     <cache name="com.elulian.CustomerSecurityManagementSystem.vo.UserInfo"
-    maxEntriesLocalHeap="10000"
-    eternal="false"
-    timeToIdleSeconds="300"
-    timeToLiveSeconds="600"
-    />
+	    statistics="true"
+	    maxEntriesLocalHeap="5000"
+	    eternal="false"
+	    timeToIdleSeconds="300"
+	    timeToLiveSeconds="600">
+        <persistence strategy="localTempSwap" />
+    </cache>
     
     <cache name="com.elulian.CustomerSecurityManagementSystem.vo.CustomerInfo"
-    maxEntriesLocalHeap="80000"
-    eternal="false"
-    timeToIdleSeconds="300"
-    timeToLiveSeconds="600"
-    />
+	    statistics="true"
+	    maxEntriesLocalHeap="10000"
+	    eternal="false"
+	    timeToIdleSeconds="300"
+	    timeToLiveSeconds="600">
+	    <persistence strategy="localTempSwap" />
+    </cache>
     
     <cache name="com.elulian.CustomerSecurityManagementSystem.vo.RiskRank"
-    maxEntriesLocalHeap="10"
-    eternal="false"
-    timeToIdleSeconds="300"
-    timeToLiveSeconds="600"
-    />
+	    statistics="true"
+	    maxEntriesLocalHeap="10"
+	    eternal="false"
+	    timeToIdleSeconds="300"
+	    timeToLiveSeconds="600">
+	    <persistence strategy="localTempSwap" />
+    </cache>
     
     <cache name="com.elulian.CustomerSecurityManagementSystem.vo.Threshold"
-    maxEntriesLocalHeap="100"
-    eternal="false"
-    timeToIdleSeconds="300"
-    timeToLiveSeconds="600"
-    />
+	    statistics="true"
+	    maxEntriesLocalHeap="100"
+	    eternal="false"
+	    timeToIdleSeconds="300"
+	    timeToLiveSeconds="600">
+	    <persistence strategy="localTempSwap" />
+    </cache>
 </ehcache>
