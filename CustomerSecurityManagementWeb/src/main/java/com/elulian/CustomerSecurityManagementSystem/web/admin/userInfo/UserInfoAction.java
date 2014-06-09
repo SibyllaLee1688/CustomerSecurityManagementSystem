@@ -145,7 +145,7 @@ public class UserInfoAction extends ActionSupport implements Preparable, Paramet
 		} catch (InvalidDataAccessApiUsageException e) {
 			logger.error(e.getMessage(), e);
 		}
-		//this.userInfo = new UserInfo();
+		this.userInfo = new UserInfo();
 		return list();
 	}
 

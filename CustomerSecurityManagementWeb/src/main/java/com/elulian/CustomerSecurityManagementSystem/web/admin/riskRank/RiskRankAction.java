@@ -82,7 +82,7 @@ public class RiskRankAction extends ActionSupport implements Preparable{
 			} catch (InvalidDataAccessApiUsageException e) {
 				logger.error(e.getMessage(), e);
 			}
-			//this.riskRank = new RiskRank();
+			this.riskRank = new RiskRank();
 		}
 		return list();
 	}
