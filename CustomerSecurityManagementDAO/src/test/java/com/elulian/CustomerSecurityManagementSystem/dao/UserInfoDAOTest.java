@@ -8,6 +8,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.junit.After;
@@ -250,23 +252,38 @@ public class UserInfoDAOTest {
      }
      
      @Test
-     public void testDAOEditUserRole(){
-        	 logger.info("modify a existing user's role in database--------------");
-        	 int id = 1;   	 
-        	 UserInfo userInfo = userInfoDAO.findById(id);
-        	 assertNotNull(userInfo);
-        	 assertEquals(1, userInfo.getRoles().size());
-        	 assertEquals(roleDAO.findById(1).getName(), ((Role)(userInfo.getRoles().toArray()[0])).getName());
-        	 userInfo.addRole(roleDAO.findById(3));
-        	 userInfo = userInfoDAO.save(userInfo);
-        	 assertEquals(2, userInfo.getRoles().size());
-        	 assertEquals(roleDAO.findById(3).getName(), ((Role)(userInfo.getRoles().toArray()[1])).getName());
-        	 userInfo.removeRole(roleDAO.findById(1));
-        	 userInfo = userInfoDAO.save(userInfo);
-        	 assertEquals(1, userInfo.getRoles().size());
-        	 assertEquals(roleDAO.findById(3).getName(), ((Role)(userInfo.getRoles().toArray()[0])).getName());
-        	 
-     }
+	public void testDAOEditUserRole() {
+		logger.info("modify a existing user's role in database--------------");
+		int id = 1;
+		UserInfo userInfo = userInfoDAO.findById(id);
+		assertNotNull(userInfo);
+		assertEquals(1, userInfo.getRoles().size());
+		assertEquals(roleDAO.findById(1).getName(), ((Role) (userInfo
+				.getRoles().toArray()[0])).getName());
+		userInfo.addRole(roleDAO.findById(3));
+		userInfo = userInfoDAO.save(userInfo);
+		assertEquals(2, userInfo.getRoles().size());
+		/* check the roles */
+		assertTrue((roleDAO.findById(3).getName()
+				.equals(((Role) (userInfo.getRoles().toArray()[1])).getName()) && roleDAO
+				.findById(1).getName()
+				.equals(((Role) (userInfo.getRoles().toArray()[0])).getName()))
+				|| (roleDAO
+						.findById(3)
+						.getName()
+						.equals(((Role) (userInfo.getRoles().toArray()[0]))
+								.getName()) && roleDAO
+						.findById(1)
+						.getName()
+						.equals(((Role) (userInfo.getRoles().toArray()[1]))
+								.getName())));
+		userInfo.removeRole(roleDAO.findById(1));
+		userInfo = userInfoDAO.save(userInfo);
+		assertEquals(1, userInfo.getRoles().size());
+		assertEquals(roleDAO.findById(3).getName(), ((Role) (userInfo
+				.getRoles().toArray()[0])).getName());
+
+	}
      
      /* test save */
 	 /**

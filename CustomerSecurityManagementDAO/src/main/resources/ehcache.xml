@@ -83,7 +83,7 @@
 	    maxEntriesLocalHeap="10000"
 	    eternal="false"
 	    timeToIdleSeconds="300"
-	    timeToLiveSeconds="600"
+	    timeToLiveSeconds="600">
         <persistence strategy="localTempSwap" />
     </cache> -->
     
@@ -93,6 +93,15 @@
 	    eternal="false"
 	    timeToIdleSeconds="300"
 	    timeToLiveSeconds="600">
+        <persistence strategy="localTempSwap" />
+    </cache>
+   
+    <cache name="com.elulian.CustomerSecurityManagementSystem.vo.UserInfo.roles"
+        statistics="true"
+        maxEntriesLocalHeap="5000"
+        eternal="false"
+        timeToIdleSeconds="300"
+        timeToLiveSeconds="600">
         <persistence strategy="localTempSwap" />
     </cache>
     
