@@ -35,7 +35,7 @@
 	<properties>
 		<!-- Application settings -->
 		<project.copyright.year>2014</project.copyright.year>
-		<project.dao.framework>openjpa</project.dao.framework>
+		<project.dao.framework>hibernate</project.dao.framework>
 		<project.web.framework>struts</project.web.framework>
 		<project.db.name>CustomerSecurityManagementSystem</project.db.name>
 		<project.web.deployname>/CustomerSecurityManagementSystem</project.web.deployname>
@@ -102,7 +102,6 @@
 		<project.slf4j-simpleVersion>1.7.2</project.slf4j-simpleVersion>
         <project.kiePluginVersion>6.1.0.Beta3</project.kiePluginVersion>
 		<project.cglib-nodepVersion>3.1</project.cglib-nodepVersion>
-		<project.itextVersion>4.2.1</project.itextVersion>
 		<project.commons-beanutilsVersion>1.9.2</project.commons-beanutilsVersion>
 		<project.commons-configurationVersion>1.10</project.commons-configurationVersion>
 		<!-- service -->
@@ -110,9 +109,14 @@
 		<project.springVersion>4.0.5.RELEASE</project.springVersion>
         <project.springSecurityVersion>3.2.4.RELEASE</project.springSecurityVersion>
 		<!-- web -->
-		<project.groovy-allVersion>2.3.0</project.groovy-allVersion>
+		
 		<project.jasperreportsVersion>5.6.0</project.jasperreportsVersion>
-		<project.jxlVersion>2.6.12</project.jxlVersion>
+		<!-- <project.jxlVersion>2.6.12</project.jxlVersion>
+		<project.groovy-allVersion>2.3.0</project.groovy-allVersion>
+        <project.poiVersion>3.10-FINAL</project.poiVersion>
+        <project.wiserVersion>1.2</project.wiserVersion> 
+                <project.itextVersion>4.2.1</project.itextVersion>
+                -->
 		<project.urlrewritefilterVersion>4.0.4</project.urlrewritefilterVersion>
 		<!-- <displaytag.version>1.2</displaytag.version> -->
 		
@@ -120,16 +124,11 @@
 		
 		
 		
-		<project.poiVersion>3.10-FINAL</project.poiVersion>
-		<project.wiserVersion>1.2</project.wiserVersion>
 		<!-- WebTest default target -->
 		<project.webtest.target>run-all-tests</project.webtest.target>
 
-		<project.cargo.container>tomcat7x</project.cargo.container>
-		<project.cargo.container.home>${env.CATALINA_HOME}</project.cargo.container.home>
-		<project.cargo.container.url>http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.33/bin/apache-tomcat-7.0.33.zip</project.cargo.container.url>
 		<project.cargo.host>localhost</project.cargo.host>
-		<project.cargo.port>8081</project.cargo.port>
+        <project.cargo.port>8081</project.cargo.port>
 		<project.cargo.wait>false</project.cargo.wait>
 		<!-- Jetty Cargo settings: <project.cargo.container>jetty6x</project.cargo.container> 
 			<project.cargo.container.url>http://dist.codehaus.org/jetty/jetty-6.1.21/jetty-6.1.21.zip</project.cargo.container.url> -->
@@ -147,94 +146,22 @@
 		<project.jdbc.password>root</project.jdbc.password>
 	</properties>
 	<profiles>
+	
+	   <!-- ================= Container Profiles ================= -->
+        <profile>
+            <id>jboss</id>
+            <properties>
+                <project.cargo.container>jboss4x</project.cargo.container>
+                <!-- <project.cargo.container.home>${env.JBOSS_HOME}</project.cargo.container.home> -->
+                <project.cargo.container.url>http://easynews.dl.sourceforge.net/sourceforge/jboss/jboss-4.0.5.GA.zip</project.cargo.container.url>
+            </properties>
+        </profile>
 		<profile>
-			<id>integration-test</id>
-			<!-- <activation> <property> <name>!skipTests</name> </property> </activation> -->
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.cargo</groupId>
-						<artifactId>cargo-maven2-plugin</artifactId>
-						<version>${project.cargoPluginVersion}</version>
-						<configuration>
-							<wait>${project.cargo.wait}</wait>
-							<container>
-								<containerId>${project.cargo.container}</containerId>
-								<home>${project.cargo.container.home}</home>
-								<zipUrlInstaller>
-									<url>${project.cargo.container.url}</url>
-									<extractDir>${installDir}</extractDir>
-								</zipUrlInstaller>
-							</container>
-							<configuration>
-								<home>${project.build.directory}/${project.cargo.container}/container</home>
-								<properties>
-									<project.cargo.hostname>${project.cargo.host}</project.cargo.hostname>
-									<cargo.servlet.port>${project.cargo.port}</cargo.servlet.port>
-									<!-- To prevent conflicts with already running instances -->
-									<cargo.tomcat.ajp.port>8123</cargo.tomcat.ajp.port>
-								</properties>
-							</configuration>
-						</configuration>
-						<executions>
-							<execution>
-								<id>start-container</id>
-								<phase>pre-integration-test</phase>
-								<goals>
-									<goal>start</goal>
-								</goals>
-							</execution>
-							<execution>
-								<id>stop-container</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>stop</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>webtest-maven-plugin</artifactId>
-						<version>1.0.0</version>
-						<executions>
-							<execution>
-								<id>webtest-test</id>
-								<phase>integration-test</phase>
-								<goals>
-									<goal>test</goal>
-								</goals>
-							</execution>
-							<execution>
-								<id>webtest-verify</id>
-								<phase>verify</phase>
-								<goals>
-									<goal>verify-result</goal>
-								</goals>
-							</execution>
-							<execution>
-								<id>webtest-report-html</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>report</goal>
-								</goals>
-							</execution>
-						</executions>
-						<configuration>
-							<host>${project.cargo.host}</host>
-							<port>${project.cargo.port}</port>
-							<sourcedirectory>src/test/resources</sourcedirectory>
-							<sourcefile>web-tests.xml</sourcefile>
-							<target>${project.webtest.target}</target>
-							<basepath>${project.build.finalName}</basepath>
-							<resultpath>target/webtest/webtest-results</resultpath>
-							<haltonfailure>false</haltonfailure>
-							<haltonerror>false</haltonerror>
-							<loglevel>fatal</loglevel>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
+			<id>tomcat</id>
+			 <properties>
+			    <project.cargo.container>tomcat7x</project.cargo.container>
+                <project.cargo.container.url>http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.54/bin/apache-tomcat-7.0.54.zip</project.cargo.container.url>
+		     </properties>
 		</profile>
 
 		<!-- ================= Production Settings Profile ================= -->
@@ -267,8 +194,8 @@
 				<project.jdbcVersion>10.2.2.0</project.jdbcVersion>
 				<project.jdbc.driverClassName>org.apache.derby.jdbc.ClientDriver</project.jdbc.driverClassName>
 				<project.jdbc.url>jdbc:derby://localhost/${project.db.name};create=true</project.jdbc.url>
-				<project.jdbc.username>any</project.jdbc.username>
-				<project.jdbc.password>value</project.jdbc.password>
+				<project.jdbc.username>root</project.jdbc.username>
+				<project.jdbc.password>root</project.jdbc.password>
 			</properties>
 		</profile>
 		<profile>
@@ -338,18 +265,8 @@
 				<project.jdbcVersion>1.2</project.jdbcVersion>
 				<project.jdbc.driverClassName>net.sourceforge.jtds.jdbc.Driver</project.jdbc.driverClassName>
 				<project.jdbc.url>jdbc:jtds:sqlserver://localhost:3683/${project.db.name}</project.jdbc.url>
-				<project.jdbc.username>sa</project.jdbc.username>
-				<project.jdbc.password>appfuse</project.jdbc.password>
-			</properties>
-		</profile>
-
-		<!-- ================= Container Profiles ================= -->
-		<profile>
-			<id>jboss</id>
-			<properties>
-				<project.cargo.container>jboss4x</project.cargo.container>
-				<project.cargo.container.home>${env.JBOSS_HOME}</project.cargo.container.home>
-				<project.cargo.container.url>http://easynews.dl.sourceforge.net/sourceforge/jboss/jboss-4.0.5.GA.zip</project.cargo.container.url>
+				<project.jdbc.username>root</project.jdbc.username>
+				<project.jdbc.password>root</project.jdbc.password>
 			</properties>
 		</profile>
 	</profiles>
@@ -784,9 +701,9 @@
 				<version>${project.jasperreportsVersion}</version>
 			</dependency>
 
-			<!-- auto included <dependency> <groupId>commons-digester</groupId> <artifactId>commons-digester</artifactId> 
+			<!-- auto included by jasperreport<dependency> <groupId>commons-digester</groupId> <artifactId>commons-digester</artifactId> 
 				<version>1.7</version> </dependency> <dependency> <groupId>commons-logging</groupId> 
-				<artifactId>commons-logging</artifactId> <version>1.0.2</version> </dependency> -->
+				<artifactId>commons-logging</artifactId> <version>1.0.2</version> </dependency> 
 			<dependency>
 				<groupId>com.lowagie</groupId>
 				<artifactId>itext</artifactId>
@@ -807,12 +724,13 @@
 				<artifactId>poi</artifactId>
 				<version>${project.poiVersion}</version>
 			</dependency>
+			
 			<dependency>
 				<groupId>org.codehaus.groovy</groupId>
 				<artifactId>groovy-all</artifactId>
 				<version>${project.groovy-allVersion}</version>
 			</dependency>
-
+            -->
 			<dependency>
 				<groupId>org.apache.struts</groupId>
 				<artifactId>struts2-jasperreports-plugin</artifactId>
@@ -856,7 +774,7 @@
 				</plugin>
 				
 				<!-- clean-up previous hibernate-search indexed from integration tests, 
-					as there could be a lock -->
+					as there could be a lock 
 				<plugin>
 					<artifactId>maven-clean-plugin</artifactId>
 					<version>${project.cleanPluginVersion}</version>
@@ -868,9 +786,7 @@
 						</filesets>
 					</configuration>
 				</plugin>
-				<!-- will package a ready-to-run app regarding hibernate-search index 
-					location -->
-				
+				-->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-release-plugin</artifactId>

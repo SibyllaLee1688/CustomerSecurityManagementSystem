@@ -130,7 +130,7 @@
 			<groupId>net.sf.jasperreports</groupId>
 			<artifactId>jasperreports</artifactId>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.lowagie</groupId>
 			<artifactId>itext</artifactId>
 		</dependency>
@@ -145,7 +145,7 @@
 		<dependency>
 			<groupId>org.codehaus.groovy</groupId>
 			<artifactId>groovy-all</artifactId>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>org.apache.struts</groupId>
@@ -162,7 +162,7 @@
 		<defaultGoal>install</defaultGoal>
 <pluginManagement>
 <plugins>
-<plugin>
+                    <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-eclipse-plugin</artifactId>
                     <version>${project.eclipsePluginVersion}</version>
@@ -239,7 +239,112 @@
 						<include>hibernate.properties</include> </includes> </resource> </webResources> -->
 				</configuration>
 			</plugin>
-
+<plugin>
+                        <groupId>org.codehaus.cargo</groupId>
+                        <artifactId>cargo-maven2-plugin</artifactId>
+                        <version>${project.cargoPluginVersion}</version>
+                        <configuration>
+                            <!--  use cargo:run instead of cargo:start, wait default false means
+                                  container will close after mvn life cycle
+                                  see http://cargo.codehaus.org/Maven2+Plugin+Reference+Guide for more details -->
+                            <wait>${project.cargo.wait}</wait>
+                            <container>
+                                <containerId>${project.cargo.container}</containerId>
+                                <!-- container home -->
+                                <!-- already has a container installed 
+                                <type>installed</type>
+                                <home>${project.cargo.container.home}</home>
+                                -->
+                                <!-- download from remote for the first time, later use existing one-->
+                                <zipUrlInstaller>
+                                    <url>${project.cargo.container.url}</url>
+                                    <downloadDir>${project.build.directory}/${project.cargo.container}/downloads</downloadDir>
+                                    <extractDir>${project.build.directory}/${project.cargo.container}/extracts</extractDir>
+                                </zipUrlInstaller>
+                                <!-- <log>${project.build.directory}/logs/jboss51x.log</log>
+                        <output>${project.build.directory}/logs/jboss51x.out</output> -->
+                            </container>
+                            <configuration>
+                                <!-- deploy home -->
+                                <home>${project.build.directory}/${project.cargo.container}/container</home>
+                                <!-- <type>existing</type> -->
+                                <properties>
+                                    <project.cargo.hostname>${project.cargo.host}</project.cargo.hostname>
+                                    <cargo.servlet.port>${project.cargo.port}</cargo.servlet.port>
+                                    <!-- To prevent conflicts with already running instances -->
+                                    <cargo.servlet.uriencoding>${project.build.sourceEncoding}</cargo.servlet.uriencoding>
+                                    <!-- <cargo.tomcat.ajp.port>8123</cargo.tomcat.ajp.port> 
+                                         <cargo.tomcat.manager.protocol>http</cargo.tomcat.manager.protocol>   
+                                        <cargo.tomcat.manager.hostname>127.0.0.1</cargo.tomcat.manager.hostname>   
+                                        <cargo.tomcat.manager.port>8080</cargo.tomcat.manager.port>   
+                                        <cargo.tomcat.manager.username>admin</cargo.tomcat.manager.username>   
+                                        <cargo.tomcat.manager.password>1234</cargo.tomcat.manager.password> -->
+                                </properties>
+                                <!-- for remote deploy, also container type should be remote
+                                    <type>runtime</type>
+                                    <properties>
+                                      <cargo.remote.username>username</cargo.remote.username>
+                                      <cargo.remote.password>password</cargo.remote.password>
+                                    </properties> -->
+                            </configuration>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>start-container</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>stop-container</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                     <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>webtest-maven-plugin</artifactId>
+                        <version>1.0.0</version>
+                        <executions>
+                            <execution>
+                                <id>webtest-test</id>
+                                <phase>integration-test</phase>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>webtest-verify</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>verify-result</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>webtest-report-html</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>report</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <host>${project.cargo.host}</host>
+                            <port>${project.cargo.port}</port>
+                            <sourcedirectory>src/test/resources</sourcedirectory>
+                            <sourcefile>web-tests.xml</sourcefile>
+                            <target>${project.webtest.target}</target>
+                            <basepath>${project.build.finalName}</basepath>
+                            <resultpath>target/webtest/webtest-results</resultpath>
+                            <haltonfailure>false</haltonfailure>
+                            <haltonerror>false</haltonerror>
+                            <loglevel>fatal</loglevel>
+                        </configuration>
+                    </plugin>
 		</plugins>
 		<resources>
 			<resource>
