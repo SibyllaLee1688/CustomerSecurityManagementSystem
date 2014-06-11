@@ -27,7 +27,7 @@
 				<prop key="hibernate.query.substitutions">true 'Y', false 'N'</prop>
 				<!-- http://ehcache.org/documentation/integrations/hibernate -->
 				<!-- http://www.tutorialspoint.com/hibernate/hibernate_caching.htm -->
-				<prop key="hibernate.cache.use_second_level_cache">false</prop>
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
 				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
 				<!-- hibernate只会缓存使用load()方法获得的单个持久化对象，如果想缓存使用findall()、 list()、Iterator()、createCriteria()、createQuery()
 				                等方法获得的数据结果集的话，就需要设置hibernate.cache.use_query_cache true  -->
@@ -35,48 +35,10 @@
 				<!-- <prop key="hibernate.cache.provider_configuration_file_resource_path">/ehcache.xml</prop> -->
 				<!-- Hibernate Search index directory
 				<prop key="hibernate.search.default.indexBase">${app.search.index.basedir}</prop> -->
-				<!-- <prop key="hibernate.generate_statistics">true</prop> -->
 			</props>
 		</property>
 	</bean> 
-
-<!--     <context:mbean-server /> -->
-   
-<!--        <bean id="htmlAdaptor" class="com.sun.jdmk.comm.HtmlAdaptorServer"
-        init-method="start">
-        <constructor-arg index="0" value="9070" />
-        <constructor-arg index="1">
-            <bean id="authInfo" class="com.sun.jdmk.comm.AuthInfo">
-                <property name="login" value="admin" />
-                <property name="password" value="admin" />
-            </bean>
-        </constructor-arg>
-    </bean>
-   
-   <bean id="mbeanServer"
-        class="org.springframework.jmx.support.MBeanServerFactoryBean">
-        <property name="locateExistingServerIfPossible" value="false" />
-        <property name="defaultDomain" value="elulian" />
-    </bean> -->
-   
-    <bean id="mbeanExporter" class="org.springframework.jmx.export.MBeanExporter" lazy-init="false">
-        <property name="beans">
-            <map>
-                <entry key="bean:name=hibernateStatisticsMBean"
-                    value-ref="hibernateStatisticsMBean" />
-                <!-- <entry key="bean:name=ehCacheManagerMBean" value-ref="ehCacheManagerMBean" /> -->
-<!--                 <entry key="com.elulian:name=htmlAdaptor" value-ref="htmlAdaptor" /> -->                
-            </map>
-        </property>
-    </bean>
-    <bean name="hibernateStatisticsMBean" class="org.hibernate.jmx.StatisticsService">
-        <property name="sessionFactory" ref="sessionFactory" />
-        <property name="statisticsEnabled" value="true" />
-    </bean>
-
-	<!-- <bean name="ehCacheManagerMBean" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" 
-		/> -->
- 
+	
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
@@ -88,6 +50,52 @@
 	<!-- Activates scanning of @Repository -->
 	<context:component-scan
 		base-package="com.elulian.CustomerSecurityManagementSystem.dao.impl.hibernate" />
+
+    <!-- hibernate & ehcache performance jmx monitoring -->
+    
+<!--     <context:mbean-server /> -->
+   
+    <bean id="mbeanExporter" class="org.springframework.jmx.export.MBeanExporter" lazy-init="false">
+        <property name="beans">
+            <map>
+                <entry key="com.elulian.CustomerSecurityManagementSystem:name=hibernateStatisticsMBean"
+                    value-ref="hibernateStatisticsMBean" />
+<!--                 <entry key="com.elulian:name=htmlAdaptor" value-ref="htmlAdaptor" /> -->                
+            </map>
+        </property>
+         <property name="server" ref="mbeanServer"/>
+    </bean>
+    <bean name="hibernateStatisticsMBean" class="org.hibernate.jmx.StatisticsService">
+        <property name="sessionFactory" ref="sessionFactory" />
+        <property name="statisticsEnabled" value="true" />
+    </bean>
+
+    <!-- JMX for ehcache -->
+     <bean id="ehCacheMBeanRegistration"
+                class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+
+                <property name="staticMethod"
+                        value="net.sf.ehcache.management.ManagementService.registerMBeans"/>
+                <property name="arguments">
+                        <list>
+                                <ref bean="cacheManager"/>
+                                <ref bean="mbeanServer"/>
+                                <value>true</value>
+                                <value>true</value>
+                                <value>true</value>
+                                <value>true</value>
+                        </list>
+                </property>
+        </bean>
+ 
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+      <property name="configLocation" value="classpath:ehcache.xml"/>
+      <property name="shared" value="true"/>
+    </bean>
+ 
+    <bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean">
+      <property name="locateExistingServerIfPossible" value="true"/>
+    </bean>
 
 	<!-- It is not necessary to configure a Spring loadTimeWeaver when using 
 		OpenJPA build time enhancement. The following warning message will be logged 

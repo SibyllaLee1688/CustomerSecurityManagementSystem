@@ -230,14 +230,13 @@ public class CustomerInfoAction extends ActionSupport implements
 			try {
 				customerInfoService.save(customerInfo);
 			} catch (DataIntegrityViolationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			} catch (InvalidDataAccessApiUsageException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 			}
 			actionResult = true;
 			actionMessage = "CustomerInfo Update successful!";
+			customerInfo = new CustomerInfo();
 			return SUCCESS;
 		}
 		actionResult = false;
