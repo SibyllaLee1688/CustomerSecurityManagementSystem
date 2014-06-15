@@ -20,16 +20,14 @@
     <!-- Use i18n bundle, 2nd one listed is the default -->
     <property file="../../../target/classes/ApplicationResources_${user.language}.properties"/>
     <property file="../../../target/classes/ApplicationResources.properties"/>
-    <property file="../../../target/classes/displaytag_${user.language}.properties"/>
-    <property file="../../../target/classes/displaytag.properties"/>
 
     <!-- runs all targets -->
     <target name="run-all-tests" 
-        depends="Login,Logout,PasswordHint,Signup,UserTests,StaticPages,WebServices,DWR,FileUpload"
+        depends="Login,Logout,UserTests,StaticPages,FileUpload"
         description="Call and executes all test cases (targets)"/>
     
     <!-- runs user-related tests -->
-    <target name="UserTests" depends="EditUser,SearchUser,SaveUser,AddUser,ActiveUsers"
+    <target name="UserTests" depends="EditUser,SearchUser,SaveUser"
         description="Call and executes all user test cases (targets)">
         <echo>Successfully ran all User UI tests!</echo>
     </target>
@@ -52,31 +50,6 @@
                 &login;
                 <invoke description="get Logout Page" url="/logout"/>
                 <verifytitle description="we should see the login title" text=".*${login.title}.*" regex="true"/>
-            </steps>
-        </webtest>
-    </target>
-
-    <!-- Retrieve Password Hint -->
-    <target name="PasswordHint" description="Gets the user's password hint">
-        <webtest name="passwordHint">
-            &config;
-            <steps>
-                <invoke description="get Login Page" url="/"/>
-                <verifytitle description="we should see the login title" text=".*${login.title}.*" regex="true"/>
-                <invoke description="click password hint link" url="/passwordHint?username=admin"/>
-                <verifytitle description="show login title again" text=".*${login.title}.*" regex="true"/>
-            </steps>
-        </webtest>
-    </target>
-    
-    <target name="StaticPages" description="Ensures that StaticFilter is working">
-        <webtest name="staticPages">
-            &config;
-            <steps>
-                &login;
-                <invoke description="go to static HTML page" url="/scripts/dojo/test.html"/>
-                <verifytitle description="we should see static title" text="Static HTML Page" regex="true"/>
-                <verifytext description="verify message" text="Static content!"/>
             </steps>
         </webtest>
     </target>
