@@ -8,12 +8,6 @@
 	<beans:bean name="bcryptEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
-	<authentication-manager>
-		<authentication-provider user-service-ref="userInfoDAO">
-			<password-encoder ref="bcryptEncoder" />
-		</authentication-provider>
-	</authentication-manager>
-
 	<global-method-security jsr250-annotations="enabled" />
 
 	<!-- http://lengyun3566.iteye.com/blog/1170112 we should follow jsr250 to 

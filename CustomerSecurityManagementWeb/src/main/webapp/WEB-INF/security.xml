@@ -36,9 +36,9 @@
 			<concurrency-control error-if-maximum-exceeded="false"
 				max-sessions="1" expired-url="/selfService/start.action" />
 		</session-management>
-		<!-- 3600 * 24 * 90 c3p0DataSource-->
-		<remember-me user-service-ref="userInfoDAO"
-			data-source-ref="hikariCPDataSource" token-validity-seconds="7776000"
+		<!-- 3600 * 24 * 90 if data-source-ref is not used, Simple Hash-Based Token Approach 
+		     is used which is not recommend-->
+		<remember-me data-source-ref="hikariCPDataSource" token-validity-seconds="7776000"
 			key="e37f4b31-0c45-11dd-bd0b-0800200c9a66" />
 	</http>
 
@@ -46,7 +46,7 @@
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
 	<authentication-manager>
-		<authentication-provider user-service-ref="userInfoDAO">
+		<authentication-provider user-service-ref="userInfoService">
 			<password-encoder ref="bcryptEncoder" />
 		</authentication-provider>
 	</authentication-manager>

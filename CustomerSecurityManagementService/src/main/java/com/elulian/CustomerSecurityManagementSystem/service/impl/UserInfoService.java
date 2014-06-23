@@ -8,8 +8,12 @@ import javax.annotation.security.RolesAllowed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.elulian.CustomerSecurityManagementSystem.dao.IUserInfoDAO;
 import com.elulian.CustomerSecurityManagementSystem.service.IUserInfoService;
@@ -18,7 +22,7 @@ import com.elulian.CustomerSecurityManagementSystem.vo.UserInfo;
 
 @Service("userInfoService")
 public class UserInfoService extends BaseService<UserInfo, Integer> implements
-		IUserInfoService {
+		IUserInfoService, UserDetailsService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserInfoService.class);
 	
@@ -125,6 +129,21 @@ public class UserInfoService extends BaseService<UserInfo, Integer> implements
 		
 		return false;
 		
+	}
+
+	@Override
+	@Transactional
+	/* transactional is required due to aop doesn't cover this method
+	 * as it is not belongs to service interfaces
+	 */
+	public UserDetails loadUserByUsername(String username)
+			throws UsernameNotFoundException {
+		if(null == username || 0 == username.trim().length())
+			throw new UsernameNotFoundException("wrong username: " + username);	
+		UserInfo userInfo = userInfoDAO.getUserByName(username);	
+		if(null != userInfo)
+			return userInfo;
+		throw new UsernameNotFoundException("wrong username: " + username);
 	}
 	
 }

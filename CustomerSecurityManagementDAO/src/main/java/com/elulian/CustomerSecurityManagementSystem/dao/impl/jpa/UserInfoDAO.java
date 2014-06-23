@@ -6,12 +6,7 @@ import javax.persistence.Query;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.elulian.CustomerSecurityManagementSystem.dao.IUserInfoDAO;
 import com.elulian.CustomerSecurityManagementSystem.vo.Condition;
@@ -19,21 +14,10 @@ import com.elulian.CustomerSecurityManagementSystem.vo.UserInfo;
 
 @Repository("userInfoDAO")
 public class UserInfoDAO extends BaseDAO<UserInfo, Integer> implements
-		IUserInfoDAO, UserDetailsService {
+		IUserInfoDAO {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserInfoDAO.class);
 	
-	@Transactional
-	@Override
-	public UserDetails loadUserByUsername(String username)
-			throws UsernameNotFoundException {
-		UserInfo user = this.getUserByName(username);
-		if(null == user){
-			logger.warn("fail to use " + username + "to load User++++++++++++++++++++++++, result is null");
-			throw new UsernameNotFoundException(username);
-		}
-		return user;
-	}	
 	
 	@Override
 	public UserInfo getUserByName(String name) {

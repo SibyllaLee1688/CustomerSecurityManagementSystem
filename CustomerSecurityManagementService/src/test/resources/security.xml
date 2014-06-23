@@ -21,7 +21,7 @@
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
 	<authentication-manager>
-		<authentication-provider user-service-ref="userInfoDAO">
+		<authentication-provider user-service-ref="userInfoService">
 			<password-encoder ref="bcryptEncoder" />
 		</authentication-provider>
 	</authentication-manager>
