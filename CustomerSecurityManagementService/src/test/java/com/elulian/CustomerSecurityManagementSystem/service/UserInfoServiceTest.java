@@ -285,5 +285,4 @@ public class UserInfoServiceTest {
 		
 		assertTrue(passwordEncoder.matches(normalUsername, userInfo.getPassword()));
 	}
-
 }

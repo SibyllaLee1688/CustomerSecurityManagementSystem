@@ -8,8 +8,10 @@ import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -19,6 +21,7 @@ import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -134,75 +137,23 @@ public class PerformanceTest {
 		// userInfo.setRoles(roles);
 	}
 
-	@org.junit.Ignore
-	//@Test
-	public void testAdd() {
+	//@org.junit.Ignore
+	@Test
+	public void testUserCRUTime() {
 		
-		logger.info("-----------begin test add------------------------"); 
-		
-		monitorAddUser(1, 1);	
-		monitorAddUser(1, 1);
-		monitorAddUser(1, 10);	
-		//monitorAddUser(1, 100);	
-		//monitorAddUser(1, 1000);
-		monitorAddUser(2, 1);
-		monitorAddUser(2, 10);	
-	//	monitorAddUser(2, 100);	
-		//monitorAddUser(2, 1000);
-		monitorAddUser(3, 1);
-		monitorAddUser(3, 10);	
-	//	monitorAddUser(3, 100);	
-		//monitorAddUser(3, 1000);
-		monitorAddUser(4, 1);
-		monitorAddUser(4, 10);	
-	//	monitorAddUser(4, 100);	
-		//monitorAddUser(4, 1000);
-		
-		/*monitorAddUser(1, 1);	
-		monitorAddUser(2, 1);	
-		monitorAddUser(3, 1);	
-		monitorAddUser(4, 1);	
-		monitorAddUser(5, 1);	
-		monitorAddUser(6, 1);	
-		monitorAddUser(7, 1);	
-		monitorAddUser(8, 1);	
-		monitorAddUser(9, 1);	
-		monitorAddUser(15, 1);	
-		monitorAddUser(20, 1);
-		monitorAddUser(50, 1);
-		monitorAddUser(100, 1);
-		monitorAddUser(500, 1);
-		monitorAddUser(1000, 1);*/
-		monitorAddUser(5, 1);
-		monitorAddUser(5, 10);	
-	//	monitorAddUser(5, 100);	
-		//monitorAddUser(5, 1000);	
-		monitorAddUser(6, 1);
-		monitorAddUser(6, 10);	
-	//	monitorAddUser(6, 100);	
-	//	monitorAddUser(6, 1000);	
-		monitorAddUser(7, 1);
-		monitorAddUser(7, 10);	
-		monitorAddUser(8, 1);
-		monitorAddUser(8, 10);	
-		monitorAddUser(9, 1);
-		monitorAddUser(9, 10);	
-		monitorAddUser(10, 1);			
-		monitorAddUser(10, 10);	
-		/*monitorAddUser(10, 100);	
-		monitorAddUser(10, 1000);*/
-		
-		logger.info("-----------finish test add------------------------");
+		logger.info("-----------begin testUserCRUTime------------------------"); 
+		monitorCDUUser(1000, 10);	
+		logger.info("-----------finish testUserCRUTime------------------------");
 	}
 
 
 	/**
 	 * @param recordsNumber
 	 */
-	private void monitorAddUser(final int threads, final int records) {
+	private void monitorCDUUser(final int threads, final int records) {
 		
 		BlockingQueue<Runnable> queue = new LinkedBlockingQueue<Runnable>();    
-	     ThreadPoolExecutor executor = new ThreadPoolExecutor(10, 20, 1, TimeUnit.DAYS, queue, new RejectedExecutionHandler(){
+	     ThreadPoolExecutor executor = new ThreadPoolExecutor(50, 150, 1, TimeUnit.DAYS, queue, new RejectedExecutionHandler(){
 
 			@Override
 			public void rejectedExecution(Runnable arg0, ThreadPoolExecutor arg1) {
@@ -211,15 +162,15 @@ public class PerformanceTest {
 	    	 
 	     });
 		
-	     List<Future<List<UserInfo>>> list = new LinkedList<Future<List<UserInfo>>>(); 
+	     List<Future<HashMap<String, Long>>> list = new LinkedList<Future<HashMap<String, Long>>>(); 
 	     
-		for(int i = 0; i < threads; i++){
-			list.add(executor.submit(new Callable<List<UserInfo>>(){
+		for(int i=1; i<=threads; i++){
+			list.add(executor.submit(new Callable<HashMap<String, Long>>(){
 						@Override
-						public List<UserInfo> call() throws Exception {
+						public HashMap<String, Long> call() throws Exception {
 							SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("Admin","password"));
-							List<UserInfo> list = new ArrayList<UserInfo>(records);
-							
+							HashMap<String, Long> list = new HashMap<String, Long>(records);
+										
 							Calendar cl = Calendar.getInstance();
 							Date registerTime = cl.getTime();
 							cl.add(Calendar.MONTH, 6);
@@ -227,21 +178,45 @@ public class PerformanceTest {
 							for (int i = 0; i < records; i++){
 								String username = "temp" + System.nanoTime() + Thread.currentThread().getName() + i;
 								String userId = username;	
-								final UserInfo userInfo = new UserInfo();
+								UserInfo userInfo = new UserInfo();
 								buildUser(userInfo, username, userId, registerTime, expiredTime,
 										(username + "@gmail.com"),"ALL");
-								list.add(userInfoService.save(userInfo));
+								long start = System.currentTimeMillis();
+								userInfoService.save(userInfo);
+								long end = System.currentTimeMillis();
+								list.put("add", end - start);
+								start = System.currentTimeMillis();
+								userInfo = userInfoService.getUserInfoByName("admin");
+								end = System.currentTimeMillis();
+								list.put("serach", end - start);
+								userInfo.setRealname("realname");
+								start = System.currentTimeMillis();
+								userInfoService.save(userInfo);
+								end = System.currentTimeMillis();
+								list.put("update", end - start);
+								userInfo = userInfoService.getUserInfoByName(username);
+								start = System.currentTimeMillis();
+								userInfoService.remove(userInfo);
+								end = System.currentTimeMillis();
+								list.put("remove", end - start);
 							}
 							return list;
 						} 
 					})
 			);
 			
+			if(i % 10 == 0){
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					logger.error(e.getMessage(), e);
+				}
+			}
 		}
 		
-		for(Future<List<UserInfo>> future : list){
+		for(Future<HashMap<String, Long>> future : list){
 				try {
-					future.get();
+					System.out.println(future.get().toString());
 				} catch (InterruptedException e) {
 					logger.error(e.getMessage(), e);
 				} catch (ExecutionException e) {
@@ -271,5 +246,10 @@ public class PerformanceTest {
 	@org.junit.Ignore//@Test
 	public void testMix(){
 		fail();
+	}
+	
+	@Test
+	public void test(){
+		
 	}
 }

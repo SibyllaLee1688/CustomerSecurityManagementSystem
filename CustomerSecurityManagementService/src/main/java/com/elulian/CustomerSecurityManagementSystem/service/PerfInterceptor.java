@@ -45,12 +45,12 @@ public class PerfInterceptor implements MethodInterceptor {
 	 */
 
 	public Object invoke(MethodInvocation method) throws Throwable {
-		long start = System.nanoTime();
+		long start = System.currentTimeMillis();
 		try {
 			return method.proceed();
 		} finally {
 			updateStats(method.getMethod().getName(),
-					(System.nanoTime() - start));
+					(System.currentTimeMillis() - start));
 		}
 	}
 
