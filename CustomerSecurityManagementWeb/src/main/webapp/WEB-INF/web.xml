@@ -5,7 +5,7 @@
          version="3.0">
          
 	<display-name>Customer Security Management System</display-name>
-	<!-- <distributable/> -->
+	<distributable/>
 	<!-- Context Configuration locations for Spring XML files -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
