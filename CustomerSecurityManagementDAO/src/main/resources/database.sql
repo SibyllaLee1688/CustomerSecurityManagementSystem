@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS threshold;
 DROP TABLE IF EXISTS user_role;
 DROP TABLE IF EXISTS userinfo;
 DROP TABLE IF EXISTS role;
+DROP TABLE IF EXISTS persistent_logins;
 CREATE TABLE khxx (id INTEGER NOT NULL AUTO_INCREMENT, address VARCHAR(255), birthday VARCHAR(255), branch VARCHAR(255), certificateAddress VARCHAR(255), certificateBeginDate DATETIME, certificateEndDate DATETIME, certificateId VARCHAR(255), certificateType VARCHAR(255), customerId VARCHAR(255) NOT NULL, customerName VARCHAR(255), customerType VARCHAR(255), foreignFlag BIT, instrperName VARCHAR(255), mobileNumber VARCHAR(255), nationality VARCHAR(255), phoneNumber VARCHAR(255), professionCode VARCHAR(255), relationcertificateId VARCHAR(255), relationcertificateType VARCHAR(255), remark VARCHAR(255), riskType VARCHAR(255), riskValue INTEGER, sex VARCHAR(255), zipcode VARCHAR(255), PRIMARY KEY (id), UNIQUE U_KHXX_CUSTOMERID (customerId)) ENGINE = innodb;
 CREATE TABLE riskrank (id INTEGER NOT NULL AUTO_INCREMENT, maxVal INTEGER, minVal INTEGER, rankType VARCHAR(255) NOT NULL, version INTEGER, PRIMARY KEY (id), UNIQUE U_RISKRNK_RANKTYPE (rankType)) ENGINE = innodb;
 CREATE TABLE role (id INTEGER NOT NULL AUTO_INCREMENT, description VARCHAR(150), name VARCHAR(50) NOT NULL, PRIMARY KEY (id), UNIQUE U_ROLE_NAME (name)) ENGINE = innodb;
@@ -12,3 +13,4 @@ CREATE TABLE userinfo (id INTEGER NOT NULL AUTO_INCREMENT, accountExpired BIT NO
 CREATE TABLE user_role (user_id INTEGER, role_id INTEGER, FOREIGN KEY  (role_id) REFERENCES role (id),  FOREIGN KEY  (user_id) REFERENCES userinfo (id) ) ENGINE = innodb;
 CREATE INDEX I_USR_ROL_ELEMENT ON user_role (role_id);
 CREATE INDEX I_USR_ROL_USER_ID ON user_role (user_id);
+CREATE TABLE persistent_logins (username VARCHAR(64) NOT NULL, series VARCHAR(64) primary key,token VARCHAR(64) NOT NULL, last_used timestamp NOT NULL) ENGINE = innodb;
