@@ -13,7 +13,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -40,9 +42,18 @@ import com.elulian.CustomerSecurityManagementSystem.vo.CustomerInfo;
 import com.elulian.CustomerSecurityManagementSystem.vo.UserInfo;
 
 /**
+ * This is a low layer (service layer performance test suite.
+ * No need to run unless performance issue happens and investigation is required.
+ * Default: disable.
+ * 
+ * Note: due to CRUD test may causes database connection timeout, need to carefully
+ * adjust the test parameters.
+ * 
  * @author cloud lu
  *
  */
+
+//TODO: add threshold verification for performance test results
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:applicationContext-resources.xml",
 	"classpath:**/security.xml",
@@ -119,6 +130,19 @@ public class PerformanceTest {
 		PerfInterceptor.clearMethodStats();
 	}
 	
+	/**
+	 * 
+	 * internal function used to build userinfo
+	 * 
+	 * @param userInfo
+	 * @param username
+	 * @param realname
+	 * @param registerTime
+	 * @param expiredTime
+	 * @param email
+	 * @param branch
+	 */
+	//TODO: consider userinfohelper class later
 	private void buildUser(UserInfo userInfo, String username, String realname,
 			Date registerTime, Date expiredTime, String email, String branch) {
 		userInfo.setUsername(username);
@@ -137,12 +161,12 @@ public class PerformanceTest {
 		// userInfo.setRoles(roles);
 	}
 
-	//@org.junit.Ignore
-	@Test
+	@org.junit.Ignore
+	//@Test
 	public void testUserCRUTime() {
 		
 		logger.info("-----------begin testUserCRUTime------------------------"); 
-		monitorCDUUser(1000, 10);	
+		monitorCDUUser(100, 1);	
 		logger.info("-----------finish testUserCRUTime------------------------");
 	}
 
@@ -153,7 +177,7 @@ public class PerformanceTest {
 	private void monitorCDUUser(final int threads, final int records) {
 		
 		BlockingQueue<Runnable> queue = new LinkedBlockingQueue<Runnable>();    
-	     ThreadPoolExecutor executor = new ThreadPoolExecutor(50, 150, 1, TimeUnit.DAYS, queue, new RejectedExecutionHandler(){
+	     ThreadPoolExecutor executor = new ThreadPoolExecutor(10, 10, 1, TimeUnit.DAYS, queue, new RejectedExecutionHandler(){
 
 			@Override
 			public void rejectedExecution(Runnable arg0, ThreadPoolExecutor arg1) {
@@ -161,7 +185,9 @@ public class PerformanceTest {
 			}
 	    	 
 	     });
-		
+	     
+	     //final CyclicBarrier waitDown = new CyclicBarrier(threads + 1);
+	    		 
 	     List<Future<HashMap<String, Long>>> list = new LinkedList<Future<HashMap<String, Long>>>(); 
 	     
 		for(int i=1; i<=threads; i++){
@@ -169,7 +195,7 @@ public class PerformanceTest {
 						@Override
 						public HashMap<String, Long> call() throws Exception {
 							SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken("Admin","password"));
-							HashMap<String, Long> list = new HashMap<String, Long>(records);
+							HashMap<String, Long> map = new HashMap<String, Long>(records);
 										
 							Calendar cl = Calendar.getInstance();
 							Date registerTime = cl.getTime();
@@ -184,39 +210,47 @@ public class PerformanceTest {
 								long start = System.currentTimeMillis();
 								userInfoService.save(userInfo);
 								long end = System.currentTimeMillis();
-								list.put("add", end - start);
+								map.put("add", end - start);
 								start = System.currentTimeMillis();
 								userInfo = userInfoService.getUserInfoByName("admin");
 								end = System.currentTimeMillis();
-								list.put("serach", end - start);
+								map.put("search", end - start);
 								userInfo.setRealname("realname");
 								start = System.currentTimeMillis();
 								userInfoService.save(userInfo);
 								end = System.currentTimeMillis();
-								list.put("update", end - start);
+								map.put("update", end - start);
 								userInfo = userInfoService.getUserInfoByName(username);
 								start = System.currentTimeMillis();
 								userInfoService.remove(userInfo);
 								end = System.currentTimeMillis();
-								list.put("remove", end - start);
+								map.put("remove", end - start);
 							}
-							return list;
+							//waitDown.await();
+							return map;
 						} 
 					})
 			);
 			
 			if(i % 10 == 0){
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(5000);
 				} catch (InterruptedException e) {
 					logger.error(e.getMessage(), e);
 				}
 			}
 		}
 		
+		/*try {
+			waitDown.await();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}*/
+		
 		for(Future<HashMap<String, Long>> future : list){
 				try {
-					System.out.println(future.get().toString());
+					if(future.isDone())
+						System.out.println(future.get().toString());
 				} catch (InterruptedException e) {
 					logger.error(e.getMessage(), e);
 				} catch (ExecutionException e) {
