@@ -27,7 +27,7 @@ How to set up eclipse project
     
 How to load build
 --------------------------------
-    start mvn clean install from the command-line in the root project
+    start mvn clean install from the command-line in the root project (-DskipTests=true -Ptomcat)
 
 How to deploy with jetty in standalone mode
 --------------------------------
