@@ -100,21 +100,21 @@
 		<project.openjpaVersion>2.3.0</project.openjpaVersion>
 		<!-- rules -->
 		<project.slf4j-simpleVersion>1.7.2</project.slf4j-simpleVersion>
-        <project.kiePluginVersion>6.1.0.Beta3</project.kiePluginVersion>
+                <project.kiePluginVersion>6.1.0.Beta3</project.kiePluginVersion>
 		<project.cglib-nodepVersion>3.1</project.cglib-nodepVersion>
 		<project.commons-beanutilsVersion>1.9.2</project.commons-beanutilsVersion>
 		<project.commons-configurationVersion>1.10</project.commons-configurationVersion>
 		<!-- service -->
 		<project.aspectjVersion>1.8.0</project.aspectjVersion>
 		<project.springVersion>4.0.5.RELEASE</project.springVersion>
-        <project.springSecurityVersion>3.2.4.RELEASE</project.springSecurityVersion>
+                <project.springSecurityVersion>3.2.4.RELEASE</project.springSecurityVersion>
 		<!-- web -->
 		
 		<project.jasperreportsVersion>5.6.0</project.jasperreportsVersion>
 		<!-- <project.jxlVersion>2.6.12</project.jxlVersion>
 		<project.groovy-allVersion>2.3.0</project.groovy-allVersion>
-        <project.poiVersion>3.10-FINAL</project.poiVersion>
-        <project.wiserVersion>1.2</project.wiserVersion> 
+                <project.poiVersion>3.10-FINAL</project.poiVersion>
+                <project.wiserVersion>1.2</project.wiserVersion> 
                 <project.itextVersion>4.2.1</project.itextVersion>
                 -->
 		<project.urlrewritefilterVersion>4.0.4</project.urlrewritefilterVersion>
@@ -122,13 +122,15 @@
 		
 		<project.strutsVersion>2.3.16.3</project.strutsVersion>
 		
-		
-		
+	        <project.bootstrapVersion>3.2.0</project.bootstrapVersion>
+                <project.dojoVersion>1.10.0</project.dojoVersion>	
+	        <project.extjsVersion>5.0.2</project.extjsVersion>
+	
 		<!-- WebTest default target -->
 		<project.webtest.target>run-all-tests</project.webtest.target>
 
 		<project.cargo.host>localhost</project.cargo.host>
-        <project.cargo.port>8081</project.cargo.port>
+                <project.cargo.port>8080</project.cargo.port>
 		<project.cargo.wait>false</project.cargo.wait>
 		<!-- Jetty Cargo settings: <project.cargo.container>jetty6x</project.cargo.container> 
 			<project.cargo.container.url>http://dist.codehaus.org/jetty/jetty-6.1.21/jetty-6.1.21.zip</project.cargo.container.url> -->
@@ -737,6 +739,22 @@
 				<version>${project.strutsVersion}</version>
 			</dependency>
 			<!-- for jasperreport end -->
+                        <!-- for js -->
+                         <dependency>
+                                <groupId>org.webjars</groupId>
+                                <artifactId>bootstrap</artifactId>
+                                <version>${project.bootstrapVersion}</version>
+                         </dependency> 
+                         <dependency>
+                                <groupId>org.webjars</groupId>
+                                <artifactId>dojo</artifactId>
+                                <version>${project.dojoVersion}</version>
+                         </dependency>
+                         <dependency>
+                                <groupId>org.webjars</groupId>
+                                <artifactId>extjs</artifactId>
+                                <version>${project.extjsVersion}</version>
+                         </dependency>
 		</dependencies>
 	</dependencyManagement>
 

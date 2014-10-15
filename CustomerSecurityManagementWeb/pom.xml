@@ -152,6 +152,14 @@
 			<artifactId>struts2-jasperreports-plugin</artifactId>
 		</dependency>
 		<!-- for jasperreport end -->
+                <dependency>
+                        <groupId>org.webjars</groupId>
+                        <artifactId>bootstrap</artifactId>
+                </dependency>
+                <dependency>
+                        <groupId>org.webjars</groupId>
+                        <artifactId>dojo</artifactId>
+                </dependency>
 		<dependency>
 			<groupId>com.elulian</groupId>
 			<artifactId>CustomerSecurityManagementService</artifactId>
@@ -248,7 +256,6 @@
                             <!--  use cargo:run instead of cargo:start, wait default false means
                                   container will close after mvn life cycle
                                   see http://cargo.codehaus.org/Maven2+Plugin+Reference+Guide for more details -->
-                            <wait>${project.cargo.wait}</wait>
                             <container>
                                 <containerId>${project.cargo.container}</containerId>
                                 <!-- container home -->
@@ -262,8 +269,8 @@
                                     <downloadDir>${project.build.directory}/${project.cargo.container}/downloads</downloadDir>
                                     <extractDir>${project.build.directory}/${project.cargo.container}/extracts</extractDir>
                                 </zipUrlInstaller>
-                                <!-- <log>${project.build.directory}/logs/jboss51x.log</log>
-                        <output>${project.build.directory}/logs/jboss51x.out</output> -->
+                                <log>${project.build.directory}/logs/container.log</log>
+                                <output>${project.build.directory}/logs/container.out</output>
                             </container>
                             <configuration>
                                 <!-- deploy home -->
@@ -288,6 +295,23 @@
                                       <cargo.remote.password>password</cargo.remote.password>
                                     </properties> -->
                             </configuration>
+                            <deployables>  
+                                   <deployable>  
+                                     <!-- group/artifact使用默认值部署本应用，默认从maven output获取部署包，可以在location中指定  
+                                      <groupId>war group id</groupId>  
+                                      <artifactId>war artifact id</artifactId>  
+                                      <location> war location</location>  
+                                     -->  
+                                     <type>war</type>  
+                                     <properties>  
+                                        <context>CustomerSecurityManagementWeb</context>  
+                                     </properties>  
+                                     <!--
+                                     <pingURL>optional url to ping to know if deployable is done or not</pingURL>  
+                                     <pingTimeout>optional timeout to ping (default 20000 milliseconds)</pingTimeout>  
+                                     -->
+                                   </deployable>  
+                            </deployables>  
                         </configuration>
                         <executions>
                             <execution>
@@ -339,7 +363,7 @@
                             <sourcedirectory>src/test/resources</sourcedirectory>
                             <sourcefile>web-tests.xml</sourcefile>
                             <target>${project.webtest.target}</target>
-                            <basepath>${project.build.finalName}</basepath>
+                            <basepath>CustomerSecurityManagementWeb</basepath>
                             <resultpath>target/webtest/webtest-results</resultpath>
                             <haltonfailure>false</haltonfailure>
                             <haltonerror>false</haltonerror>

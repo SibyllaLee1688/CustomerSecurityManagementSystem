@@ -14,8 +14,8 @@
             replace="${it_user_signup.fullname}"
             global="false" />
         <verifytext description="verify success message" text="${updated.byAdmin}"/>
-     -->
     <taskdef resource="net/sf/antcontrib/antcontrib.properties" />
+   -->
 
     <!-- Use i18n bundle, 2nd one listed is the default -->
     <property file="../../../target/classes/ApplicationResources_${user.language}.properties"/>
@@ -23,7 +23,7 @@
 
     <!-- runs all targets -->
     <target name="run-all-tests" 
-        depends="Login,Logout,UserTests,StaticPages,FileUpload"
+        depends="Login,Logout"
         description="Call and executes all test cases (targets)"/>
     
     <!-- runs user-related tests -->
