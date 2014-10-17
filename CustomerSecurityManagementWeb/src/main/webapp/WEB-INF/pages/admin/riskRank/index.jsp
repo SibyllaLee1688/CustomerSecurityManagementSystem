@@ -8,7 +8,7 @@
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
  -->
-<script src="http://ajax.googleapis.com/ajax/libs/dojo/1.9.3/dojo/dojo.js"></script>
+<script src="<%=request.getContextPath() %>/webjars/dojo/1.10.0/dojo/dojo.js"></script>
 
 		<script type="text/javascript" >
 		

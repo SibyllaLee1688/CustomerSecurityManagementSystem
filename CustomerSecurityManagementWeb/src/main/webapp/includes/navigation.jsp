@@ -2,11 +2,6 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
-<html>
-<head>
-
-</head>
-<body>
 <div class="rounded" align="center">
 <div id="sitemesh">
 <table cellspacing="0" width="100%" border="0">
@@ -64,5 +59,3 @@
 </table>
 </div>
 </div>
-</body>
-</html>

@@ -6,7 +6,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<script type="text/javascript" src="<%=request.getContextPath() %>/webjars/bootstrap/3.2.0/js/bootstrap.min.js"></script> 
+<script type="text/javascript" src="<%=request.getContextPath() %>/webjars/jquery/1.9.0/jquery.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/webjars/bootstrap/3.0.2/js/bootstrap.min.js"></script> 
+<script type="text/javascript" src="<%=request.getContextPath() %>/webjars/jquery-cookie/1.3.1/jquery.cookie.js"></script>
 <script type="text/javascript">
     if ($.cookie("username") != null && $.cookie("username") != "") {
         $("#j_username").val($.cookie("username"));
@@ -42,7 +44,7 @@
     }
 </script>
 
-<title>Sign On Money laundering system</title>
+<title><sec:authorize  ifNotGranted="ROLE_ADMIN,ROLE_USER"><s:text name="login.service" /></sec:authorize>&nbsp;<s:text name="system" /></title>
 </head>
 <body>
 

@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<html>
-
-    <body>
        <p>
        	<font color="black" size="3"><s:text name="system" /></font></p>
        	
@@ -54,6 +51,3 @@
     </table>
        	       	<hr size="3" color="blue" />
        <p />
-       
-    </body>
-</html>

@@ -158,6 +158,10 @@
                 </dependency>
                 <dependency>
                         <groupId>org.webjars</groupId>
+                        <artifactId>jquery-cookie</artifactId>
+                </dependency>
+                <dependency>
+                        <groupId>org.webjars</groupId>
                         <artifactId>dojo</artifactId>
                 </dependency>
 		<dependency>
@@ -312,6 +316,9 @@
                                      -->
                                    </deployable>  
                             </deployables>  
+                            <packager>
+                                    <outputLocation>${project.build.directory}/packaged</outputLocation>
+                            </packager>
                         </configuration>
                         <executions>
                             <execution>
@@ -328,12 +335,37 @@
                                     <goal>stop</goal>
                                 </goals>
                             </execution>
+                            <execution>
+                                <id>package-container</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>package</goal>
+                                </goals>
+                            </execution>
                         </executions>
                     </plugin>
                      <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>webtest-maven-plugin</artifactId>
                         <version>1.0.0</version>
+                        <dependencies>
+                           <!-- Upgrade HtmlUnit to support jQuery 1.9 -->
+                           <dependency>
+                              <groupId>net.sourceforge.htmlunit</groupId>
+                              <artifactId>htmlunit</artifactId>
+                              <version>${project.htmlunitVersion}</version>
+                           </dependency>
+                           <dependency>
+                             <groupId>xml-apis</groupId>
+                             <artifactId>xml-apis</artifactId>
+                             <version>${project.xml-apisVersion}</version>
+                           </dependency>
+                           <dependency>
+                             <groupId>commons-lang</groupId>
+                             <artifactId>commons-lang</artifactId>
+                             <version>${project.commons-langVersion}</version>
+                           </dependency>
+                        </dependencies>
                         <executions>
                             <execution>
                                 <id>webtest-test</id>
@@ -365,9 +397,11 @@
                             <target>${project.webtest.target}</target>
                             <basepath>CustomerSecurityManagementWeb</basepath>
                             <resultpath>target/webtest/webtest-results</resultpath>
+                            <autorefresh>true</autorefresh>
                             <haltonfailure>false</haltonfailure>
                             <haltonerror>false</haltonerror>
-                            <loglevel>fatal</loglevel>
+                            <loglevel>warn</loglevel>
+                            <!-- <loglevel>fatal</loglevel> -->
                         </configuration>
                     </plugin>
 		</plugins>

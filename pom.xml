@@ -122,13 +122,18 @@
 		
 		<project.strutsVersion>2.3.16.3</project.strutsVersion>
 		
-	        <project.bootstrapVersion>3.2.0</project.bootstrapVersion>
+                <!-- use jquery version from bootstrap <project.jqueryVersion>2.1.1</project.jqueryVersion> -->
+	        <project.bootstrapVersion>3.0.2</project.bootstrapVersion>
+                <project.jquery-cookieVersion>1.3.1</project.jquery-cookieVersion>
                 <project.dojoVersion>1.10.0</project.dojoVersion>	
-	        <project.extjsVersion>5.0.2</project.extjsVersion>
+	        <project.extjsVersion>2.2</project.extjsVersion>
 	
-		<!-- WebTest default target -->
+		<!-- WebTest -->
 		<project.webtest.target>run-all-tests</project.webtest.target>
-
+                <project.webtestPluginVersion>1.0.0</project.webtestPluginVersion>
+                <project.htmlunitVersion>2.12</project.htmlunitVersion>
+                <project.xml-apisVersion>1.4.01</project.xml-apisVersion>
+                <project.commons-langVersion>2.6</project.commons-langVersion>
 		<project.cargo.host>localhost</project.cargo.host>
                 <project.cargo.port>8080</project.cargo.port>
 		<project.cargo.wait>false</project.cargo.wait>
@@ -145,7 +150,7 @@
 		<project.jdbc.dataSourceClassName>com.mysql.jdbc.jdbc2.optional.MysqlDataSource</project.jdbc.dataSourceClassName>
 		<project.jdbc.url>jdbc:mysql://localhost/${project.db.name}?createDatabaseIfNotExist=true&amp;amp;useUnicode=true&amp;amp;characterEncoding=utf-8&amp;amp;autoReconnect=true</project.jdbc.url>
 		<project.jdbc.username>root</project.jdbc.username>
-		<project.jdbc.password>root</project.jdbc.password>
+		<project.jdbc.password></project.jdbc.password>
 	</properties>
 	<profiles>
 	
@@ -159,6 +164,9 @@
             </properties>
         </profile>
 		<profile>
+                        <activation>
+                            <activeByDefault>true</activeByDefault>
+                        </activation>
 			<id>tomcat</id>
 			 <properties>
 			    <project.cargo.container>tomcat7x</project.cargo.container>
@@ -745,6 +753,18 @@
                                 <artifactId>bootstrap</artifactId>
                                 <version>${project.bootstrapVersion}</version>
                          </dependency> 
+                         <dependency>
+                                <groupId>org.webjars</groupId>
+                                <artifactId>jquery-cookie</artifactId>
+                                <version>${project.jquery-cookieVersion}</version>
+                                <!-- Exclude jQuery so version from Boostrap is used instead. -->
+                                <exclusions>
+                                     <exclusion>
+                                         <groupId>org.webjars</groupId>
+                                         <artifactId>jquery</artifactId>
+                                     </exclusion>
+                                </exclusions>
+                         </dependency>
                          <dependency>
                                 <groupId>org.webjars</groupId>
                                 <artifactId>dojo</artifactId>
