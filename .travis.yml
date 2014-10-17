@@ -5,6 +5,10 @@ jdk:
   - openjdk6
 before_script:
   - mysql -e 'create database CustomerSecurityManagementSystem;'
+  - "cd CustomerSecurityManagementDAO"
+  - "mvn sql:execute"
+  - "mvn dbunit:operation"
+  - "cd .."
 notifications:
   email:
     recipients:
