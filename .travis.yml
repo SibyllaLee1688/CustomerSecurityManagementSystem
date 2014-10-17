@@ -3,12 +3,10 @@ jdk:
 #  - oraclejdk7
 #  - openjdk7
   - openjdk6
-before_script:
-  - mysql -e 'create database CustomerSecurityManagementSystem;'
-  - "cd CustomerSecurityManagementDAO"
-  - "mvn sql:execute"
-  - "mvn dbunit:operation"
-  - "cd .."
+before install:
+  - mvn test -Dmaven.javadoc.skip=true
+script:
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 notifications:
   email:
     recipients:
