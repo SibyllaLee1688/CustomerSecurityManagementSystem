@@ -4,9 +4,10 @@ jdk:
 #  - openjdk7
   - openjdk6
 before_install:
-  - mvn test -Dmaven.javadoc.skip=true
+  - mvn install -Dmaven.javadoc.skip=true
 script:
-  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+  - "echo skipped" 
+# - mvn deploy
 notifications:
   email:
     recipients:
