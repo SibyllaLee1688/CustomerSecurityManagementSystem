@@ -400,7 +400,7 @@
                             <autorefresh>true</autorefresh>
                             <haltonfailure>false</haltonfailure>
                             <haltonerror>false</haltonerror>
-                            <loglevel>warn</loglevel>
+                            <loglevel>debug</loglevel>
                             <!-- <loglevel>fatal</loglevel> -->
                         </configuration>
                     </plugin>
