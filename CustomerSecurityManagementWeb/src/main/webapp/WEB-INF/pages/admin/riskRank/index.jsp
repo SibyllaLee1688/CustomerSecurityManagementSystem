@@ -19,7 +19,7 @@
 	                }); 
 					domConstruct.empty("riskRanks");                
 	                // Request the text file
-	                request.get("/CustomerSecurityManagementSystem/riskRank/list.action").then(
+	                request.get("<%=request.getContextPath() %>/riskRank/list.action").then(
 	                    function(response){
 	                        // Display the text file content
 	                        dom.byId('riskRanks').innerHTML = response;
@@ -45,7 +45,7 @@
 	                 
 	                            domConstruct.empty("riskRanks");
 					            // Request the text file
-					            request.get("/CustomerSecurityManagementSystem/riskRank/list.action").then(
+					            request.get("<%=request.getContextPath() %>/riskRank/list.action").then(
 					            	function(response){
 					                    // Display the text file content
 					            		dom.byId('riskRanks').innerHTML = response;
@@ -74,7 +74,7 @@
                  
                             domConstruct.empty("riskRanks");
                             // Post the data to the server
-                            request.post("/CustomerSecurityManagementSystem/riskRank/save.action", {
+                            request.post("<%=request.getContextPath() %>/riskRank/save.action", {
                                 // Send the username and password
                                 data: domForm.toObject("save"),
                                 // Wait 5 seconds for a response
