@@ -109,6 +109,7 @@
 		<project.springVersion>4.0.5.RELEASE</project.springVersion>
         <project.springSecurityVersion>3.2.4.RELEASE</project.springSecurityVersion>
 		<project-javasimonVersion>3.5.0</project-javasimonVersion>
+                <project-metricsVersion>3.1.0</project-metricsVersion>
 		<!-- web -->
 		
 		<project.jasperreportsVersion>5.6.0</project.jasperreportsVersion>
@@ -567,7 +568,19 @@
                 <version>${project-javasimonVersion}</version>
             </dependency>
             <!-- for javasimon end -->
-            
+	    <!-- metrics start -->
+            <dependency>
+            <groupId>io.dropwizard.metrics</groupId>
+            <artifactId>metrics-core</artifactId>
+            <version>${project-metricsVersion}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.dropwizard.metrics</groupId>
+            <artifactId>metrics-healthchecks</artifactId>
+            <version>${project-metricsVersion}</version>
+        </dependency>
+            <!-- metrics end -->            
+
 			<!-- for struts -->
 			<dependency>
 				<groupId>org.apache.struts</groupId>

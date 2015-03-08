@@ -16,6 +16,14 @@
 
 	<dependencies>
 	    <dependency>
+            <groupId>io.dropwizard.metrics</groupId>
+            <artifactId>metrics-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.dropwizard.metrics</groupId>
+            <artifactId>metrics-healthchecks</artifactId>
+        </dependency>
+	    <dependency>
             <groupId>org.javasimon</groupId>
             <artifactId>javasimon-spring</artifactId>
         </dependency>
