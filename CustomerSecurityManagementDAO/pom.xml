@@ -297,13 +297,13 @@
 						</goals>
 					</execution>
 					<!-- Runs before integration tests and jetty:run-war -->
-					<!-- <execution>
+					<execution>
 						<id>test</id>
 						<phase>test</phase>
 						<goals>
 							<goal>operation</goal>
 						</goals>
-					</execution> -->
+					</execution>
 				</executions>
 				<dependencies>
 					<dependency>
