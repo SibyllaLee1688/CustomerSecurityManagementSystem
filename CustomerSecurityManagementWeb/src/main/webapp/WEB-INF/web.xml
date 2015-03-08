@@ -17,6 +17,20 @@
             /WEB-INF/security.xml
         </param-value>
 	</context-param>
+	
+	<context-param>     
+      <param-name>log4jConfigLocation</param-name>     
+      <param-value>WEB-INF/classes/log4j.xml</param-value>     
+    </context-param>     
+    
+    <context-param>     
+      <param-name>log4jRefreshInterval</param-name>     
+      <param-value>6000</param-value>     
+    </context-param>     
+    
+    <listener>     
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>     
+    </listener> 
 
 	<!-- not required in sturts2 <filter> <filter-name>EncodingFilter</filter-name> 
 		<filter-class>common.filter.EncodingFilter</filter-class> </filter> -->
@@ -41,15 +55,15 @@
 			if you are having trouble using normal levels use sysout:DEBUG -->
 		<init-param>
 			<param-name>logLevel</param-name>
-			<param-value>sysout:DEBUG</param-value>
+			<param-value>log4j</param-value>
 		</init-param>
 		<!-- set the amount of seconds the conf file will be checked for reload 
 			can be a valid integer (0 denotes check every time, -1 denotes no reload 
-			check, default -1)
+			check, default -1) -->
 		<init-param>
 			<param-name>confReloadCheckInterval</param-name>
 			<param-value>10</param-value>
-		</init-param> -->
+		</init-param> 
 	</filter> 
 	<!-- access/access level will be replaced by spring security later http://blog.sina.com.cn/s/blog_3d9b8fb40100q0ql.html -->
 <!-- 	<filter>
@@ -125,6 +139,11 @@
 		<url-pattern>/admin/*</url-pattern>
 	</filter-mapping> -->
 
+    <filter-mapping>
+                <filter-name>rewriteFilter</filter-name>
+                <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
 	<filter-mapping>
 		<filter-name>securityFilter</filter-name>
 		<url-pattern>/*</url-pattern>
@@ -132,10 +151,7 @@
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>INCLUDE</dispatcher>
 	</filter-mapping>
-        <filter-mapping>
-                <filter-name>rewriteFilter</filter-name>
-                <url-pattern>/*</url-pattern>
-        </filter-mapping>
+        
 
    <filter-mapping>
         <filter-name>struts-prepare</filter-name>

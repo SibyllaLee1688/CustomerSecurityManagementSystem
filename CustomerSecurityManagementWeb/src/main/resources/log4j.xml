@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>    
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'>
+	<appender name="normal" class="org.apache.log4j.RollingFileAppender">
+		<param name="file" value="normal.log" />
+		<param name="MaxBackupIndex" value="10" />
+		<param name="maxFileSize" value="10KB" />
+		<param name="append" value="true" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="conversionPattern" value="%m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="levelMax" value="warn" />
+		</filter>
+	</appender>
+
+
+	<appender name="error" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="file" value="error.log" />
+		<param name="append" value="true" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="conversionPattern" value="%m%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="levelMin" value="error" />
+		</filter>
+	</appender>
+
+	<logger name="com.elulian.CustomerSecurityManagementSystem" additivity="false">
+		<level value="trace" />
+		<appender-ref ref="normal" />
+		<appender-ref ref="error" />
+	</logger>
+
+	<root>
+	    <level value="info" />
+		<appender-ref ref="normal" />
+		<appender-ref ref="error" />
+	</root>
+</log4j:configuration> 
