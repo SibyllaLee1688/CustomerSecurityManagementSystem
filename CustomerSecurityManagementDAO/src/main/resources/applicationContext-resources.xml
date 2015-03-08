@@ -91,8 +91,13 @@
 	    <property name="poolName" value="springHikariCP" />
     </bean>
 
-    <bean id="hikariCPDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="shutdown">
+    <bean id="realHikariCPDataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="shutdown">
         <constructor-arg ref="hikariConfig" />
-    </bean>   
+    </bean>
+    
+    <bean id="hikariCPDataSource" class="org.javasimon.jdbcx4.WrappingSimonDataSource">
+                <property name="dataSource" ref="realHikariCPDataSource"/>
+        </bean>
+       
 	  
 </beans>

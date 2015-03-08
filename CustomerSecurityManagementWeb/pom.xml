@@ -15,6 +15,14 @@
 	<name>CustomerSecurityManagementWeb</name>
 
 	<dependencies>
+        <dependency>
+            <groupId>org.javasimon</groupId>
+            <artifactId>javasimon-console-embed</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.javasimon</groupId>
+            <artifactId>javasimon-javaee</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>

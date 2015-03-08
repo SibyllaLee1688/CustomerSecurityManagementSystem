@@ -15,6 +15,10 @@
 	<name>CustomerSecurityManagementService</name>
 
 	<dependencies>
+	    <dependency>
+            <groupId>org.javasimon</groupId>
+            <artifactId>javasimon-spring</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>javax.annotation</groupId>
 			<artifactId>jsr250-api</artifactId>

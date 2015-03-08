@@ -107,7 +107,8 @@
 		<!-- service -->
 		<project.aspectjVersion>1.8.0</project.aspectjVersion>
 		<project.springVersion>4.0.5.RELEASE</project.springVersion>
-                <project.springSecurityVersion>3.2.4.RELEASE</project.springSecurityVersion>
+        <project.springSecurityVersion>3.2.4.RELEASE</project.springSecurityVersion>
+		<project-javasimonVersion>3.5.0</project-javasimonVersion>
 		<!-- web -->
 		
 		<project.jasperreportsVersion>5.6.0</project.jasperreportsVersion>
@@ -148,9 +149,9 @@
 		<project.jdbcVersion>${project.mysqlConnectorVersion}</project.jdbcVersion>
 		<project.jdbc.driverClassName>com.mysql.jdbc.Driver</project.jdbc.driverClassName>
 		<project.jdbc.dataSourceClassName>com.mysql.jdbc.jdbc2.optional.MysqlDataSource</project.jdbc.dataSourceClassName>
-		<project.jdbc.url>jdbc:mysql://localhost/${project.db.name}?createDatabaseIfNotExist=true&amp;amp;useUnicode=true&amp;amp;characterEncoding=utf-8&amp;amp;autoReconnect=true</project.jdbc.url>
+		<project.jdbc.url>jdbc:mysql://localhost:3306/${project.db.name}?createDatabaseIfNotExist=true&amp;amp;useUnicode=true&amp;amp;characterEncoding=utf-8&amp;amp;autoReconnect=true</project.jdbc.url>
 		<project.jdbc.username>root</project.jdbc.username>
-		<project.jdbc.password></project.jdbc.password>
+		<project.jdbc.password>root</project.jdbc.password>
 	</properties>
 	<profiles>
 	
@@ -543,7 +544,30 @@
 				<version>${project.aspectjVersion}</version>
 			</dependency>
 			<!-- for AspectJ end -->
-
+            
+            <!-- for javasimon start -->
+             <dependency>
+                <groupId>org.javasimon</groupId>
+                <artifactId>javasimon-spring</artifactId>
+                <version>${project-javasimonVersion}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.javasimon</groupId>
+                <artifactId>javasimon-console-embed</artifactId>
+                <version>${project-javasimonVersion}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.javasimon</groupId>
+                <artifactId>javasimon-jdbc4</artifactId>
+                <version>${project-javasimonVersion}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.javasimon</groupId>
+                <artifactId>javasimon-javaee</artifactId>
+                <version>${project-javasimonVersion}</version>
+            </dependency>
+            <!-- for javasimon end -->
+            
 			<!-- for struts -->
 			<dependency>
 				<groupId>org.apache.struts</groupId>
@@ -792,7 +816,6 @@
                 <artifactId>slf4j-log4j12</artifactId>
             </dependency>
     </dependencies>
-
 	<build>
 		<defaultGoal>install</defaultGoal>
 		<pluginManagement>
