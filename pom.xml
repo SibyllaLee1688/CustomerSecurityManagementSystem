@@ -151,7 +151,7 @@
 		<project.jdbc.dataSourceClassName>com.mysql.jdbc.jdbc2.optional.MysqlDataSource</project.jdbc.dataSourceClassName>
 		<project.jdbc.url>jdbc:mysql://localhost:3306/${project.db.name}?createDatabaseIfNotExist=true&amp;amp;useUnicode=true&amp;amp;characterEncoding=utf-8&amp;amp;autoReconnect=true</project.jdbc.url>
 		<project.jdbc.username>root</project.jdbc.username>
-		<project.jdbc.password>root</project.jdbc.password>
+		<project.jdbc.password></project.jdbc.password>
 	</properties>
 	<profiles>
 	
